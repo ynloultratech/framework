@@ -23,7 +23,7 @@
     "symfony/monolog-bundle": "^2.11",
     "sensio/distribution-bundle": "^5.0",
     "sensio/framework-extra-bundle": "^3.0",
-    "jms/serializer": "^1.1"
+    "rafrsr/lib-array2object": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.1|^5.1",
