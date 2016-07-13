@@ -1,0 +1,10 @@
+services:
+  ynlo.assetic_filter.framework_plugin_settings_dumper:
+      class: YnloFramework\YnloFrameworkBundle\Assetic\FrameworkPluginSettingsDumper
+      arguments: [ '@assetic.parameter_bag' ]
+      tags:
+           - { name: assetic.filter, alias: yfp_config_dumper }
+
+  ynlo.tagged_services:
+      class: YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServices
+      arguments: [ '@service_container' ]

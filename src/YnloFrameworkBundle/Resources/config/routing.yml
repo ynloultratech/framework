@@ -1,0 +1,3 @@
+ynlo_framework_js:
+    path:      /framework.js
+    defaults:  { _controller: YnloFrameworkBundle:LibraryCompiler:javascript }
