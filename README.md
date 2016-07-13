@@ -5,7 +5,12 @@
 [![Total Downloads](https://poser.pugx.org/ynloultratech/framework/downloads)](https://packagist.org/packages/ynloultratech/framework)
 [![License](https://poser.pugx.org/ynloultratech/framework/license)](https://packagist.org/packages/ynloultratech/framework)
 
-Ynlo Framework is a set of Symfony bundles and libraries for fast development and/or scaffolding of Symfony applications.
+YnloFramework is a set of Symfony bundles and components for fast development and/or scaffolding of Symfony applications.
+
+Makes building web applications simpler, faster, while requiring less code. 
+A modern PHP 5.6+ framework offering a flexible database access layer and a 
+powerful scaffolding system that makes building both small and complex systems simpler, easier and, of course, tastier. 
+Build fast, grow solid with YnloFramework.
 
 ## Installation
 
