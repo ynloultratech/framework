@@ -9,6 +9,9 @@
     }
   ],
   "autoload": {
+    "files": [
+      "autoload.php"
+    ],
     "psr-4": {
       "YnloFramework\\": "src/"
     }
