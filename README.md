@@ -9,8 +9,7 @@ YnloFramework is a set of Symfony bundles and components for fast development an
 
 Makes building web applications simpler, faster, while requiring less code. 
 A modern PHP 5.6+ framework offering a flexible database access layer and a 
-powerful scaffolding system that makes building both small and complex systems simpler, easier and, of course, tastier. 
-Build fast, grow solid with YnloFramework.
+powerful scaffolding system that makes building both small and complex systems simpler and easier.
 
 ## Installation
 
