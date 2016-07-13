@@ -15,10 +15,12 @@ YnloFramework.Modal = {
     },
     config: {
         spinicon: 'fa fa-spinner fa-pulse',
-        loaderTemplate: '<div class="loader loader-lg"></div>',
+        loaderTemplate: '<div class="loader"></div>',
         loaderDialogClass: 'modal-remote-loader',
         titleTemplate: "<h4 class='modal-title'>%icon% %title%</h4>",
         size: 'size-normal',
+        type: 'default',
+        title: ' ',
         nl2br: false,
         urlDataTarget: 'data-target',
         urlDataRefresh: 'data-refresh',
@@ -50,6 +52,9 @@ YnloFramework.Modal = {
                 var dialog = new BootstrapDialog({
                     message: $(YnloFramework.Modal.config.loaderTemplate),
                     closable: false,
+                    title: ' ',
+                    type: 'default',
+                    size: BootstrapDialog.SIZE_SMALL,
                     cssClass: YnloFramework.Modal.config.loaderDialogClass,
                     nl2br: false
                 });

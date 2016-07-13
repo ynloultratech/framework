@@ -1,0 +1,83 @@
+.modal-remote-loader .modal-dialog {
+  width: 200px;
+}
+.modal-remote-loader .modal-dialog .modal-content {
+  background: none;
+  box-shadow: none;
+  border: none;
+}
+.modal-remote-loader .modal-dialog .modal-content .bootstrap-dialog-body {
+  text-align: center;
+  background: none;
+}
+.modal-remote-loader .modal-dialog .modal-content .modal-header {
+  display: none;
+}
+.modal-remote-loader .modal-dialog .modal-content .modal-footer {
+  display: none;
+}
+.modal-remote-loader .loader {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  border: solid 4px transparent;
+  border-top-color: #2196F3;
+  border-left-color: #2196F3;
+  border-radius: 40px;
+  margin-top: 50px;
+  -webkit-animation: loader-spinner 400ms linear infinite;
+  -moz-animation: loader-spinner 400ms linear infinite;
+  -ms-animation: loader-spinner 400ms linear infinite;
+  -o-animation: loader-spinner 400ms linear infinite;
+  animation: loader-spinner 400ms linear infinite;
+}
+@-webkit-keyframes loader-spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes loader-spinner {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader-spinner {
+  0% {
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes loader-spinner {
+  0% {
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-spinner {
+  0% {
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

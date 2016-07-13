@@ -40,17 +40,19 @@ class Configuration implements ConfigurationInterface
             ->info('Default template to create modal forms.')
             ->children();
 
+        $modalForm->scalarNode('template')->defaultValue('YnloModalBundle::modal_form.html.twig');
+
         $default = [
             'close' => [
                 'label' => 'modals.btn.cancel',
-                'translation_domain' => 'RafrsrSydkBundle',
+                'translation_domain' => 'YnloModalBundle',
                 'icon' => null,
                 'class' => 'btn-link',
                 'action' => 'close',
             ],
             'ok' => [
                 'label' => 'modals.btn.ok',
-                'translation_domain' => 'RafrsrSydkBundle',
+                'translation_domain' => 'YnloModalBundle',
                 'icon' => null,
                 'class' => 'btn-primary',
                 'action' => 'submit',

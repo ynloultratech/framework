@@ -25,9 +25,13 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('ynlo.modal.config', $config);
-        $container->setParameter('ynlo.js_plugin.modal', [
-            'spinicon' => $config['spinicon']
-        ]);
+        $container->setParameter(
+            'ynlo.js_plugin.modal', [
+            'spinicon' => $config['spinicon'],
+            'loaderTemplate' => $config['loaderTemplate'],
+            'loaderDialogClass' => $config['loaderDialogClass'],
+        ]
+        );
 
         $configDir = __DIR__ . '/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
@@ -51,7 +55,8 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
     public function registerInternalAssets()
     {
         return [
-            new AsseticAsset('ynlo_modal_js', 'bundles/ynlomodal/js/modal.yfp.js', ['yfp_config_dumper'])
+            new AsseticAsset('ynlo_modal_js', 'bundles/ynlomodal/js/modal.yfp.js', ['yfp_config_dumper']),
+            new AsseticAsset('ynlo_modal_css', 'bundles/ynlomodal/css/modals.css', ['yfp_config_dumper'])
         ];
     }
 

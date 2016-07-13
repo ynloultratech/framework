@@ -25,9 +25,11 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('ynlo.config', $config);
-        $container->setParameter('ynlo.js_plugin.core', [
-            'debug' => $config['debug']
-        ]);
+        $container->setParameter(
+            'ynlo.js_plugin.core', [
+                'debug' => $config['debug']
+            ]
+        );
 
         $configDir = __DIR__ . '/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
@@ -134,11 +136,13 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
     public function registerInternalAssets()
     {
         return [
-            new AsseticAsset('ynlo_framework_js', [
+            new AsseticAsset(
+                'ynlo_framework_js', [
                 'bundles/ynloframework/js/framework.js',
                 'bundles/ynloframework/js/core.yfp.js',
                 'bundles/ynloframework/js/lib/*'
-            ], ['yfp_config_dumper'])
+            ], ['yfp_config_dumper']
+            )
         ];
     }
 
@@ -153,6 +157,20 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
         if ($config['ajax_forms'] === false) {
             unset($assets['jquery_form']);
         }
+
+        $iconSets =[
+            'fontawesome',
+            'glyphicons',
+            'icomoon'
+        ];
+        foreach ($iconSets as $iconSet){
+            if ((is_string($config['icons']) && $config['icons'] !== $iconSet)
+                || (is_array($config['icons']) && !in_array($iconSet, $config['icons'], true))
+            ) {
+                unset($assets[$iconSet]);
+            }
+        }
+
         return $assets;
     }
 }
