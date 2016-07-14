@@ -1,40 +1,40 @@
 services:
-  rafrsr_toggle_form_extension:
+  ynlo.form.toggle_form_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\ToggleFormTypeExtension
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  rafrsr_widget_template_form_extension:
+  ynlo.form.widget_template_form_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\WidgetTemplateExtension
       arguments: ['@templating']
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  rafrsr_form.angular_controller_form_type:
+  ynlo.form.form.angular_controller_form_type:
       class: YnloFramework\YnloFormBundle\Form\Type\AngularControllerType
       arguments: ['@templating']
       tags:
           - { name: form.type }
 
-  rafrsr_form.angular_extension:
+  ynlo.form.form.angular_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\AngularModelExtension
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  rafrsr_select2_extension:
+  ynlo.form.select2_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\Select2Extension
       arguments: ['@templating', '@?doctrine', '%ynlo.form.confing%']
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
 
-  rafrsr_form.autocomplete.typeahead_extension:
+  ynlo.form.form.autocomplete.typeahead_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\TypeaheadExtension
       calls:
           - [ setContainer, [ '@service_container' ]]
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
 
-  rafrsr_form.autocomplete.select2_extension:
+  ynlo.form.form.autocomplete.select2_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\Select2AutocompleteExtension
       calls:
           - [ setContainer, [ '@service_container' ]]
@@ -80,13 +80,13 @@ services:
       tags:
           - { name: form.type }
 
-  rafrsr_datepicker_type_guesser:
+  ynlo.form.datepicker_type_guesser:
       class: YnloFramework\YnloFormBundle\Form\Guesser\DatePickerTypeGuesser
       arguments: ['@doctrine']
       tags:
           - { name: form.type_guesser }
 
-  rafrsr_switchery_type_guesser:
+  ynlo.form.switchery_type_guesser:
       class: YnloFramework\YnloFormBundle\Form\Guesser\SwitcheryTypeGuesser
       arguments: ['@doctrine']
       tags:
