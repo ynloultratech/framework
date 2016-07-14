@@ -91,7 +91,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     {
         $dqlParts = $context->getParameter('dql_parts');
 
-        $qb = $this->doctrine->getEntityManager()->createQueryBuilder();
+        $qb = $this->doctrine->getManager()->createQueryBuilder();
         if (!empty($dqlParts)) {
             foreach ($dqlParts as $name => $parts) {
                 if (!empty($parts)) {
