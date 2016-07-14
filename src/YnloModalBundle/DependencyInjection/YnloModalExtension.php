@@ -63,7 +63,7 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
     /**
      * @inheritDoc
      */
-    public function filterConfigurationAssets(array $assets, array $config)
+    public function filterAssets(array $assets, array $config)
     {
         return $assets;
     }

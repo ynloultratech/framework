@@ -73,24 +73,34 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
             $extensionAssets = [];
             if ($extension instanceof AssetRegisterInterface) {
 
-                //find for "assets" node in the root of bundle config
+
                 preg_match('/([\w\\\]+\\\)\w+/', get_class($extension), $matches);
                 if (isset($matches[1]) && $namespace = $matches[1]) {
                     $configClass = "{$namespace}Configuration";
                     $configuration = new $configClass;
 
                     $config = $this->processConfiguration($configuration, $container->getExtensionConfig($extension->getAlias()));
+                    //find for "assets" node in the root of bundle config
                     if (isset($config['assets']) && $config['assets']['enabled']) {
-                        $filteredAssets = $extension->filterConfigurationAssets($config['assets'], $config);
-                        foreach ($filteredAssets as $name => $asset) {
+
+                        foreach ($config['assets'] as $name => $asset) {
                             if ($name !== 'enabled') {
                                 $extensionAssets[] = new AsseticAsset($name, [$asset]);
                             }
                         }
                     }
-                }
 
-                $assetsByExtension[$extension->getAlias()] = array_merge($extensionAssets, $extension->registerInternalAssets());
+                    $assetsNotIndexed = array_merge($extensionAssets, $extension->registerInternalAssets() ?: []);
+                    //index assets to apply filter later easier
+                    $indexedAssets = [];
+                    foreach ($assetsNotIndexed as $asset) {
+                        if ($asset instanceof AsseticAsset) {
+                            $indexedAssets[$asset->getName()] = $asset;
+                        }
+                    }
+                    $filteredAssets = $extension->filterAssets($indexedAssets, $config) ?: $config['assets'];
+                    $assetsByExtension[$extension->getAlias()] = $filteredAssets;
+                }
             }
         }
 
@@ -100,7 +110,6 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
         foreach ($assetsByExtension as $extensionName => $extensionAssets) {
             //create extension assets groups
             $finalAssets['bundle_' . $extensionName . '_' . 'js'] = [];
-            $finalAssets['bundle_' . $extensionName . '_' . 'css'] = [];
             $finalAssets['bundle_' . $extensionName . '_' . 'css'] = [];
 
             /** @var AsseticAsset $asset */
@@ -137,19 +146,23 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
     {
         return [
             new AsseticAsset(
-                'ynlo_framework_js', [
-                'bundles/ynloframework/js/framework.js',
-                'bundles/ynloframework/js/core.yfp.js',
-                'bundles/ynloframework/js/lib/*'
-            ], ['yfp_config_dumper']
-            )
+                'ynlo_framework_js',
+                [
+                    'bundles/ynloframework/js/framework.js',
+                    'bundles/ynloframework/js/core.yfp.js',
+                    'bundles/ynloframework/js/lib/*'
+                ], ['yfp_config_dumper']
+            ),
+            new AsseticAsset('pace_js', 'bundles/ynloframework/vendor/pace/pace.js', ['pace_settings_dumper']),
+            new AsseticAsset('ynlo_debugger_js', 'bundles/ynloframework/js/debugger.yfp.js', ['yfp_config_dumper']),
+            new AsseticAsset('ynlo_debugger_css', 'bundles/ynloframework/css/debugger.css')
         ];
     }
 
     /**
      * @inheritDoc
      */
-    public function filterConfigurationAssets(array $assets, array $config)
+    public function filterAssets(array $assets, array $config)
     {
         if ($config['pace'] === false) {
             unset($assets['pace_js'], $assets['pace_css']);
@@ -158,17 +171,21 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
             unset($assets['jquery_form']);
         }
 
-        $iconSets =[
+        $iconSets = [
             'fontawesome',
             'glyphicons',
             'icomoon'
         ];
-        foreach ($iconSets as $iconSet){
+        foreach ($iconSets as $iconSet) {
             if ((is_string($config['icons']) && $config['icons'] !== $iconSet)
                 || (is_array($config['icons']) && !in_array($iconSet, $config['icons'], true))
             ) {
                 unset($assets[$iconSet]);
             }
+        }
+
+        if ($config['debug'] == false) {
+            unset($assets['ynlo_debugger']);
         }
 
         return $assets;

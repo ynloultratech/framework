@@ -1,3 +1,2 @@
-ynlo_framework_js:
-    path:      /framework.js
-    defaults:  { _controller: YnloFrameworkBundle:LibraryCompiler:javascript }
+_ynlo_form:
+    resource: '@YnloFormBundle/Resources/config/routing.yml'

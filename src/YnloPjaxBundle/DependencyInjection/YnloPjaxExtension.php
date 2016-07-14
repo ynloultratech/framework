@@ -44,6 +44,7 @@ class YnloPjaxExtension extends Extension implements AssetRegisterInterface, Pre
         $config = $container->getExtensionConfig('ynlo_framework')[0];
         //enable ajax forms and assets
         $config['ajax_forms'] = true;
+
         $container->prependExtensionConfig('ynlo_framework', $config);
     }
 
@@ -60,7 +61,7 @@ class YnloPjaxExtension extends Extension implements AssetRegisterInterface, Pre
     /**
      * @inheritDoc
      */
-    public function filterConfigurationAssets(array $assets, array $config)
+    public function filterAssets(array $assets, array $config)
     {
         return $assets;
     }

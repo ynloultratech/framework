@@ -5,6 +5,12 @@ services:
       tags:
            - { name: assetic.filter, alias: yfp_config_dumper }
 
+  ynlo.assetic_filter.pace_settings_dumper:
+        class: YnloFramework\YnloFrameworkBundle\Assetic\PaceSettingsDumper
+        arguments: [ '%ynlo.config%' ]
+        tags:
+             - { name: assetic.filter, alias: pace_settings_dumper }
+
   ynlo.tagged_services:
       class: YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServices
       arguments: [ '@service_container' ]

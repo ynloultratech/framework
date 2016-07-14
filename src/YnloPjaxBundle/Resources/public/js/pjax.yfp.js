@@ -11,6 +11,10 @@ YnloFramework.Pjax = {
         links: 'a:not([data-pjax="false"])a:not([href="#"])a:not([target="_blank"])',
         forms: 'form:not([data-pjax="false"])'
     },
+    lastLocation: null,
+    currentLocation: function () {
+        return location.pathname + location.search;
+    },
     init: function () {
 
         if (this.config.links) {
@@ -24,7 +28,10 @@ YnloFramework.Pjax = {
 
         $(window).off('popstate.pjax');
         $(window).on("popstate.pjax", function (event) {
-            YnloFramework.Pjax.load(window.location.href);
+            // http://stackoverflow.com/questions/9731838/how-to-cancel-popstate-in-certain-condition
+            if (YnloFramework.Pjax.lastLocation != YnloFramework.Pjax.currentLocation()) {
+                YnloFramework.Pjax.load(window.location.href);
+            }
         });
     },
     _setupLinks: function () {
@@ -32,7 +39,7 @@ YnloFramework.Pjax = {
         $(document).on('click.pjax', YnloFramework.Pjax.config.links , function (event) {
             var url = $(this).attr("href");
 
-            if (!url) {
+            if (!url || url.substr(0, 1) == '#') {
                 return;
             }
 
@@ -130,7 +137,8 @@ YnloFramework.Pjax = {
         });
     },
     pushState: function (url) {
-        window.history.pushState({id: (new Date).getTime()}, '', url);
+        window.history.pushState({id: (new Date).getTime(), url: url}, '', url);
+        YnloFramework.Pjax.lastLocation = YnloFramework.Pjax.currentLocation();
     },
     pushResponse: function (url, response) {
 

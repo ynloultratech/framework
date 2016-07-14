@@ -25,22 +25,30 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ynlo_framework')->children();
 
-        $rootNode->booleanNode('debug')->defaultValue("%kernel.debug%");
-        $rootNode->booleanNode('pace')->defaultValue(true)->info('Enable or disable the Pace loader.');
+        $rootNode->scalarNode('debug')->defaultValue("false");
+        $pace = $rootNode->arrayNode('pace')
+            ->canBeDisabled()
+            ->info('Enable or disable the Pace loader.')
+            ->children();
+        $pace->scalarNode('ajax')->defaultValue(true);
+        $pace->scalarNode('document')->defaultValue(true);
+        $pace->scalarNode('eventLag')->defaultValue(true);
+        $pace->scalarNode('restartOnPushState')->defaultValue(true);
+        $pace->scalarNode('restartOnRequestAfter')->defaultValue(true);
+
         $rootNode->booleanNode('ajax_forms')->defaultValue(false)->info('Use ajax forms in bundles that support this.');
-        $rootNode->variableNode('icons')->defaultValue(['fontawesome'])->info('One or more than one icon library, available: fontawesome, glyphicons', 'icomoon');
+        $rootNode->variableNode('icons')->defaultValue(['fontawesome'])->info('Icon libraries to load, available: fontawesome, glyphicons. @note: glyphicons are always loaded with bootstrap', 'icomoon');
 
         $this->createAssetConfig(
             $rootNode, [
-                'jquery' => 'bundles/ynloframework/js/vendor/jquery/jquery.min.js',
-                'jquery_form' => 'bundles/ynloframework/js/vendor/jquery.form/jquery.form.js',
-                'pace_js' => 'bundles/ynloframework/js/vendor/pace/pace.js',
-                'pace_css' => 'bundles/ynloframework/js/vendor/pace/pace.css',
-                'bootstrap_js' => 'bundles/ynloframework/js/vendor/bootstrap/js/bootstrap.min.js',
-                'bootstrap_css' => 'bundles/ynloframework/js/vendor/bootstrap/css/bootstrap.min.css',
-                'fontawesome' => 'bundles/ynloframework/js/vendor/font-awesome/css/font-awesome.min.css',
-                'glyphicons' => 'bundles/ynloframework/js/vendor/glyphicons/css/glyphicons.css',
-                'icomoon' => 'bundles/ynloframework/js/vendor/icomoon/icomoon.css',
+                'jquery' => 'bundles/ynloframework/vendor/jquery/jquery.min.js',
+                'jquery_form' => 'bundles/ynloframework/vendor/jquery.form/jquery.form.js',
+                'pace_css' => 'bundles/ynloframework/vendor/pace/pace.css',
+                'bootstrap_js' => 'bundles/ynloframework/vendor/bootstrap/js/bootstrap.min.js',
+                'bootstrap_css' => 'bundles/ynloframework/vendor/bootstrap/css/bootstrap.min.css',
+                'fontawesome' => 'bundles/ynloframework/vendor/font-awesome/css/font-awesome.min.css',
+                'glyphicons' => 'bundles/ynloframework/vendor/glyphicons/css/glyphicons.css',
+                'icomoon' => 'bundles/ynloframework/vendor/icomoon/icomoon.css',
             ]
         );
 

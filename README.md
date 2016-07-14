@@ -22,7 +22,7 @@ Full documentation are available [here](docs/index.md)
 
 ## Functional Demo
 
-Can view a fully functional example [here](https://github.com/ynloultratech/framework-demo)
+Can view a fully functional example [here](https://framework.ynloultratech.com)
 
 ## Copyright
 

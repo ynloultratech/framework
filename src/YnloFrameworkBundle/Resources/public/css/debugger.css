@@ -1,0 +1,41 @@
+.ynlo-debugger-error {
+  background: #d93f3f;
+  color: #fff;
+  position: fixed;
+  padding: 10px 20px;
+  top: 20px;
+  right: 20px;
+  border-radius: 10px;
+  z-index: 100000;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+.ynlo-debugger-error a {
+  color: #fff;
+}
+.ynlo-debugger-error-preview {
+  background: #d93f3f;
+  color: #fff;
+  position: fixed;
+  padding: 10px 19px 23px;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  border-radius: 10px;
+  z-index: 100000;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+.ynlo-debugger-error-preview > a {
+  color: #fff;
+  float: right;
+}
+.ynlo-debugger-error-preview iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  margin: 10px 0;
+}

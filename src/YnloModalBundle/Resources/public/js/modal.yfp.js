@@ -31,7 +31,7 @@ YnloFramework.Modal = {
     },
     _setupLinks: function () {
 
-        if (YnloFramework.hasPlugin('Pjax')){
+        if (YnloFramework.hasPlugin('Pjax')) {
             $(document).off("pjax:link.modal", 'a');
             $(document).on("pjax:link.modal", 'a', function (event) {
                 var options = YnloFramework.Modal._extractPopupOptions($(this));
@@ -75,7 +75,6 @@ YnloFramework.Modal = {
                         dialog.close();
                     }
                 });
-
             }
         });
     },
@@ -115,6 +114,14 @@ YnloFramework.Modal = {
             success: function (response) {
                 if (!response || response.result == 'ok') {
                     dialog.close();
+
+                    if (response.redirect) {
+                        YnloFramework.Location.go(response.redirect);
+                    }
+
+                    if (response.refresh) {
+                        YnloFramework.Location.refresh();
+                    }
                 } else {
                     dialog.enableButtons(true);
                     dialog.setClosable(true);

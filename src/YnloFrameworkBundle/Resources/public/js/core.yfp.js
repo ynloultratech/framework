@@ -7,10 +7,10 @@
 
 YnloFramework.Core = {
     init: function () {
-        YnloFramework.debug = this.config.debug;
+        YnloFramework.debug =  this.config.debug;
     },
     config: {
         debug: false
     }
 };
-YnloFramework.register('Core'); 
+YnloFramework.register('Core');

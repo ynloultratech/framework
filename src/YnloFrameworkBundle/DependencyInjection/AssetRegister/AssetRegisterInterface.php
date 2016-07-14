@@ -24,8 +24,7 @@ interface AssetRegisterInterface
      * Receive array of assets registered for current extension
      * and should return the same array filtered with only assets to compile based on the extension config
      *
-     * this method only is called if the extension has section called 'assets' inside the config.yml
-     * and is helpful to ignore some assets if another option is disabled:
+     * e.g:
      *
      * config.yml
      *  pace: false
@@ -39,5 +38,5 @@ interface AssetRegisterInterface
      *
      * @return mixed
      */
-    public function filterConfigurationAssets(array $assets, array $config);
+    public function filterAssets(array $assets, array $config);
 }
