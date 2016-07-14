@@ -1,0 +1,37 @@
+{% extends ['MopaBootstrapBundle::Form/fields.html.twig', 'form_div_layout.html.twig'] %}
+
+{% use 'YnloFormBundle::Widgets/embedded_template.html.twig' %}
+{% use 'YnloFormBundle::Widgets/angular_form.html.twig' %}
+
+{% block form_row %}
+
+    {% if toggle_groups is defined %}
+        {% for group in toggle_groups %}
+            <div class="toggle_group_{{ group }}">
+        {% endfor %}
+    {% endif %}
+
+    {% if template_prepend is defined %}
+        {{ template_prepend|raw }}
+    {% endif %}
+
+    {{ parent() }}
+
+    {% if template_append is defined %}
+        {{ template_append|raw }}
+    {% endif %}
+
+    {% if toggle_groups is defined %}
+        {% for group in toggle_groups %}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {#{% include 'YnloFormBundle:Extensions:form_toggle.html.twig' %}#}
+    {#{% include 'YnloFormBundle:Extensions:typehead.html.twig' %}#}
+{% endblock form_row %}
+
+{% block choice_widget_collapsed %}
+    {{ parent() }}
+    {#{% include 'YnloFormBundle:Extensions:select2.html.twig' %}#}
+{% endblock %}

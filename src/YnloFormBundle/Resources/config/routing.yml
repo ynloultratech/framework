@@ -1,0 +1,3 @@
+ynlo_form_autocomplete:
+    path:      _form_autocomplete
+    defaults:  { _controller: YnloFormBundle:Autocomplete:autoComplete }

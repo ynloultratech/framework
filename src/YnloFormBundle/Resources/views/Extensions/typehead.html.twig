@@ -1,0 +1,24 @@
+{% if typehead is defined %}
+    <script>
+        $(function () {
+            var engine = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                {% if  typehead.source %}
+                local: {{ typehead.source|raw }},
+                {% else %}
+                remote: {
+                    url: '{{ autocomplete_options.autocomplete_url }}&q=%QUERY',
+                    wildcard: '%QUERY'
+                }
+                {% endif %}
+            });
+
+            $('#{{ form.vars.id }}').typeahead({
+                minLength: {{ autocomplete_options.autocomplete_min_length }}
+            }, {
+                source: engine
+            });
+        });
+    </script>
+{% endif %}

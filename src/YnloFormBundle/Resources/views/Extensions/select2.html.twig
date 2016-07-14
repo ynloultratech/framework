@@ -1,0 +1,65 @@
+{% if form.vars.choices is defined and select2_options is defined %}
+    <script>
+        $(function () {
+            //hack to allow search inside template result attribute
+            var matchTemplate = function (term, text, data) {
+                text = $(data.element).data('template-result');
+                if (text != undefined && text.toUpperCase().indexOf(term.toUpperCase()) >= 0) {
+                    return true;
+                }
+
+                return false;
+            };
+            $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+
+                var options = {
+                    matcher: oldMatcher(matchTemplate),
+                    templateResult: function (result) {
+                        if (result.element && $(result.element).data('template-result') && $(result.element).data('template-result') != undefined) {
+                            return $(result.element).data('template-result');
+                        }
+
+                        return result.text;
+                    },
+                    templateSelection: function (result) {
+                        if (result.element && $(result.element).data('template-selection') && $(result.element).data('template-selection') != undefined) {
+                            return $(result.element).data('template-selection');
+                        }
+
+                        if (result.selection_text){
+                            return result.selection_text;
+                        }
+
+                        return result.text;
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    },
+                    {% if autocomplete_options is defined %}
+                    ajax: {
+                        url: '{{ autocomplete_options.autocomplete_url }}',
+                        dataType: 'json',
+                        delay: 300,
+                        data: function (params) {
+                            return {
+                                q: params.term, // search term
+                                page: params.page
+                            };
+                        }
+                    }
+                    {% endif %}
+                };
+                options = $.extend(options,{{ select2_options|raw }});
+                $('#{{ form.vars.id }}').select2(options);
+
+                //small hack to allow search inside bootstrap modals
+                //issue: http://stackoverflow.com/questions/18487056/select2-doesnt-work-when-embedded-in-a-bootstrap-modal/18487440#18487440
+                $('#{{ form.vars.id }}').on('select2:open', function () {
+                    if ($(this).parents('.modal').length) {
+                        $(this).parents('.modal').removeAttr('tabindex');
+                    }
+                });
+            });
+        });
+    </script>
+{% endif %}
