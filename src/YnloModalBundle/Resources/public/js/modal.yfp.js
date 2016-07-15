@@ -149,6 +149,7 @@ YnloFramework.Modal = {
             if (action) {
                 switch (action) {
                     case 'close':
+
                         action = function (dialog) {
                             dialog.close()
                         };
@@ -207,6 +208,6 @@ YnloFramework.Modal = {
                 });
             }
         };
-        BootstrapDialog.show($.extend({}, this.config, defaults, options));
+        BootstrapDialog.show($.extend({}, YnloFramework.Modal.config, defaults, options));
     }
 };
