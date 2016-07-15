@@ -55,7 +55,7 @@ YnloFramework.Pjax = {
                 }
             }
         });
-        $(document).on('pjax:end', function () {
+        $(document).on('pjax:success pjax:error pjax:abort', function () {
             var element = YnloFramework.Pjax.triggerElement;
             if (element) {
                 element.find('.pjax-spinicon').each(function () {
@@ -67,7 +67,6 @@ YnloFramework.Pjax = {
                     }
                 });
             }
-            YnloFramework.Pjax.triggerElement = null;
         });
     },
     _setupLinks: function () {
@@ -93,8 +92,7 @@ YnloFramework.Pjax = {
 
             event.preventDefault && event.preventDefault();
 
-            YnloFramework.Pjax.triggerElement = $(this);
-            YnloFramework.Pjax.load(url);
+            YnloFramework.Pjax.load(url, $(this));
 
             return false;
         });
@@ -126,7 +124,6 @@ YnloFramework.Pjax = {
 
                     YnloFramework.Pjax.pushResponse(url, output);
                     $(document).trigger('pjax:success', [output, status, xhr]);
-                    $(document).trigger('pjax:end', [xhr]);
                 },
                 error: function (xhr, reason) {
                     if (reason == 'abort') {
@@ -134,7 +131,6 @@ YnloFramework.Pjax = {
                     }
                     YnloFramework.Pjax.pushResponse(url, xhr.responseText);
                     $(document).trigger('pjax:error', [xhr, reason]);
-                    $(document).trigger('pjax:end', [xhr]);
                 }
             });
         })
@@ -143,10 +139,17 @@ YnloFramework.Pjax = {
     refresh: function () {
         YnloFramework.Pjax.load(window.location.href);
     },
-    load: function (url) {
+    load: function (url, triggerElement) {
         if (YnloFramework.Pjax._xhr) {
+            $(document).trigger('pjax:abort', [YnloFramework.Pjax._xhr]);
             YnloFramework.Pjax._xhr.abort();
         }
+
+        //element triggering the load, for autospin
+        if (triggerElement){
+            YnloFramework.Pjax.triggerElement = triggerElement;
+        }
+
         YnloFramework.Pjax._xhr = $.ajax({
             url: url,
             beforeSend: function (xhr) {
@@ -176,7 +179,6 @@ YnloFramework.Pjax = {
                             }
 
                             $(document).trigger('pjax:success', [output, status, xhr]);
-                            $(document).trigger('pjax:end', [xhr]);
                             return;
                         }
                     }
@@ -185,7 +187,6 @@ YnloFramework.Pjax = {
                 YnloFramework.Pjax.pushResponse(url, output);
 
                 $(document).trigger('pjax:success', [output, status, xhr]);
-                $(document).trigger('pjax:end', [xhr]);
             },
             error: function (xhr, reason) {
                 if (reason == 'abort') {
@@ -193,7 +194,6 @@ YnloFramework.Pjax = {
                 }
                 YnloFramework.Pjax.pushResponse(url, xhr.responseText);
                 $(document).trigger('pjax:error', [xhr, reason]);
-                $(document).trigger('pjax:end', [xhr, reason]);
             }
         });
     },
