@@ -78,7 +78,7 @@ class Modal implements Object2ArrayInterface
     /**
      * @var string
      */
-    protected $spinicon;
+    protected $spinicon = 'fa fa-spinner fa-pulse';
 
     /**
      * @var bool

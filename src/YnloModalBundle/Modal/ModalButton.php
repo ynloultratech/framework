@@ -213,6 +213,7 @@ class ModalButton implements Object2ArrayInterface
             'action' => $this->getAction(),
             'cssClass' => $this->getClass(),
             'icon' => $this->getIcon(),
+            'autospin' => $this->isAutospin(),
         ];
     }
 }
