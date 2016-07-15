@@ -29,6 +29,8 @@ class YnloPjaxExtension extends Extension implements AssetRegisterInterface, Pre
             'target' => $config['target'],
             'links' => $config['links'],
             'forms' => $config['forms'],
+            'autospin' => $config['autospin'],
+            'spinicon' => $config['spinicon'],
         ]);
 
         $configDir = __DIR__ . '/../Resources/config';

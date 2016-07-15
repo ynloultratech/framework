@@ -9,12 +9,15 @@ YnloFramework.Pjax = {
     config: {
         target: 'body',
         links: 'a:not([data-pjax="false"])a:not([href="#"])a:not([target="_blank"])',
-        forms: 'form:not([data-pjax="false"])'
+        forms: 'form:not([data-pjax="false"])',
+        autospin: true,
+        spinicon: 'fa fa-spinner fa-pulse'
     },
     lastLocation: null,
     currentLocation: function () {
         return location.pathname + location.search;
     },
+    triggerElement: null,
     init: function () {
 
         if (this.config.links) {
@@ -22,6 +25,9 @@ YnloFramework.Pjax = {
         }
         if (this.config.forms) {
             this._setupForms();
+        }
+        if (this.config.autospin) {
+            this._setupAutospin();
         }
 
         YnloFramework.Pjax.pushState(window.location.href);
@@ -34,9 +40,39 @@ YnloFramework.Pjax = {
             }
         });
     },
+    _setupAutospin: function () {
+        $(document).on('pjax:start', function () {
+            var element = YnloFramework.Pjax.triggerElement;
+            if (element) {
+                var icon = YnloFramework.Pjax.config.spinicon;
+                if (element.find('i').length) {
+                    var currentIcon = element.find('i:first');
+                    currentIcon.attr('origin-class', currentIcon.attr('class'));
+                    currentIcon.attr('class', icon);
+
+                } else if (element.hasClass('btn')) {
+                    element.prepend('<i class="pjax-spinicon ' + icon + '" style="margin-right:5px"></i>');
+                }
+            }
+        });
+        $(document).on('pjax:end', function () {
+            var element = YnloFramework.Pjax.triggerElement;
+            if (element) {
+                element.find('.pjax-spinicon').each(function () {
+                    $(this).remove();
+                });
+                element.find('i').each(function () {
+                    if ($(this).attr('origin-class')) {
+                        $(this).attr('class', $(this).attr('origin-class'));
+                    }
+                });
+            }
+            YnloFramework.Pjax.triggerElement = null;
+        });
+    },
     _setupLinks: function () {
         $(document).off('click.pjax');
-        $(document).on('click.pjax', YnloFramework.Pjax.config.links , function (event) {
+        $(document).on('click.pjax', YnloFramework.Pjax.config.links, function (event) {
             var url = $(this).attr("href");
 
             if (!url || url.substr(0, 1) == '#') {
@@ -57,6 +93,7 @@ YnloFramework.Pjax = {
 
             event.preventDefault && event.preventDefault();
 
+            YnloFramework.Pjax.triggerElement = $(this);
             YnloFramework.Pjax.load(url);
 
             return false;
@@ -78,7 +115,7 @@ YnloFramework.Pjax = {
                 beforeSend: function (xhr) {
                     YnloFramework.Pjax._xhr = xhr;
                     xhr.setRequestHeader("X-PJAX", 'true');
-                    $(document).trigger('pjax:beforeSend', [xhr]);
+                    $(document).trigger('pjax:start', [xhr]);
                 },
                 success: function (output, status, xhr) {
                     if (typeof xhr.getResponseHeader === 'function') {
@@ -89,6 +126,7 @@ YnloFramework.Pjax = {
 
                     YnloFramework.Pjax.pushResponse(url, output);
                     $(document).trigger('pjax:success', [output, status, xhr]);
+                    $(document).trigger('pjax:end', [xhr]);
                 },
                 error: function (xhr, reason) {
                     if (reason == 'abort') {
@@ -96,6 +134,7 @@ YnloFramework.Pjax = {
                     }
                     YnloFramework.Pjax.pushResponse(url, xhr.responseText);
                     $(document).trigger('pjax:error', [xhr, reason]);
+                    $(document).trigger('pjax:end', [xhr]);
                 }
             });
         })
@@ -112,8 +151,7 @@ YnloFramework.Pjax = {
             url: url,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("X-PJAX", 'true');
-
-                $(document).trigger('pjax:beforeSend', [xhr]);
+                $(document).trigger('pjax:start', [xhr]);
             },
             success: function (output, status, xhr) {
 
@@ -123,7 +161,7 @@ YnloFramework.Pjax = {
                     }
                 }
 
-                if (YnloFramework.hasPlugin('Modal')){
+                if (YnloFramework.hasPlugin('Modal')) {
                     if (typeof xhr.getResponseHeader === 'function') {
                         if (xhr.getResponseHeader('X-MODAL')) {
                             var options = $.extend({}, YnloFramework.Modal.config, output);
@@ -137,6 +175,8 @@ YnloFramework.Pjax = {
                                 form.attr('action', url);
                             }
 
+                            $(document).trigger('pjax:success', [output, status, xhr]);
+                            $(document).trigger('pjax:end', [xhr]);
                             return;
                         }
                     }
@@ -145,6 +185,7 @@ YnloFramework.Pjax = {
                 YnloFramework.Pjax.pushResponse(url, output);
 
                 $(document).trigger('pjax:success', [output, status, xhr]);
+                $(document).trigger('pjax:end', [xhr]);
             },
             error: function (xhr, reason) {
                 if (reason == 'abort') {
@@ -152,6 +193,7 @@ YnloFramework.Pjax = {
                 }
                 YnloFramework.Pjax.pushResponse(url, xhr.responseText);
                 $(document).trigger('pjax:error', [xhr, reason]);
+                $(document).trigger('pjax:end', [xhr, reason]);
             }
         });
     },
