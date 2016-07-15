@@ -71,7 +71,7 @@ class FrameworkPluginSettingsDumper implements FilterInterface
 
                 $settings = <<<JAVASCRIPT
 $autoRegister
-YnloFramework.$pluginName.config = $jsonConfig;
+YnloFramework.$pluginName.config = $.extend({}, YnloFramework.$pluginName.config, $jsonConfig);
 
 JAVASCRIPT;
 
