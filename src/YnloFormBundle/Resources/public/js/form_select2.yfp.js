@@ -61,9 +61,22 @@ YnloFramework.FormSelect2 = {
                             dataType: 'json',
                             delay: 300,
                             data: function (params) {
+
+                                var related_fields_with_values = {};
+                                var form = $(element).parents('form');
+                                if ($(element).attr('autocomplete-related-fields')) {
+                                    var related_fields = $.parseJSON($(element).attr('autocomplete-related-fields'));
+                                    for (var index in related_fields) {
+                                        var field = form.find('[name*="['+related_fields[index]+']"]');
+                                        console.log(field);
+                                        related_fields_with_values[related_fields[index]] = field.val() ? field.val() : null;
+                                    }
+                                }
+
                                 return {
                                     q: params.term, // search term
-                                    page: params.page
+                                    page: params.page,
+                                    related_fields: related_fields_with_values
                                 };
                             }
                         };

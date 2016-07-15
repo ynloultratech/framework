@@ -42,6 +42,10 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
                 $url = $this->container->get('router')->generate($options['autocomplete_route'], $options['autocomplete_route_parameters']);
                 $view->vars['attr']['autocomplete-url'] = $url;
             }
+
+            if ($options['autocomplete_related_fields']) {
+                $view->vars['attr']['autocomplete-related-fields'] = json_encode($options['autocomplete_related_fields']);
+            }
         }
     }
 
@@ -56,6 +60,7 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
         $resolver->setDefaults(
             [
                 'autocomplete' => null,
+                'autocomplete_related_fields' => [],
                 'autocomplete_min_length' => 0,
                 'autocomplete_url' => null,
                 'autocomplete_route' => 'ynlo_form_autocomplete',
@@ -68,6 +73,7 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
         );
 
         $resolver->setAllowedTypes('autocomplete', ['null', 'string', 'array']);
+        $resolver->setAllowedTypes('autocomplete_related_fields', ['null', 'array']);
         $resolver->setAllowedTypes('autocomplete_min_length', ['integer']);
         $resolver->setAllowedTypes('autocomplete_url', ['null', 'string']);
         $resolver->setAllowedTypes('autocomplete_route', ['string']);
@@ -99,7 +105,7 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
         } elseif (isset($options['query'])) { //support for sonata ModelType
             $qb = $options['query'];
         }
-        if ($qb instanceof QueryBuilde) {
+        if ($qb instanceof QueryBuilder) {
             $context->setParameter('dql_parts', $qb->getDQLParts());
         }
 

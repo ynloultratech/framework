@@ -57,7 +57,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
 
             $this->orderBy($qb, $context);
 
-            $this->filter($qb, $request->get('q'), $context);
+            $this->filter($qb, $request->get('q'), $request->get('related_fields', []), $context);
 
             if ($request->get('page')) {
                 $offset = $qb->getMaxResults() * ($request->get('page') - 1);
@@ -113,9 +113,10 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
      *
      * @param QueryBuilder                 $qb
      * @param string                       $term
+     * @param array                        $extraParameters
      * @param AutocompleteContextInterface $context
      */
-    protected function filter(QueryBuilder $qb, $term, AutocompleteContextInterface $context)
+    protected function filter(QueryBuilder $qb, $term, $extraParameters = [], AutocompleteContextInterface $context)
     {
         $alias = $qb->getRootAliases()[0];
         $fields = $context->getParameter('autocomplete');
@@ -129,6 +130,9 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
                 $or->add($qb->expr()->like("$alias.$field", $search));
             }
             $qb->andWhere($or);
+        }
+        foreach ($extraParameters as $paramName => $value) {
+            $qb->setParameter($paramName, $value);
         }
     }
 
