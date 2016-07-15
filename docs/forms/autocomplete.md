@@ -28,10 +28,8 @@ $form->add(
         'autocomplete' => ['name','iso'],
         'autocomplete_max_results'=> 10,
         'class' => Country::class,
-        'query_builder' => function ($em) {
-            return $em->createQueryBuilder()
-                ->select('c')
-                ->from(Country::class, 'c')
+        'query_builder' => function (EntityRepository $repo) {
+            return $repo->createQueryBuilder('c')
                 ->where('c.continent = 1');
         },
     ]
