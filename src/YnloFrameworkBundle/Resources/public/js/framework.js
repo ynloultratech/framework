@@ -49,7 +49,7 @@ var YnloFramework = {
     initPlugin: function (plugin) {
         if (typeof YnloFramework[plugin]['init'] == 'function') {
             YnloFramework[plugin].init();
-            YnloFramework.log('Initializing plugin "' + plugin + '"');
+            YnloFramework.log('YnloFramework: initializing plugin "' + plugin + '"');
         }
     },
     log: function (msg) {
