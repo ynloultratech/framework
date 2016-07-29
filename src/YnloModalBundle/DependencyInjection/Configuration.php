@@ -56,7 +56,7 @@ class Configuration implements ConfigurationInterface
                 'icon' => null,
                 'class' => 'btn-primary',
                 'action' => 'submit',
-            ]
+            ],
         ];
         $buttons = $modalForm->arrayNode('buttons')
             ->useAttributeAsKey('id')
@@ -64,10 +64,9 @@ class Configuration implements ConfigurationInterface
             ->example($default)
             ->prototype('array');
 
-
         $button = $buttons->children();
 
-        /** @var $button NodeBuilder */
+        /* @var $button NodeBuilder */
         $button->scalarNode('label');
         $button->scalarNode('translation_domain');
         $button->scalarNode('class')->defaultValue('btn-default');

@@ -33,13 +33,13 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
         ]
         );
 
-        $configDir = __DIR__ . '/../Resources/config';
+        $configDir = __DIR__.'/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
         $loader->load('services.yml');
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {
@@ -50,18 +50,18 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function registerInternalAssets()
     {
         return [
             new AsseticAsset('ynlo_modal_js', 'bundles/ynlomodal/js/modal.yfp.js', ['yfp_config_dumper']),
-            new AsseticAsset('ynlo_modal_css', 'bundles/ynlomodal/css/modals.css', ['yfp_config_dumper'])
+            new AsseticAsset('ynlo_modal_css', 'bundles/ynlomodal/css/modals.css', ['yfp_config_dumper']),
         ];
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterAssets(array $assets, array $config)
     {

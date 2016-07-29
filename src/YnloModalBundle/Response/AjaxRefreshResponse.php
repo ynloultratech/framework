@@ -12,7 +12,7 @@ namespace YnloFramework\YnloModalBundle\Response;
 class AjaxRefreshResponse extends AjaxSuccessResponse
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct()
     {

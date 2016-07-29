@@ -33,13 +33,13 @@ class YnloPjaxExtension extends Extension implements AssetRegisterInterface, Pre
             'spinicon' => $config['spinicon'],
         ]);
 
-        $configDir = __DIR__ . '/../Resources/config';
+        $configDir = __DIR__.'/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
         $loader->load('services.yml');
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {
@@ -51,21 +51,20 @@ class YnloPjaxExtension extends Extension implements AssetRegisterInterface, Pre
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function registerInternalAssets()
     {
         return [
-            new AsseticAsset('ynlo_pjax_js', 'bundles/ynlopjax/js/pjax.yfp.js', ['yfp_config_dumper'])
+            new AsseticAsset('ynlo_pjax_js', 'bundles/ynlopjax/js/pjax.yfp.js', ['yfp_config_dumper']),
         ];
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterAssets(array $assets, array $config)
     {
         return $assets;
     }
-
 }

@@ -11,5 +11,4 @@ namespace YnloFramework\YnloFrameworkBundle\DependencyInjection\CompilerPass;
 
 class TaggedServicesCompilerPass
 {
-
 }

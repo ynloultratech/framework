@@ -35,7 +35,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -43,7 +43,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function fetchResults(Request $request, AutocompleteContextInterface $context)
     {
@@ -81,7 +81,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * createQueryBuilder
+     * createQueryBuilder.
      *
      * @param AutocompleteContextInterface $context
      *
@@ -109,7 +109,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * Filter current query using given term and context
+     * Filter current query using given term and context.
      *
      * @param QueryBuilder                 $qb
      * @param string                       $term
@@ -125,7 +125,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
         }
         if ($term) {
             $or = $qb->expr()->orX();
-            $search = $qb->expr()->literal('%' . $term . '%');
+            $search = $qb->expr()->literal('%'.$term.'%');
             foreach ($fields as $field) {
                 $or->add($qb->expr()->like("$alias.$field", $search));
             }
@@ -137,7 +137,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * Get all possible results for current query without limits
+     * Get all possible results for current query without limits.
      *
      * @param QueryBuilder $qb
      *
@@ -155,7 +155,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * orderBy
+     * orderBy.
      *
      * @param QueryBuilder                 $qb
      * @param AutocompleteContextInterface $context
@@ -182,13 +182,13 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildResponse(AutocompleteResults $results, AutocompleteContextInterface $context)
     {
         $array = [];
         foreach ($results as $id => $result) {
-            $array[$id] = (string)$result;
+            $array[$id] = (string) $result;
         }
 
         return new JsonResponse($array);

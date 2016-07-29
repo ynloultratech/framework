@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 /**
- * Create a asset configuration inside your extension config
+ * Create a asset configuration inside your extension config.
  */
 trait AssetConfiguration
 {

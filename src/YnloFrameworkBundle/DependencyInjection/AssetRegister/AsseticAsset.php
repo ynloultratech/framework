@@ -80,7 +80,7 @@ class AsseticAsset
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -88,7 +88,7 @@ class AsseticAsset
     }
 
     /**
-     * isJavascript
+     * isJavascript.
      *
      * @return bool
      */
@@ -98,7 +98,7 @@ class AsseticAsset
     }
 
     /**
-     * isJavascript
+     * isJavascript.
      *
      * @return bool
      */

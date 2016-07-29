@@ -12,7 +12,7 @@ namespace YnloFramework\YnloModalBundle\Response;
 class AjaxRedirectResponse extends AjaxSuccessResponse
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct($uri)
     {

@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class TagSpecification
 {
-
     /**
      * @var string
      */
@@ -78,6 +77,7 @@ class TagSpecification
 
     /**
      * @return mixed
+     *
      * @throws ServiceCircularReferenceException
      * @throws ServiceNotFoundException
      */

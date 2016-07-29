@@ -25,8 +25,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ynlo_framework')->children();
 
-        /** @noinspection UnNecessaryDoubleQuotesInspection */
-        $rootNode->scalarNode('debug')->defaultValue("false");
+        /* @noinspection UnNecessaryDoubleQuotesInspection */
+        $rootNode->scalarNode('debug')->defaultValue('false');
         $pace = $rootNode->arrayNode('pace')
             ->canBeDisabled()
             ->info('Enable or disable the Pace loader.')

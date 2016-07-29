@@ -16,7 +16,7 @@ use YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServicesCom
 class YnloFrameworkBundle extends Bundle
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function build(ContainerBuilder $container)
     {

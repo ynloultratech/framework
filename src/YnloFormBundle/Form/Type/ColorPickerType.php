@@ -36,7 +36,7 @@ class ColorPickerType extends AbstractType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBlockPrefix()
     {
@@ -52,7 +52,7 @@ class ColorPickerType extends AbstractType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -60,7 +60,7 @@ class ColorPickerType extends AbstractType
     }
 
     /**
-     * parseWidgetOptions
+     * parseWidgetOptions.
      *
      * @param $options
      *
@@ -72,7 +72,7 @@ class ColorPickerType extends AbstractType
         $options = array_filter(
             $options,
             function ($val) {
-                return ($val !== null);
+                return $val !== null;
             }
         );
 
@@ -90,7 +90,7 @@ class ColorPickerType extends AbstractType
     }
 
     /**
-     * getDefaultOptions
+     * getDefaultOptions.
      *
      * @return array
      */
@@ -126,7 +126,7 @@ class ColorPickerType extends AbstractType
                 ['#e06666', '#f6b26b', '#ffd966', '#93c47d', '#76a5af', '#6fa8dc', '#8e7cc3', '#c27ba0'],
                 ['#c00', '#e69138', '#f1c232', '#6aa84f', '#45818e', '#3d85c6', '#674ea7', '#a64d79'],
                 ['#900', '#b45f06', '#bf9000', '#38761d', '#134f5c', '#0b5394', '#351c75', '#741b47'],
-                ['#600', '#783f04', '#7f6000', '#274e13', '#0c343d', '#073763', '#20124d', '#4c1130']
+                ['#600', '#783f04', '#7f6000', '#274e13', '#0c343d', '#073763', '#20124d', '#4c1130'],
             ],
             'cp_selectionPalette' => null,
         ];

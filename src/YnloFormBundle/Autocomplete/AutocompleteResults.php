@@ -36,7 +36,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -46,7 +46,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -56,7 +56,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -66,7 +66,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {
@@ -74,7 +74,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -84,7 +84,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     /**
      * Required by interface IteratorAggregate.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -92,7 +92,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTotalOverAll()
     {
@@ -100,7 +100,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setTotalOverAll($total)
     {
@@ -110,7 +110,7 @@ class AutocompleteResults implements AutocompleteResultsInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface AutocompleteProviderInterface
 {
     /**
-     * Unique name of the provider for references
+     * Unique name of the provider for references.
      *
      * @return string
      */
@@ -23,7 +23,7 @@ interface AutocompleteProviderInterface
 
     /**
      * Passing current request and auto-complete context
-     * should return all available results
+     * should return all available results.
      *
      * @param Request                      $request
      * @param AutocompleteContextInterface $context
@@ -33,7 +33,7 @@ interface AutocompleteProviderInterface
     public function fetchResults(Request $request, AutocompleteContextInterface $context);
 
     /**
-     * Build the http response to return the results to the frontend
+     * Build the http response to return the results to the frontend.
      *
      * @param AutocompleteResults          $results
      * @param AutocompleteContextInterface $context

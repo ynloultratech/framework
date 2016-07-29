@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AjaxSuccessResponse extends JsonResponse
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct($params = [])
     {

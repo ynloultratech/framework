@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
- * Class Select2Extension
+ * Class Select2Extension.
  */
 class Select2Extension extends AbstractTypeExtension
 {
@@ -60,7 +60,7 @@ class Select2Extension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \RuntimeException
      */
@@ -69,7 +69,6 @@ class Select2Extension extends AbstractTypeExtension
         /** @var ChoiceView $choice */
         foreach ($view->vars['choices'] as $choice) {
             if ($options['select2_template_result']) {
-
                 $object = $choice->value;
                 if ($this->doctrine && $options['class']) {
                     $object = $this->doctrine->getRepository($options['class'])->find($object);
@@ -79,7 +78,7 @@ class Select2Extension extends AbstractTypeExtension
                         $options['select2_template_result'],
                         [
                             'choice' => $choice,
-                            'object' => $object
+                            'object' => $object,
                         ]
                     );
                 } else {
@@ -89,7 +88,6 @@ class Select2Extension extends AbstractTypeExtension
             }
 
             if ($options['select2_template_selection']) {
-
                 $object = $choice->value;
                 if ($this->doctrine && $options['class']) {
                     $object = $this->doctrine->getRepository($options['class'])->find($object);
@@ -99,7 +97,7 @@ class Select2Extension extends AbstractTypeExtension
                         $options['select2_template_selection'],
                         [
                             'choice' => $choice,
-                            'object' => $object
+                            'object' => $object,
                         ]
                     );
                 } else {
@@ -125,7 +123,7 @@ class Select2Extension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws AccessException
      * @throws UndefinedOptionsException
@@ -147,7 +145,7 @@ class Select2Extension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtendedType()
     {

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AjaxErrorResponse extends JsonResponse
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct($errorMsg)
     {

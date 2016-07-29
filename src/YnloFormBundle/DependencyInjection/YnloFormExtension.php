@@ -18,7 +18,7 @@ use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AsseticA
 use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegisterInterface;
 
 /**
- * Read configuration
+ * Read configuration.
  */
 class YnloFormExtension extends Extension implements PrependExtensionInterface, AssetRegisterInterface
 {
@@ -32,7 +32,7 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
 
         $container->setParameter('ynlo.form.confing', $config);
 
-        $configDir = __DIR__ . '/../Resources/config';
+        $configDir = __DIR__.'/../Resources/config';
         $loader = new Loader\YamlFileLoader($container, new FileLocator($configDir));
 
         $loader->load('services.yml');
@@ -46,7 +46,7 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {
@@ -59,7 +59,7 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function registerInternalAssets()
     {
@@ -76,7 +76,7 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterAssets(array $assets, array $config)
     {

@@ -20,12 +20,12 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class TagType
+ * Class TagType.
  */
 class TagsType extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -39,7 +39,7 @@ class TagsType extends AbstractType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -47,7 +47,7 @@ class TagsType extends AbstractType
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($options) {
                 $form = $event->getForm();
-                $data = (array)$event->getData();
+                $data = (array) $event->getData();
                 foreach ($data as $tag) {
                     $options['choices'][$tag] = $tag;
                     $options['data'][] = $tag;
@@ -59,7 +59,7 @@ class TagsType extends AbstractType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -68,13 +68,13 @@ class TagsType extends AbstractType
                 'multiple' => true,
                 'select2_options' => [
                     'tags' => true,
-                ]
+                ],
             ]
         );
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getParent()
     {

@@ -183,7 +183,7 @@ class ModalButton implements Object2ArrayInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAutospin()
     {
@@ -191,7 +191,7 @@ class ModalButton implements Object2ArrayInterface
     }
 
     /**
-     * @param boolean $autospin
+     * @param bool $autospin
      *
      * @return $this
      */
@@ -203,7 +203,7 @@ class ModalButton implements Object2ArrayInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __toArray()
     {

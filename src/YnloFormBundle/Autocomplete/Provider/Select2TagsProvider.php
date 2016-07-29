@@ -17,7 +17,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class Select2TagsProvider extends SimpleEntityProvider
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -25,7 +25,7 @@ class Select2TagsProvider extends SimpleEntityProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildResponse(AutocompleteResults $results, AutocompleteContextInterface $context)
     {
@@ -50,7 +50,7 @@ class Select2TagsProvider extends SimpleEntityProvider
                 'results' => $array,
                 'pagination' => [
                     'more' => $results->getTotalOverAll() > $results->count(),
-                ]
+                ],
             ]
         );
     }

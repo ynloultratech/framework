@@ -15,7 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class TaggedServicesCompilerPass implements CompilerPassInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     *
      * @throws \InvalidArgumentException
      */
     public function process(ContainerBuilder $container)

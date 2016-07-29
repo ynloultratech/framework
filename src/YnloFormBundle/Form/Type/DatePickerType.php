@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatePickerType extends DateTimePickerType
 {
-
     /**
      * {@inheritdoc}
      */

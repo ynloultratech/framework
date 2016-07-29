@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
- * Class WidgetTemplateExtension
+ * Class WidgetTemplateExtension.
  */
 class WidgetTemplateExtension extends AbstractTypeExtension
 {
@@ -35,7 +35,7 @@ class WidgetTemplateExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -56,7 +56,7 @@ class WidgetTemplateExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -73,7 +73,7 @@ class WidgetTemplateExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtendedType()
     {

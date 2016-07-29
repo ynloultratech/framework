@@ -21,7 +21,7 @@ class Select2Provider extends SimpleEntityProvider implements ContainerAwareInte
     use ContainerAwareTrait;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -29,7 +29,7 @@ class Select2Provider extends SimpleEntityProvider implements ContainerAwareInte
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildResponse(AutocompleteResults $results, AutocompleteContextInterface $context)
     {
@@ -50,13 +50,13 @@ class Select2Provider extends SimpleEntityProvider implements ContainerAwareInte
                 'results' => $array,
                 'pagination' => [
                     'more' => $results->getTotalOverAll() > $results->count(),
-                ]
+                ],
             ]
         );
     }
 
     /**
-     * renderSelect2Item
+     * renderSelect2Item.
      *
      * @param      $id
      * @param      $result
@@ -67,20 +67,20 @@ class Select2Provider extends SimpleEntityProvider implements ContainerAwareInte
     protected function renderSelect2Item($id, $result, $template = null)
     {
         if ($template) {
-            $choice = new ChoiceView($id, (string)$result, (string)$result);
+            $choice = new ChoiceView($id, (string) $result, (string) $result);
             if (is_string($template)) {
                 $text = $this->container->get('templating')->render(
                     $template,
                     [
                         'choice' => $choice,
-                        'object' => $result
+                        'object' => $result,
                     ]
                 );
             } else {
                 $text = call_user_func_array($template, [$choice, $result]);
             }
         } else {
-            $text = (string)$result;
+            $text = (string) $result;
         }
 
         return $text;

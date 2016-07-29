@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TypeaheadExtension extends AutocompleteBaseExtension
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -34,7 +34,7 @@ class TypeaheadExtension extends AutocompleteBaseExtension
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function buildAutocompleteContext(array $options)
     {
@@ -45,7 +45,7 @@ class TypeaheadExtension extends AutocompleteBaseExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws AccessException
      * @throws UndefinedOptionsException
@@ -57,7 +57,7 @@ class TypeaheadExtension extends AutocompleteBaseExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtendedType()
     {

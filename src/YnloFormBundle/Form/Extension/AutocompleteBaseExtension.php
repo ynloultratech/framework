@@ -25,14 +25,13 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
     use ContainerAwareTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \RuntimeException
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         if ($options['autocomplete']) {
-
             $context = $this->buildAutocompleteContext($options);
 
             $contextId = $this->container->get('ynlo.form.autocomplete.context_manager')->addContext($context);
@@ -50,7 +49,7 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws AccessException
      * @throws UndefinedOptionsException
@@ -85,7 +84,7 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
     }
 
     /**
-     * buildAutocompleteContext
+     * buildAutocompleteContext.
      *
      * @param array $options
      *

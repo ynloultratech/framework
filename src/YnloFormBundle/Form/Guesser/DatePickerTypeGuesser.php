@@ -18,7 +18,7 @@ use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
 
 /**
- * Class DatePickerTypeGuesser
+ * Class DatePickerTypeGuesser.
  */
 class DatePickerTypeGuesser extends DoctrineOrmTypeGuesser
 {
@@ -32,7 +32,7 @@ class DatePickerTypeGuesser extends DoctrineOrmTypeGuesser
         }
 
         /** @var ClassMetadataInfo $metadata */
-        list($metadata,) = $ret;
+        list($metadata) = $ret;
 
         //fix to read embedded properties
         if (!$metadata->hasField($property)) {
@@ -46,6 +46,6 @@ class DatePickerTypeGuesser extends DoctrineOrmTypeGuesser
                 return new TypeGuess(DateTimePickerType::class, [], Guess::VERY_HIGH_CONFIDENCE);
         }
 
-        return null;
+        return;
     }
 }

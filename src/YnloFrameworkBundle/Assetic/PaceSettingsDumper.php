@@ -14,7 +14,7 @@ use Assetic\Filter\FilterInterface;
 
 /**
  * This assetic filter is used for YnloFramework pace javascript plugin
- * to dump settings just before load the script
+ * to dump settings just before load the script.
  */
 class PaceSettingsDumper implements FilterInterface
 {
@@ -29,14 +29,14 @@ class PaceSettingsDumper implements FilterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterLoad(AssetInterface $asset)
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterDump(AssetInterface $asset)
     {
@@ -61,8 +61,8 @@ var paceOptions = {
 
 JAVASCRIPT;
             //https://github.com/HubSpot/pace/issues/188
-            $content = str_replace('["GET"]', "[\"GET\", \"POST\"]", $content);
-            $asset->setContent($settings . $content);
+            $content = str_replace('["GET"]', '["GET", "POST"]', $content);
+            $asset->setContent($settings.$content);
         }
     }
 }

@@ -17,7 +17,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class TypeaheadProvider extends SimpleEntityProvider
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -25,7 +25,7 @@ class TypeaheadProvider extends SimpleEntityProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildResponse(AutocompleteResults $results, AutocompleteContextInterface $context)
     {

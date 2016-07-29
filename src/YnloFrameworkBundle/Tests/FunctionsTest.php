@@ -9,7 +9,6 @@
 
 namespace YnloFramework\YnloFrameworkBundle\Tests;
 
-
 class FunctionsTest extends \PHPUnit_Framework_TestCase
 {
     public function testArrayKeyValue()
@@ -19,12 +18,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
             'name' => 'Angela',
             'parents' => [
                 'father' => [
-                    'name' => 'Tom'
+                    'name' => 'Tom',
                 ],
                 'mother' => null,
             ],
             'boyfriend' => [
-                'name' => 'Tomy'
+                'name' => 'Tomy',
             ],
             'age' => 18,
         ];

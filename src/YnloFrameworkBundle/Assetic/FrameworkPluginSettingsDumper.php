@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
  * This assetic filter is used for YnloFramework javascript plugins
- * to dump all settings from the config.yml to the javascript file
+ * to dump all settings from the config.yml to the javascript file.
  *
  * This filter using naming convetion to resolve settings and dump
  *
@@ -37,14 +37,14 @@ class FrameworkPluginSettingsDumper implements FilterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterLoad(AssetInterface $asset)
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function filterDump(AssetInterface $asset)
     {
@@ -68,14 +68,13 @@ class FrameworkPluginSettingsDumper implements FilterInterface
                     $autoRegister = "\nYnloFramework.register('$pluginName');";
                 }
 
-
                 $settings = <<<JAVASCRIPT
 $autoRegister
 YnloFramework.$pluginName.config = $.extend({}, YnloFramework.$pluginName.config, $jsonConfig);
 
 JAVASCRIPT;
 
-                $asset->setContent($content . $settings);
+                $asset->setContent($content.$settings);
             }
         }
     }

@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SwitcheryType
+ * Class SwitcheryType.
  */
 class SwitcheryType extends AbstractType
 {
@@ -34,7 +34,7 @@ class SwitcheryType extends AbstractType
         ];
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -70,7 +70,6 @@ class SwitcheryType extends AbstractType
         return CheckboxType::class;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -80,7 +79,7 @@ class SwitcheryType extends AbstractType
     }
 
     /**
-     * parseWidgetOptions
+     * parseWidgetOptions.
      *
      * @param $options
      *
@@ -92,7 +91,7 @@ class SwitcheryType extends AbstractType
         $options = array_filter(
             $options,
             function ($val) {
-                return ($val !== null);
+                return $val !== null;
             }
         );
 

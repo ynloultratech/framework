@@ -26,9 +26,9 @@ trait ModalControllerTrait
 {
     /**
      * Ajax redirect response is helpful for modals to redirect
-     * to another location after modal is submitted
+     * to another location after modal is submitted.
      *
-     * @param string $route #Route
+     * @param string $route           #Route
      * @param array  $routeParameters
      *
      * @return AjaxRedirectResponse
@@ -47,7 +47,7 @@ trait ModalControllerTrait
 
     /**
      * Ajax redirect response is helpful for modals to refresh current
-     * location after modal is submitted
+     * location after modal is submitted.
      *
      * @return AjaxRedirectResponse
      */
@@ -58,7 +58,7 @@ trait ModalControllerTrait
 
     /**
      * Ajax success response is helpful to get a json response with some parameters
-     * is used in modals to know when some action is success
+     * is used in modals to know when some action is success.
      *
      * @param array $parameters
      *
@@ -70,7 +70,7 @@ trait ModalControllerTrait
     }
 
     /**
-     * Ajax error response is helpful to return a simple json response with error message
+     * Ajax error response is helpful to return a simple json response with error message.
      *
      * @param string $message
      *
@@ -82,9 +82,9 @@ trait ModalControllerTrait
     }
 
     /**
-     * Create simple modal with given view and parameters
+     * Create simple modal with given view and parameters.
      *
-     * @param string|FormView|FormInterface $view view or form to render
+     * @param string|FormView|FormInterface $view       view or form to render
      * @param array                         $parameters
      * @param string                        $title
      *
@@ -107,7 +107,7 @@ trait ModalControllerTrait
     }
 
     /**
-     * Create simple modal for given form, a predefined template will be used
+     * Create simple modal for given form, a predefined template will be used.
      *
      * @param FormView|FormInterface $form
      * @param string                 $title   modal title
@@ -137,7 +137,7 @@ trait ModalControllerTrait
     }
 
     /**
-     * Render already created template and show in the browser
+     * Render already created template and show in the browser.
      *
      * @param Modal|string $modal
      *

@@ -31,7 +31,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     /**
      * AutocompleteContext constructor.
      *
-     * @param string $provider name of the auto-complete provider to use
+     * @param string $provider   name of the auto-complete provider to use
      * @param array  $parameters
      */
     public function __construct($provider = null, array $parameters = [])
@@ -41,7 +41,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getProvider()
     {
@@ -61,7 +61,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParameters()
     {
@@ -69,7 +69,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setParameters($parameters)
     {
@@ -79,7 +79,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setParameter($name, $value)
     {
@@ -89,7 +89,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParameter($name, $default = null)
     {
@@ -101,7 +101,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function hasParameter($name)
     {
@@ -109,7 +109,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __sleep()
     {
@@ -124,7 +124,7 @@ class AutocompleteContext implements AutocompleteContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __wakeup()
     {

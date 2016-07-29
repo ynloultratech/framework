@@ -14,7 +14,7 @@ interface AssetRegisterInterface
     /**
      * Use this to register assets to compile by assetic.
      * This assets are added silently to assetic and can`t be configured or changed.
-     * Use only for internal required libraries
+     * Use only for internal required libraries.
      *
      * @return array|AsseticAsset[]
      */
@@ -22,7 +22,7 @@ interface AssetRegisterInterface
 
     /**
      * Receive array of assets registered for current extension
-     * and should return the same array filtered with only assets to compile based on the extension config
+     * and should return the same array filtered with only assets to compile based on the extension config.
      *
      * e.g:
      *

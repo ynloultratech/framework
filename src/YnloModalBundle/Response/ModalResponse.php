@@ -17,16 +17,17 @@ class ModalResponse extends Response
 {
     /**
      * @param Modal $modal
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(Modal $modal)
     {
-        $modalJson =  json_encode(Object2ArrayBuilder::create()->build()->createArray($modal));
+        $modalJson = json_encode(Object2ArrayBuilder::create()->build()->createArray($modal));
 
         parent::__construct(
             $modalJson, 200, [
                 'X-Modal' => true,
-                'Content-Type'=>'application/json'
+                'Content-Type' => 'application/json',
             ]
         );
     }

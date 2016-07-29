@@ -44,7 +44,7 @@ class TaggedServices
     }
 
     /**
-     * findTaggedServices
+     * findTaggedServices.
      *
      * @param string $tag
      *

@@ -42,7 +42,7 @@ class AutocompleteContextManager implements ContainerAwareInterface
     public function addContext(AutocompleteContextInterface $context)
     {
         $id = $this->getId($context);
-        $this->session->set(self::SESSION_PREFIX . $id, $context);
+        $this->session->set(self::SESSION_PREFIX.$id, $context);
 
         return $id;
     }
@@ -54,7 +54,7 @@ class AutocompleteContextManager implements ContainerAwareInterface
      */
     public function getContext($contextId)
     {
-        return $this->session->get(self::SESSION_PREFIX . $contextId);
+        return $this->session->get(self::SESSION_PREFIX.$contextId);
     }
 
     /**

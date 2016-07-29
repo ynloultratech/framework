@@ -12,7 +12,7 @@ namespace YnloFramework\YnloFormBundle\Autocomplete;
 interface AutocompleteContextInterface
 {
     /**
-     * Name of the service to use to fetch results
+     * Name of the service to use to fetch results.
      *
      * @return string
      */

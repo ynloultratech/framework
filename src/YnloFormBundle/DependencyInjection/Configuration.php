@@ -14,7 +14,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetConfiguration;
 
 /**
- * This is the class that validates and merges configuration files
+ * This is the class that validates and merges configuration files.
  */
 class Configuration implements ConfigurationInterface
 {

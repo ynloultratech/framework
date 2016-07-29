@@ -12,7 +12,7 @@ namespace YnloFramework\YnloFormBundle\Autocomplete;
 interface AutocompleteResultsInterface extends \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
-     * Array of results
+     * Array of results.
      *
      * @return array
      */
@@ -21,14 +21,14 @@ interface AutocompleteResultsInterface extends \Countable, \IteratorAggregate, \
     /**
      * Should return the amount of items available
      * in case of partial result this should be greater than
-     * current $elements count
+     * current $elements count.
      *
-     * @return boolean
+     * @return bool
      */
     public function getTotalOverAll();
 
     /**
-     * @param integer $total
+     * @param int $total
      *
      * @return $this
      */

@@ -12,7 +12,7 @@ namespace YnloFramework\YnloFormBundle\Form\Transformer;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * Class DateTimePickerTransformer
+ * Class DateTimePickerTransformer.
  */
 class DateTimePickerTransformer implements DataTransformerInterface
 {
@@ -32,7 +32,7 @@ class DateTimePickerTransformer implements DataTransformerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function transform($value)
     {
@@ -47,7 +47,7 @@ class DateTimePickerTransformer implements DataTransformerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function reverseTransform($value)
     {

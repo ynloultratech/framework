@@ -61,7 +61,7 @@ class Modal implements Object2ArrayInterface
     protected $buttons = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $closable = true;
 
@@ -317,7 +317,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isClosable()
     {
@@ -325,7 +325,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @param boolean $closable
+     * @param bool $closable
      *
      * @return $this
      */
@@ -337,7 +337,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isCloseByBackdrop()
     {
@@ -345,7 +345,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @param boolean $closeByBackdrop
+     * @param bool $closeByBackdrop
      *
      * @return $this
      */
@@ -357,7 +357,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isCloseByKeyboard()
     {
@@ -365,7 +365,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @param boolean $closeByKeyboard
+     * @param bool $closeByKeyboard
      *
      * @return $this
      */
@@ -377,7 +377,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAnimate()
     {
@@ -385,7 +385,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @param boolean $animate
+     * @param bool $animate
      *
      * @return $this
      */
@@ -477,7 +477,7 @@ class Modal implements Object2ArrayInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __toArray()
     {

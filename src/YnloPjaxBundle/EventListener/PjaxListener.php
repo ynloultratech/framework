@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * Class PjaxListener
+ * Class PjaxListener.
  *
  * This class manipulates requests and response in order to works with Pjax
  */
@@ -24,7 +24,7 @@ class PjaxListener implements ContainerAwareInterface
     use ContainerAwareTrait;
 
     /**
-     * onKernelRequest
+     * onKernelRequest.
      *
      * Manipulate the request in order to distinguish ajax requests and pjax requests
      *
@@ -48,7 +48,7 @@ class PjaxListener implements ContainerAwareInterface
     }
 
     /**
-     * onKernelResponse
+     * onKernelResponse.
      *
      * Manipulate the response and add the some headers
      *
@@ -62,7 +62,7 @@ class PjaxListener implements ContainerAwareInterface
             $baseUrl = $request->getBaseUrl();
             $pathInfo = $request->getPathInfo();
             $query = http_build_query($request->query->getIterator());
-            $url = $baseUrl . $pathInfo . (($query) ? '?' . $query : '');
+            $url = $baseUrl.$pathInfo.(($query) ? '?'.$query : '');
 
             $responseHeaders = $event->getResponse()->headers;
             $responseHeaders->set('X-PJAX-URL', $url);

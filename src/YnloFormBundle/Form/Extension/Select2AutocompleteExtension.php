@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Select2AutocompleteExtension extends AutocompleteBaseExtension
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -59,7 +59,7 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws AccessException
      * @throws UndefinedOptionsException
@@ -80,7 +80,7 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtendedType()
     {
@@ -88,7 +88,7 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function buildAutocompleteContext(array $options)
     {

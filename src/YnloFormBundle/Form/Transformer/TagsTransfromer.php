@@ -10,9 +10,8 @@
 namespace YnloFramework\YnloFormBundle\Form\Transformer;
 
 /**
- * Class TagsTransfromer
+ * Class TagsTransfromer.
  */
 class TagsTransfromer
 {
-
 }

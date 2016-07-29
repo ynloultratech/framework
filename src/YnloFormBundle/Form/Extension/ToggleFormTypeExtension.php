@@ -18,14 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ToggleFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         //TODO: support for expanded choices (radio buttons)
 
         if (isset($options['toggle_group'])) {
-            $groups = (array)$options['toggle_group'];
+            $groups = (array) $options['toggle_group'];
 
             if ($groups) {
                 $view->vars['toggle_groups'] = $groups;
@@ -40,24 +40,24 @@ class ToggleFormTypeExtension extends AbstractTypeExtension
             if (isset($view->vars['toggle_reverse_prefix'])) {
                 $toggleOptions = [
                     'dataAttribute' => 'reverse-toggle',
-                    'reverse' => true
+                    'reverse' => true,
                 ];
             }
             $view->vars['attr']['form-toggle-options'] = json_encode($toggleOptions);
 
             //convert into class name
             if ($options['toggle']) {
-                $view->vars['attr']['data-toggle'] = '.toggle_group_' . $options['toggle'];
+                $view->vars['attr']['data-toggle'] = '.toggle_group_'.$options['toggle'];
             }
 
             if ($options['toggle_prefix']) {
-                $view->vars['attr']['data-toggle-prefix'] = '.toggle_group_' . $options['toggle_prefix'];
+                $view->vars['attr']['data-toggle-prefix'] = '.toggle_group_'.$options['toggle_prefix'];
             }
         }
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -77,7 +77,7 @@ class ToggleFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtendedType()
     {
