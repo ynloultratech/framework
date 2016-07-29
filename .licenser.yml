@@ -1,0 +1,6 @@
+finder:
+  in:
+    - src
+parameters:
+   author: YNLO-Ultratech Development Team <developer@ynloultratech.com>
+   package: Mobile-ERP
