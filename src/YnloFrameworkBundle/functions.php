@@ -16,7 +16,7 @@ if (!function_exists('dump')) {
         }
     }
 }
-if (!function_exists('array_value_expected')) {
+if (!function_exists('array_key_value')) {
     /**
      * Extract some value from array using a key path,
      * return default value if the path don't exist
