@@ -1,6 +1,12 @@
-finder:
-  in:
-    - src
+finders:
+  php:
+    in:
+      - src
+  javascript:
+    in:
+      - src
+    name: '*.js'
+    path: 'Resources/public/js'
+license: symfony
 parameters:
-   author: YNLO-Ultratech Development Team <developer@ynloultratech.com>
-   package: Mobile-ERP
+   package: YNLOFramework
