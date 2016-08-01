@@ -1,0 +1,78 @@
+{% block sonata_page_content_header %}
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h3>
+                <span class="text-semibold">
+                {% block page_title_text %}
+                    {% if admin is defined and admin.icon %}
+                        <i class="{{ admin.icon }}"></i>
+                    {% elseif admin is not defined %}
+                        <i class="icon-home4"></i>
+                    {% endif %}
+                    {% if _title is not empty %}
+                        {{ _title|raw }}
+                    {% elseif admin is defined and action is defined %}
+                        {% set menu = admin.breadcrumbs(action)|last %}
+                        {{ menu.label }}
+                    {% endif %}
+                {% endblock %}
+                </span>
+                </h3>
+                <ul class="breadcrumb position-right">
+                    {% if _breadcrumb is empty %}
+                        {% if action is defined %}
+                            {% for menu in admin.breadcrumbs(action) %}
+                                {% if not loop.last %}
+                                    <li>
+                                        {% if menu.uri is not empty %}
+                                            <a href="{{ menu.uri }}">{{ menu.label|raw }}</a>
+                                        {% else %}
+                                            {{ menu.label }}
+                                        {% endif %}
+                                    </li>
+                                {% else %}
+                                    <li class="active"><span>{{ menu.label }}</span></li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        {{ _breadcrumb|raw }}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="heading-elements">
+                {{ block('page_header_right') }}
+            </div>
+            <a class="heading-elements-toggle"><i class="icon-menu"></i></a>
+        </div>
+
+        {% if _tab_menu is not empty %}
+            <div class="navbar navbar-default navbar-xs">
+                <ul class="nav navbar-nav no-border visible-xs-block">
+                    <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second"><i class="icon-circle-down2"></i></a></li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="navbar-second">
+                    {{ _tab_menu|raw }}
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>{{ include('@Admin/Widget/date_range_picker.html.twig') }}</li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+        {#<div class="breadcrumb-line">#}
+
+
+        {#<ul class="breadcrumb-elements">#}
+        {#{% if _list_filters_actions is not empty %}#}
+        {#{{ _list_filters_actions|raw }}#}
+        {#{% endif %}#}
+        {#</ul>#}
+        {#<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a></div>#}
+        {#</div>#}
+    </div>
+{% endblock %}

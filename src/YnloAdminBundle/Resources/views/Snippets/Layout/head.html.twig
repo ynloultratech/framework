@@ -1,0 +1,40 @@
+{% block head %}
+    <head>
+        {% block meta_tags %}
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta charset="UTF-8">
+            <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        {% endblock %}
+
+        {% block stylesheets %}
+            {% include 'YnloAdminBundle:Snippets:admin_stylesheets.html.twig' %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% include 'YnloAdminBundle:Snippets:admin_scripts.html.twig' %}
+        {% endblock %}
+
+        <title>
+            {% block sonata_head_title %}
+                {{ 'Admin'|trans({}, 'SonataAdminBundle') }}
+
+                {% if _title is not empty %}
+                    {{ _title|raw }}
+                {% else %}
+                    {% if action is defined %}
+                        -
+                        {% for menu in admin.breadcrumbs(action) %}
+                            {% if not loop.first %}
+                                {% if loop.index != 2 %}
+                                    &gt;
+                                {% endif %}
+
+                                {{ menu.label }}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            {% endblock %}
+        </title>
+    </head>
+{% endblock head %}

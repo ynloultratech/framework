@@ -54,6 +54,9 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
 
         //Assetic base configuration
         $asseticConfig['bundles'][] = 'YnloFrameworkBundle';
+        if ($container->hasExtension('ynlo_admin')) {
+            $asseticConfig['bundles'][] = 'YnloAdminBundle';
+        }
         $asseticConfig['filters']['cssrewrite'] = null;
         if (empty($asseticConfig['assets'])) {
             $asseticConfig['assets'] = [];

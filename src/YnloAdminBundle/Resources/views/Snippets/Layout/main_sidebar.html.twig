@@ -1,0 +1,19 @@
+{% block main_sidebar %}
+    <div class="sidebar sidebar-main sidebar-fixed">
+        <div class="sidebar-content">
+            {{ sonata_block_render_event('admin.sidebar.top') }}
+
+            <!-- Main navigation -->
+            <div class="sidebar-category sidebar-category-visible">
+                <div class="category-content no-padding">
+                    {% if app.user and is_granted('ROLE_ADMIN') %}
+                        {{ sonata_block_render_event('admin.sidebar.menu') }}
+                    {% endif %}
+                </div>
+            </div>
+            <!-- /main navigation -->
+
+            {{ sonata_block_render_event('admin.sidebar.bottom') }}
+        </div>
+    </div>
+{% endblock main_sidebar %}
