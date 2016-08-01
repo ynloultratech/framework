@@ -38,7 +38,7 @@ class Configuration implements ConfigurationInterface
         $pace->scalarNode('restartOnRequestAfter')->defaultValue(true);
 
         $rootNode->booleanNode('ajax_forms')->defaultValue(false)->info('Use ajax forms in bundles that support this.');
-        $rootNode->variableNode('icons')->defaultValue(['fontawesome'])->info('Icon libraries to load, available: fontawesome, glyphicons. @note: glyphicons are always loaded with bootstrap', 'icomoon');
+        $rootNode->variableNode('icons')->defaultValue(['fontawesome'])->info('Icon libraries to load, available: fontawesome, glyphicons. @note: glyphicons are always loaded with bootstrap');
 
         $this->createAssetConfig(
             $rootNode, [
