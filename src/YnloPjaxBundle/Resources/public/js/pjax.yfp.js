@@ -97,7 +97,13 @@ YnloFramework.Pjax = {
             return false;
         });
     },
+    _submitBtn: null,
     _setupForms: function () {
+
+        $(document).on('click', 'button[type="submit"]', function () {
+            YnloFramework.Pjax._submitBtn = $(this);
+        });
+
         $(document).off('submit.pjax');
         $(document).on('submit.pjax', YnloFramework.Pjax.config.forms, function (event) {
             var $form = $(this);
@@ -109,11 +115,22 @@ YnloFramework.Pjax = {
                 url = $form.attr('action');
             }
 
+            var $submitBtn = YnloFramework.Pjax._submitBtn;
+            if ($submitBtn && $submitBtn.attr('name')) {
+                var $hidden = $('<input type="hidden">');
+                $hidden.attr('name', $submitBtn.attr('name'));
+                $hidden.attr('value', $submitBtn.attr('value'));
+                $form.append($hidden);
+            }
+
             $form.ajaxSubmit({
                 beforeSend: function (xhr) {
                     YnloFramework.Pjax._xhr = xhr;
                     xhr.setRequestHeader("X-PJAX", 'true');
                     $(document).trigger('pjax:start', [xhr]);
+
+                    console.log(YnloFramework.Pjax._submitBtn);
+
                 },
                 success: function (output, status, xhr) {
                     if (typeof xhr.getResponseHeader === 'function') {
@@ -226,6 +243,11 @@ YnloFramework.Pjax = {
             originClass = $(response).find(target).attr('class');
 
         }
+
+        if (YnloFramework.Pjax.config.target !== 'body') {
+            $('.pace').remove();//avoid a blink in pjax loader
+        }
+
         $(YnloFramework.Pjax.config.target).html(innerResponse);
         $(YnloFramework.Pjax.config.target).attr('class', originClass);
 
