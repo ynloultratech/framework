@@ -139,6 +139,9 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
             ],
             'admin' => [
                 'include' => ['all'],
+                'override' => [
+                    'pace_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/pace/pace.min.css',
+                ],
             ],
         ];
 
