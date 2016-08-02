@@ -14,8 +14,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetContext;
 use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AsseticAsset;
 use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegisterInterface;
+use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegistry;
 
 class YnloFrameworkExtension extends Extension implements PrependExtensionInterface, AssetRegisterInterface
 {
@@ -26,7 +28,8 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
 
         $container->setParameter('ynlo.config', $config);
         $container->setParameter(
-            'ynlo.js_plugin.core', [
+            'ynlo.js_plugin.core',
+            [
                 'debug' => $config['debug'],
             ]
         );
@@ -44,101 +47,6 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
         $this->prependAsseticAssets($container);
     }
 
-    protected function prependAsseticAssets(ContainerBuilder $container)
-    {
-        if (!$container->hasExtension('assetic')) {
-            throw new \LogicException('The assetic bundle is required by YnloFramework bundle to work');
-        }
-
-        $asseticConfig = $container->getExtensionConfig('assetic')[0];
-
-        //Assetic base configuration
-        $asseticConfig['bundles'][] = 'YnloFrameworkBundle';
-        if ($container->hasExtension('ynlo_admin')) {
-            $asseticConfig['bundles'][] = 'YnloAdminBundle';
-        }
-        $asseticConfig['filters']['cssrewrite'] = null;
-        if (empty($asseticConfig['assets'])) {
-            $asseticConfig['assets'] = [];
-        }
-
-        //first pass to allow other extensions to modify the framework assets settings
-        foreach ($container->getExtensions() as $extension) {
-            if ($extension instanceof AssetRegisterInterface) {
-                if ($extension instanceof PrependExtensionInterface && $extension->getAlias() !== 'ynlo_framework') {
-                    $extension->prepend($container);
-                }
-            }
-        }
-
-        $assetsByExtension = [];
-        foreach ($container->getExtensions() as $extension) {
-            $extensionAssets = [];
-            if ($extension instanceof AssetRegisterInterface) {
-                preg_match('/([\w\\\]+\\\)\w+/', get_class($extension), $matches);
-                if (isset($matches[1]) && $namespace = $matches[1]) {
-                    $configClass = "{$namespace}Configuration";
-                    $configuration = new $configClass();
-
-                    $config = $this->processConfiguration($configuration, $container->getExtensionConfig($extension->getAlias()));
-                    //find for "assets" node in the root of bundle config
-                    if (isset($config['assets']) && $config['assets']['enabled']) {
-                        foreach ($config['assets'] as $name => $asset) {
-                            if ($name !== 'enabled') {
-                                $extensionAssets[] = new AsseticAsset($name, [$asset]);
-                            }
-                        }
-                    }
-
-                    $assetsNotIndexed = array_merge($extensionAssets, $extension->registerInternalAssets() ?: []);
-                    //index assets to apply filter later easier
-                    $indexedAssets = [];
-                    foreach ($assetsNotIndexed as $asset) {
-                        if ($asset instanceof AsseticAsset) {
-                            $indexedAssets[$asset->getName()] = $asset;
-                        }
-                    }
-                    $filteredAssets = $extension->filterAssets($indexedAssets, $config) ?: $config['assets'];
-                    $assetsByExtension[$extension->getAlias()] = $filteredAssets;
-                }
-            }
-        }
-
-        $finalAssets = [];
-        $finalAssets['ynlo_framework_all_js'] = [];
-        $finalAssets['ynlo_framework_all_css'] = [];
-        foreach ($assetsByExtension as $extensionName => $extensionAssets) {
-            //create extension assets groups
-            $finalAssets['bundle_'.$extensionName.'_'.'js'] = [];
-            $finalAssets['bundle_'.$extensionName.'_'.'css'] = [];
-
-            /** @var AsseticAsset $asset */
-            foreach ($extensionAssets as $asset) {
-                $groups = [
-                    $asset->getName(),
-                    'bundle_'.$extensionName.'_'.$asset->getType(),
-                    'ynlo_framework_all_'.$asset->getType(),
-                ];
-
-                foreach ($groups as $group) {
-                    foreach ($asset->getInputs() as $input) {
-                        if (!isset($finalAssets[$group]['inputs']) || !in_array($input, $finalAssets[$group]['inputs'], true)) {
-                            $finalAssets[$group]['inputs'][] = $input;
-                        }
-                    }
-                    foreach ($asset->getFilters() as $filter) {
-                        if (!isset($finalAssets[$group]['filters']) || !in_array($filter, $finalAssets[$group]['filters'], true)) {
-                            $finalAssets[$group]['filters'][] = $filter;
-                        }
-                    }
-                }
-            }
-        }
-        $asseticConfig['assets'] = array_merge($finalAssets, $asseticConfig['assets']);
-        $container->setParameter('ynlo.assetic.assets', $asseticConfig['assets']);
-        $container->prependExtensionConfig('assetic', $asseticConfig);
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -151,7 +59,10 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
                     'bundles/ynloframework/js/framework.js',
                     'bundles/ynloframework/js/core.yfp.js',
                     'bundles/ynloframework/js/lib/*',
-                ], ['yfp_config_dumper']
+                ],
+                [
+                    'yfp_config_dumper',
+                ]
             ),
             new AsseticAsset('pace_js', 'bundles/ynloframework/vendor/pace/pace.js', ['pace_settings_dumper']),
             new AsseticAsset('ynlo_debugger_js', 'bundles/ynloframework/js/debugger.yfp.js', ['yfp_config_dumper']),
@@ -189,5 +100,62 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
         }
 
         return $assets;
+    }
+
+    protected function prependAsseticAssets(ContainerBuilder $container)
+    {
+        if (!$container->hasExtension('assetic')) {
+            throw new \LogicException('The assetic bundle is required by YnloFramework bundle to work');
+        }
+
+        $asseticConfig = $container->getExtensionConfig('assetic')[0];
+
+        //Assetic base configuration
+        $asseticConfig['bundles'][] = 'YnloFrameworkBundle';
+        if ($container->hasExtension('ynlo_admin')) {
+            $asseticConfig['bundles'][] = 'YnloAdminBundle';
+        }
+        $asseticConfig['filters']['cssrewrite'] = null;
+        if (empty($asseticConfig['assets'])) {
+            $asseticConfig['assets'] = [];
+        }
+
+        $registry = new AssetRegistry($container);
+        $this->processAssetContexts($registry, $container);
+        $registeredAssets = $registry->getAsseticAssetsArray();
+
+        $asseticConfig['assets'] = array_merge($registeredAssets, $asseticConfig['assets']);
+        $container->setParameter('ynlo.assetic.assets', $asseticConfig['assets']);
+        $container->prependExtensionConfig('assetic', $asseticConfig);
+    }
+
+    private function processAssetContexts(AssetRegistry $registry, ContainerBuilder $containerBuilder)
+    {
+        $config = $this->processConfiguration(new Configuration(), $containerBuilder->getExtensionConfig('ynlo_framework'));
+        $defaultContexts = [
+            'app' => [
+                'include' => ['all'],
+                'exclude' => ['bundle_ynlo_admin'],
+            ],
+            'admin' => [
+                'include' => ['all'],
+            ],
+        ];
+
+        $config['assets_contexts'] = array_merge_recursive($config['assets_contexts'], $defaultContexts);
+
+        foreach ($config['assets_contexts'] as $context => $contextConfig) {
+            $context = new AssetContext($context, $registry);
+            $context->setInclude(array_key_value($contextConfig, 'include', []));
+            $context->setExclude(array_key_value($contextConfig, 'exclude', []));
+            $context->setOverride(array_key_value($contextConfig, 'override', []));
+
+            if (empty($contextConfig['include'])) {
+                $msg = sprintf('The context `%s` don`t have any assets to include.', $context);
+                throw new \LogicException($msg);
+            }
+
+            $registry->registerAssetBundle($context->getName(), $context->getAssets());
+        }
     }
 }

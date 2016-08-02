@@ -9,7 +9,6 @@
 YnloFramework.Admin = {
     config: {},
     init: function () {
-
-
+        console.log(this.config);
     }
 };

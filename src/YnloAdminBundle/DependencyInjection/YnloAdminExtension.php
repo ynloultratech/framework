@@ -24,7 +24,6 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-
         $configDir = __DIR__.'/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
         $loader->load('services.yml');
@@ -40,6 +39,27 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $vendorConfig['default_contexts'][] = 'admin';
         $vendorConfig['blocks']['sonata.admin.block.admin_list']['contexts'][] = 'admin';
         $container->prependExtensionConfig('sonata_block', $vendorConfig);
+
+        //set twig globals
+        $config = $this->processConfiguration(new Configuration(), $container->getExtensionConfig('ynlo_admin'));
+        $vendorConfig = $container->getExtensionConfig('twig')[0];
+        $vendorConfig['globals']['admin_body_classes'][] = 'skin-'.$config['skin'];
+
+        if ($config['mode'] === 'fixed') {
+            $vendorConfig['globals']['admin_body_classes'][] = 'fixed';
+        } else {
+            $vendorConfig['globals']['admin_body_classes'][] = 'layout-boxed';
+        }
+
+        if ($config['sidebar_mini']) {
+            $vendorConfig['globals']['admin_body_classes'][] = 'sidebar-mini';
+        }
+
+        if ($config['collapsed_sidebar']) {
+            $vendorConfig['globals']['admin_body_classes'][] = 'sidebar-collapse';
+        }
+
+        $container->prependExtensionConfig('twig', $vendorConfig);
     }
 
     /**
@@ -48,18 +68,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
     public function registerInternalAssets()
     {
         return [
-            new AsseticAsset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper']),
-
-            //extra
-            new AsseticAsset('admin_lte_css', 'bundles/sonataadmin/vendor/admin-lte/dist/css/AdminLTE.min.css'),
-            new AsseticAsset('admin_lte_black_skin_css', 'bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css'),
-            new AsseticAsset(
-                'sonata_admin_style', [
-                    'bundles/sonataadmin/css/styles.css',
-                    'bundles/sonataadmin/css/layout.css',
-                    'bundles/sonataadmin/css/tree.css',
-                ]
-            ),
+            new AsseticAsset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper'])
         ];
     }
 

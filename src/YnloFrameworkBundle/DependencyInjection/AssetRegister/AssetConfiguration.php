@@ -25,7 +25,11 @@ trait AssetConfiguration
      */
     protected function createAssetConfig(NodeBuilder $root, $assets = [])
     {
-        $assetsNode = $root->arrayNode('assets')->canBeDisabled()->addDefaultsIfNotSet();
+        $assetsNode = $root->arrayNode('assets')
+            ->canBeDisabled()
+            ->addDefaultsIfNotSet()
+            ->info('Internal assets, can override this assets to use your own version.');
+
         foreach ($assets as $name => $asset) {
             $assetsNode->children()->scalarNode($name)->defaultValue($asset);
         }

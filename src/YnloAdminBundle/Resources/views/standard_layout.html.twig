@@ -12,14 +12,16 @@
 {% set _list_filters_actions = block('list_filters_actions') %}
 
 {% use 'YnloAdminBundle:Snippets/Layout:head.html.twig' %}
-{% use 'YnloAdminBundle:Snippets/Layout:main_navbar.html.twig' %}
+{% use 'YnloAdminBundle:Snippets/Layout:main_header.html.twig' %}
 {% use 'YnloAdminBundle:Snippets/Layout:main_sidebar.html.twig' %}
+{% use 'YnloAdminBundle:Snippets/Layout:main_footer.html.twig' %}
 {% use 'YnloAdminBundle:Snippets/Layout:content_header.html.twig' %}
 {% use 'YnloAdminBundle:Snippets/Layout:content.html.twig' %}
 
 {% set _head                 = block('head') %}
-{% set _main_navbar          = block('main_navbar') %}
+{% set _main_header          = block('main_header') %}
 {% set _main_sidebar         = block('main_sidebar') %}
+{% set _main_footer          = block('main_footer') %}
 {% set _page_content_header  = block('sonata_page_content_header') %}
 {% set _page_content         = block('sonata_page_content') %}
 
@@ -30,49 +32,120 @@
     {{ _head|raw }}
 
     {% block body %}
-        <body {% block body_attributes %}class="navbar-top"{% endblock %}>
+        <body {% block body_attributes %}class="{% for class in admin_body_classes %}{{ class }} {% endfor %}"{% endblock %}>
+        <div class="wrapper">
 
-        {% block sonata_header %}
-            {{ _main_navbar|raw }}
-        {% endblock sonata_header %}
+            <!-- Main Header -->
+            {{ _main_header|raw }}
 
-        <div class="page-container">
+            <!-- Left side column. contains the logo and sidebar -->
+            {{ _main_sidebar|raw }}
 
-            <!-- Page content -->
-            <div class="page-content">
-                {% block sonata_wrapper %}
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper" style="min-height: 854px;">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Page Header
+                        <small>Optional description</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                        <li class="active">Here</li>
+                    </ol>
+                </section>
 
-                <!-- Main sidebar -->
-                {% block sonata_left_side %}
-                    {{ _main_sidebar|raw }}
-                {% endblock sonata_left_side %}
-                <!-- /Main sidebar -->
-
-                <div class="content-wrapper">
-                    {{ _page_content_header|raw }}
-                    {{ _page_content|raw }}
-                </div>
+                <!-- Main content -->
+                <section class="content">
+                        {{ _page_content_header|raw }}
+                        {{ _page_content|raw }}
+                </section>
+                <!-- /.content -->
             </div>
-            <!-- /Page content -->
+            <!-- /.content-wrapper -->
 
+            <!-- Main Footer -->
+            {{ _main_footer|raw }}
+
+
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Create the tabs -->
+                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                    <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- Home tab content -->
+                    <div class="tab-pane active" id="control-sidebar-home-tab">
+                        <h3 class="control-sidebar-heading">Recent Activity</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="javascript::;">
+                                    <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                        <p>Will be 23 on April 24th</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+
+                        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="javascript::;">
+                                    <h4 class="control-sidebar-subheading">
+                                        Custom Template Design
+                                        <span class="pull-right-container">
+                  <span class="label label-danger pull-right">70%</span>
+                </span>
+                                    </h4>
+
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+
+                    </div>
+                    <!-- /.tab-pane -->
+                    <!-- Stats tab content -->
+                    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                    <!-- /.tab-pane -->
+                    <!-- Settings tab content -->
+                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                        <form method="post">
+                            <h3 class="control-sidebar-heading">General Settings</h3>
+
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Report panel usage
+                                    <input type="checkbox" class="pull-right" checked="">
+                                </label>
+
+                                <p>
+                                    Some information about this general settings option
+                                </p>
+                            </div>
+                            <!-- /.form-group -->
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+            </aside>
+            <!-- /.control-sidebar -->
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
         </div>
-        {% endblock sonata_wrapper %}
-
-        {% if admin_pool is defined and admin_pool.getOption('use_bootlint') %}
-            {% block bootlint %}
-                {# Bootlint - https://github.com/twbs/bootlint#in-the-browser #}
-                <script type="text/javascript">
-                    javascript:(function () {
-                        var s = document.createElement("script");
-                        s.onload = function () {
-                            bootlint.showLintReportForCurrentDocument([], {hasProblems: false, problemFree: false});
-                        };
-                        s.src = "https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";
-                        document.body.appendChild(s)
-                    })();
-                </script>
-            {% endblock %}
-        {% endif %}
+        <!-- ./wrapper -->
         </body>
     {% endblock body %}
     </html>

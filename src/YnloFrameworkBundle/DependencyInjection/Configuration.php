@@ -9,6 +9,7 @@
 
 namespace YnloFramework\YnloFrameworkBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetConfiguration;
@@ -41,7 +42,8 @@ class Configuration implements ConfigurationInterface
         $rootNode->variableNode('icons')->defaultValue(['fontawesome'])->info('Icon libraries to load, available: fontawesome, glyphicons. @note: glyphicons are always loaded with bootstrap');
 
         $this->createAssetConfig(
-            $rootNode, [
+            $rootNode,
+            [
                 'jquery' => 'bundles/ynloframework/vendor/jquery/jquery.min.js',
                 'jquery_form' => 'bundles/ynloframework/vendor/jquery.form/jquery.form.js',
                 'pace_css' => 'bundles/ynloframework/vendor/pace/pace.css',
@@ -52,6 +54,19 @@ class Configuration implements ConfigurationInterface
                 'icomoon' => 'bundles/ynloframework/vendor/icomoon/icomoon.css',
             ]
         );
+
+        /** @var NodeBuilder $mappings */
+        $mappings = $rootNode
+            ->arrayNode('assets_contexts')
+            ->useAttributeAsKey('id')
+            ->example(['app' => ['include' => ['all'], 'exclude' => ['bundle_ynlo_admin']]])
+            ->prototype('array')
+            ->children();
+
+        $mappings->arrayNode('include')->info('Array of assets to include, only this assets will be used.')->end();
+        $mappings->arrayNode('exclude')->info('Array of assets to exclude.')->end();
+        $mappings->arrayNode('override')->useAttributeAsKey('id')->prototype('scalar')->info('Array of named assets to override')->end();
+        $mappings->end();
 
         return $treeBuilder;
     }

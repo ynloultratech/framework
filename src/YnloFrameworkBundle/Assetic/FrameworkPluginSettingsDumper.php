@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  * This assetic filter is used for YnloFramework javascript plugins
  * to dump all settings from the config.yml to the javascript file.
  *
- * This filter using naming convetion to resolve settings and dump
+ * This filter using naming convention to resolve settings and dump
  *
  * - Must create a parameter with all settings to dump when read config.yml
  * - The parameter with array of settings should be called "ynlo.js_plugin.plugin_name"

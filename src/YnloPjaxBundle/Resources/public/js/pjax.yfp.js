@@ -146,7 +146,7 @@ YnloFramework.Pjax = {
         }
 
         //element triggering the load, for autospin
-        if (triggerElement){
+        if (triggerElement) {
             YnloFramework.Pjax.triggerElement = triggerElement;
         }
 
@@ -220,11 +220,14 @@ YnloFramework.Pjax = {
         }
 
         var innerResponse = response;
+        var originClass = null;
         if ($(response).find(target).length > 0) {
             innerResponse = $(response).find(target).html();
+            originClass = $(response).find(target).attr('class');
 
         }
         $(YnloFramework.Pjax.config.target).html(innerResponse);
+        $(YnloFramework.Pjax.config.target).attr('class', originClass);
 
         if ($(response).find('title').length > 0) {
             document.title = $(response).find('title').html();
