@@ -118,6 +118,14 @@ class AbstractAdmin extends BaseAbstractAdmin
                 ->setClass('btn btn-primary')
                 ->setIcon('fa fa-save');
         }
+
+        if ($action === 'delete') {
+            $modal->setTypeDanger()->setTitle($this->trans('title_delete', [], 'SonataAdminBundle'));
+            $modal->getButton('ok')
+                ->setLabel($this->trans('btn_delete', [], 'SonataAdminBundle'))
+                ->setClass('btn btn-danger')
+                ->setIcon('fa fa-trash');
+        }
     }
 
     /**
