@@ -1,6 +1,9 @@
 {% block sonata_page_content_header %}
     <section class="content-header">
         {% block tab_menu_navbar_header %}
+            {% if _list_filters_actions is not empty %}
+                {{ _list_filters_actions|raw }}
+            {% endif %}
             <h1 class="page-title">
                 {% block page_title_text %}
                     {% if admin is defined and admin.icon %}
@@ -45,6 +48,7 @@
             {% endblock sonata_breadcrumb %}
         {% endblock %}
 
+
         {#{% block sonata_page_content_nav %}#}
         {#{% if _tab_menu is not empty or _actions is not empty or _list_filters_actions is not empty %}#}
         {#<nav class="navbar navbar-default" role="navigation">#}
@@ -85,13 +89,20 @@
         {#{% endif %}#}
         {#{% endblock sonata_admin_content_actions_wrappers %}#}
 
-        {#{% if _list_filters_actions is not empty %}#}
-        {#{{ _list_filters_actions|raw }}#}
-        {#{% endif %}#}
+
         {#</div>#}
         {#</div>#}
         {#</nav>#}
         {#{% endif %}#}
         {#{% endblock sonata_page_content_nav %}#}
     </section>
+    {% if _tab_menu is not empty %}
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-collapse">
+                <div class="navbar-left">
+                    {{ _tab_menu|raw }}
+                </div>
+            </div>
+        </nav>
+    {% endif %}
 {% endblock sonata_page_content_header %}

@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the YNLOFramework package.
  *
@@ -7,14 +6,19 @@
  */
 
 YnloFramework.Admin = {
-    config: {},
+    config: {
+        icheck: 'square-blue'
+    },
     init: function () {
-        $(document).on('pjax:success', YnloFramework.Admin.initAdminLTE);
+        $(document).on('pjax:success', function () {
+            YnloFramework.Admin.initAdminLTE();
+            Admin.shared_setup(YnloFramework.Pjax.config.target)
+        });
     },
     //this initialization is a copy of initialization
     //from AdminLTE.js, the main target is reinitialize
     //the admin on every pjax request
-    initAdminLTE: function(){
+    initAdminLTE: function () {
 
         //Fix for IE page transitions
         $("body").removeClass("hold-transition");

@@ -13,6 +13,7 @@
 }
 .content-header {
   padding: 15px 15px 15px 15px;
+  border-bottom: 1px solid #e7e7e7;
 }
 .skin-blue .content-header,
 .skin-red .content-header,
@@ -40,4 +41,24 @@
   content: "/\00a0";
   padding: 0 5px;
   color: #333;
+}
+.content-header + .navbar {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+.editable {
+  border-bottom: dashed 1px blue;
+}
+/* Hide Delete checkbox on sonata_type_collection tables */
+.sonata-ba-field-inline-table td > div.checkbox > label > .control-label__text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
