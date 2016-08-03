@@ -141,6 +141,10 @@ class AbstractAdmin extends BaseAbstractAdmin
             $parameters['embedded'] = true;
         }
 
+        if ($name === 'export') {
+            $parameters['data-pjax'] = false;
+        }
+
         return parent::generateUrl($name, $parameters, $absolute);
     }
 }
