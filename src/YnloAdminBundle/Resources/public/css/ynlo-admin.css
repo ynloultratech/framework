@@ -11,3 +11,33 @@
   margin-right: 10px;
   text-align: center;
 }
+.content-header {
+  padding: 15px 15px 15px 15px;
+}
+.skin-blue .content-header,
+.skin-red .content-header,
+.skin-yellow .content-header,
+.skin-green .content-header,
+.skin-purple .content-header,
+.skin-black .content-header,
+.skin-blue-light .content-header,
+.skin-red-light .content-header,
+.skin-yellow-light .content-header,
+.skin-green-light .content-header,
+.skin-purple-light .content-header,
+.skin-black-light .content-header {
+  background: #fff;
+}
+.content-header > .breadcrumb {
+  background: transparent;
+  position: relative;
+  float: none;
+  padding: 5px;
+  top: 0;
+  right: 0;
+}
+.content-header > .breadcrumb > li + li:before {
+  content: "/\00a0";
+  padding: 0 5px;
+  color: #333;
+}

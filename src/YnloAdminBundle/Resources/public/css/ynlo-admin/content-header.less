@@ -1,0 +1,30 @@
+.content-header {
+  padding: 15px 15px 15px 15px;
+  .skin-blue &,
+  .skin-red &,
+  .skin-yellow &,
+  .skin-green &,
+  .skin-purple &,
+  .skin-black &,
+  .skin-blue-light &,
+  .skin-red-light &,
+  .skin-yellow-light &,
+  .skin-green-light &,
+  .skin-purple-light &,
+  .skin-black-light &{
+    background: #fff;
+  }
+  & > .breadcrumb {
+    background: transparent;
+    position: relative;
+    float: none;
+    padding: 5px;
+    top: 0;
+    right: 0;
+    & > li + li:before {
+      content: "/\00a0";
+      padding: 0 5px;
+      color: #333;
+    }
+  }
+}
