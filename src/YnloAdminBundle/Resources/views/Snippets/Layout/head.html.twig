@@ -7,11 +7,15 @@
         {% endblock %}
 
         {% block stylesheets %}
-            {% include 'YnloAdminBundle:Snippets:admin_stylesheets.html.twig' %}
+            {% stylesheets '@admin_css' output='assets/admin.css' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}"/>
+            {% endstylesheets %}
         {% endblock %}
 
         {% block javascripts %}
-            {% include 'YnloAdminBundle:Snippets:admin_scripts.html.twig' %}
+            {% javascripts '@admin_js' output='assets/admin.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
         {% endblock %}
 
         <title>
