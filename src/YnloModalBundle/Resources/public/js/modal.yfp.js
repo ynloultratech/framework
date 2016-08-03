@@ -130,6 +130,10 @@ YnloFramework.Modal = {
                         form.attr('action', url);
                     }
                 }
+            },
+            error: function (response) {
+                dialog.enableButtons(true);
+                dialog.setClosable(true);
             }
         })
     },

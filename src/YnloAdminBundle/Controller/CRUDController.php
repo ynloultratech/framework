@@ -33,6 +33,7 @@ class CRUDController extends BaseCRUDController
             $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
             $parameters['admin'] = $this->admin;
+            $parameters['modal'] = true;
 
             $modal = $this->createModal($view, $parameters, $this->admin->getClassnameLabel(), $this->admin->getIcon());
             $this->admin->configureModal($action, $modal);
