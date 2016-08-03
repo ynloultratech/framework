@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
 use Symfony\Component\HttpFoundation\Response;
 use YnloFramework\YnloAdminBundle\Admin\AbstractAdmin;
 use YnloFramework\YnloModalBundle\Controller\ModalControllerTrait;
+use YnloFramework\YnloModalBundle\Response\AjaxRedirectResponse;
 use YnloFramework\YnloModalBundle\Response\AjaxRefreshResponse;
 
 /**
@@ -47,7 +48,12 @@ class CRUDController extends BaseCRUDController
      */
     public function renderJson($data, $status = 200, $headers = [])
     {
+
         if ($this->isModalRequest()) {
+            if ($this->getRequest()->getMethod() === 'DELETE') {
+                return new AjaxRedirectResponse($this->admin->generateUrl('list'));
+            }
+
             return new AjaxRefreshResponse();
         }
 
