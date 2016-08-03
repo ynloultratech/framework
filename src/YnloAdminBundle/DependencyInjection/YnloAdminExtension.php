@@ -68,7 +68,8 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
     public function registerInternalAssets()
     {
         return [
-            new AsseticAsset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper'])
+            new AsseticAsset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper']),
+            new AsseticAsset('ynlo_admin_css', 'bundles/ynloadmin/css/ynlo-admin.css', ['yfp_config_dumper']),
         ];
     }
 
