@@ -15,11 +15,11 @@ use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Router;
+use YnloFramework\YnloModalBundle\Modal\Modal;
 use YnloFramework\YnloModalBundle\Response\AjaxErrorResponse;
 use YnloFramework\YnloModalBundle\Response\AjaxRedirectResponse;
 use YnloFramework\YnloModalBundle\Response\AjaxRefreshResponse;
 use YnloFramework\YnloModalBundle\Response\AjaxSuccessResponse;
-use YnloFramework\YnloModalBundle\Modal\Modal;
 use YnloFramework\YnloModalBundle\Response\ModalResponse;
 
 trait ModalControllerTrait
@@ -28,7 +28,7 @@ trait ModalControllerTrait
      * Ajax redirect response is helpful for modals to redirect
      * to another location after modal is submitted.
      *
-     * @param string $route           #Route
+     * @param string $route #Route
      * @param array  $routeParameters
      *
      * @return AjaxRedirectResponse
@@ -84,13 +84,14 @@ trait ModalControllerTrait
     /**
      * Create simple modal with given view and parameters.
      *
-     * @param string|FormView|FormInterface $view       view or form to render
+     * @param string|FormView|FormInterface $view view or form to render
      * @param array                         $parameters
      * @param string                        $title
+     * @param string                        $icon
      *
      * @return Modal
      */
-    public function createModal($view, array $parameters = [], $title = null)
+    public function createModal($view, array $parameters = [], $title = null, $icon = null)
     {
         if ($view instanceof FormView || $view instanceof FormInterface) {
             if ($view instanceof FormInterface) {
@@ -109,16 +110,17 @@ trait ModalControllerTrait
     /**
      * Create simple modal for given form, a predefined template will be used.
      *
-     * @param FormView|FormInterface $form
-     * @param string                 $title   modal title
-     * @param string                 $icon    icon class to use
-     * @param bool                   $buttons automatically add basic buttons, cancel & submit
+     * @param FormView|FormInterface|string $form       Form instance or view
+     * @param string                        $title      modal title
+     * @param string                        $icon       icon class to use
+     * @param bool                          $buttons    automatically add basic buttons, cancel & submit
+     * @param array                         $parameters array of parameters to use in case of view
      *
      * @return Modal
      */
-    public function createModalForm($form, $title = null, $icon = null, $buttons = true)
+    public function createModalForm($form, $title = null, $icon = null, $buttons = true, $parameters = [])
     {
-        $modal = $this->createModal($form, [], $title, $icon);
+        $modal = $this->createModal($form, $parameters, $title, $icon);
 
         if ($buttons) {
             $config = $this->getParameter('ynlo.modal.config');
@@ -146,5 +148,17 @@ trait ModalControllerTrait
     public function renderModal(Modal $modal)
     {
         return new ModalResponse($modal);
+    }
+
+    /**
+     * Returns true if the request is a ModalRequest.
+     *
+     * Only works when the modal plugin send the apropiate headers
+     *
+     * @return bool true if the request is an ModalRequest, false otherwise
+     */
+    public function isModalRequest()
+    {
+        return $this->getRequest()->headers->get('X-Modal');
     }
 }

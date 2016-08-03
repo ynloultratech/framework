@@ -191,7 +191,7 @@ YnloFramework.Pjax = {
 
                             //set the form action url in case origin don`t have
                             var form = dialog.getModalBody().find('form');
-                            if (form.length) {
+                            if (form.length && !form.attr('action')) {
                                 form.attr('action', url);
                             }
 

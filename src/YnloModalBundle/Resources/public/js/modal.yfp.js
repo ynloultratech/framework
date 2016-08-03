@@ -34,7 +34,6 @@ YnloFramework.Modal = {
                 var options = YnloFramework.Modal._extractPopupOptions($(this));
                 var url = $(this).attr('href');
                 if (options.target == 'modal') {
-
                     event.preventDefault && event.preventDefault();
                 }
             });
@@ -62,7 +61,7 @@ YnloFramework.Modal = {
                         YnloFramework.Modal.setOptions(dialog, response);
                         var form = dialog.getModalBody().find('form');
 
-                        if (form.length) {
+                        if (form.length && !form.attr('action')) {
                             form.attr('action', url);
                         }
                         dialog.getModal().removeClass(YnloFramework.Modal.config.loaderDialogClass);
@@ -104,9 +103,10 @@ YnloFramework.Modal = {
         //get the current action in case the origin don`t have
         var url = form.attr('action');
         form.ajaxSubmit({
-            beforeSend: function () {
+            beforeSend: function (xhr) {
                 dialog.enableButtons(false);
                 dialog.setClosable(false);
+                xhr.setRequestHeader("X-MODAL", 'true');
             },
             success: function (response) {
                 if (!response || response.result == 'ok') {
@@ -125,7 +125,7 @@ YnloFramework.Modal = {
                     YnloFramework.Modal.setOptions(dialog, response);
                     var form = dialog.getModalBody().find('form');
 
-                    if (form.length) {
+                    if (form.length && !form.attr('action')) {
                         //set the action url in case origin don`t have
                         form.attr('action', url);
                     }

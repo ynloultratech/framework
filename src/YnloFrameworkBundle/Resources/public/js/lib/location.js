@@ -60,5 +60,8 @@ YnloFramework.Location = {
         } else {
             window.location = url;
         }
+    },
+    go: function (url) {
+        YnloFramework.Location.load(url);
     }
 };
