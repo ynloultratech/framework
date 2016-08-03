@@ -33,7 +33,12 @@ class CRUDController extends BaseCRUDController
             $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
             $parameters['admin'] = $this->admin;
-            $parameters['modal'] = true;
+
+            //By default, Pjax remove "X-Requested-With" header
+            //but in some cases the modal is returned as Modal response,
+            //Pjax plugin show this type of response using a modal, then is required restart the X-Requested-With header
+            //to hide some contents in the view
+            $this->getRequest()->headers->set('X-Requested-With', 'XMLHttpRequest');
 
             $modal = $this->createModal($view, $parameters, $this->admin->getClassnameLabel(), $this->admin->getIcon());
             $this->admin->configureModal($action, $modal);

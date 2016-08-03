@@ -1,0 +1,8 @@
+{% use '@SonataAdmin/CRUD/base_edit_form.html.twig' %}
+
+{% block formactions %}
+    {% if not app.request.xmlHttpRequest %}
+        {{ parent() }}
+    {% endif %}
+{% endblock formactions %}
+
