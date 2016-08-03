@@ -195,7 +195,7 @@ YnloFramework.Pjax = {
                                 form.attr('action', url);
                             }
 
-                            $(document).trigger('pjax:success', [output, status, xhr]);
+                            $(document).trigger('pjax:abort', [output, status, xhr]);
                             return;
                         }
                     }
