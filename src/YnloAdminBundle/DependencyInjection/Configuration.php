@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
         $rootNode->booleanNode('sidebar_mini')->defaultValue(true)->info('Show a little sidebar bar when the sidebar is collapsed, otherwise the sidebar is hidden.');
         $rootNode->booleanNode('collapsed_sidebar')->defaultValue(false)->info('Have a collapsed sidebar upon loading.');
 
+        $rootNode->scalarNode('icheck')->defaultValue('square-blue')->info('Set the theme to use or false to disable');
 
         $this->createAssetConfig(
             $rootNode,
@@ -54,7 +55,18 @@ class Configuration implements ConfigurationInterface
                 'admin_lte_skins_css' => 'bundles/ynloadmin/vendor/admin-lte/css/skins/_all-skins.min.css',
                 'admin_lte_js' => 'bundles/ynloadmin/vendor/admin-lte/js/app.min.js',
                 'jquery_slim_scroll_js' => 'bundles/ynloadmin/vendor/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js',
-                'fastclick_js' => 'bundles/ynloadmin/vendor/admin-lte/plugins/fastclick/fastclick.min.js',
+                //'fastclick_js' => 'bundles/ynloadmin/vendor/admin-lte/plugins/fastclick/fastclick.min.js',
+                'jquery_confirm_exit_js' => 'bundles/sonataadmin/jquery/jquery.confirmExit.js',
+                'icheck_js' => 'bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/icheck.min.js',
+                'icheck_theme_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/square/blue.css',
+                'bootstrap_editable_js' => 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
+                'bootstrap_editable_css' => 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css',
+                'jquery_ui_js' => 'bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js',
+                'jquery_ui_css' => 'bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css',
+                'tree_view_js' => 'bundles/sonataadmin/treeview.js',
+                'jquery_waypoints_js' => 'bundles/sonataadmin/vendor/waypoints/lib/jquery.waypoints.min.js',
+                'jquery_waypoints_sticky_js' => 'bundles/sonataadmin/vendor/waypoints/lib/shortcuts/sticky.min.js',
+                'sonata_admin_js' => 'bundles/sonataadmin/Admin.js',
             ]
         );
 
