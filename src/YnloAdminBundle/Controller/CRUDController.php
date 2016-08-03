@@ -29,7 +29,7 @@ class CRUDController extends BaseCRUDController
     public function render($view, array $parameters = [], Response $response = null)
     {
         $action = $parameters['action'];
-        if ($this->admin->isActionOnModal($action)) {
+        if ($this->isModalAction($action)) {
             $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
             $parameters['admin'] = $this->admin;
@@ -58,5 +58,19 @@ class CRUDController extends BaseCRUDController
         }
 
         return parent::renderJson($data, $status, $headers);
+    }
+
+    /**
+     * Verify if some action should be loaded in a modal.
+     *
+     * @param $action
+     *
+     * @return bool
+     */
+    protected function isModalAction($action)
+    {
+        $ajax = ($this->isXmlHttpRequest() || $this->isModalRequest() || $this->getRequest()->headers->get('X-Pjax'));
+
+        return $ajax && $this->admin->isActionOnModal($action);
     }
 }
