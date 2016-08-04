@@ -214,7 +214,10 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
+     * NOTE: use configureBatchActionsUsingMapper to customize batch actions
+     *
      * @inheritDoc
+     * @internal
      *
      * Override to call configureBatchActionsUsingMapper with mapper instance with current actions
      */
@@ -239,7 +242,7 @@ class AbstractAdmin extends BaseAbstractAdmin
     /**
      * Allows you to customize batch actions.
      * This implementation differ from sonata that this allow use OOP
-     * with a ActionMapper and many extra features, in any case sonata ways can be used too.
+     * with a ActionMapper and many extra features.
      *
      * @param BatchActionMapper $actions List of actions
      */
