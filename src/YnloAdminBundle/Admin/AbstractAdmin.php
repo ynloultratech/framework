@@ -155,4 +155,14 @@ class AbstractAdmin extends BaseAbstractAdmin
 
         return parent::generateUrl($name, $parameters, $absolute);
     }
+
+    /**
+     * getSideBarTemplate.
+     *
+     * @return string
+     */
+    public function getSideBarTemplate()
+    {
+        return 'YnloAdminBundle::CRUD/edit_sidebar.html.twig';
+    }
 }

@@ -62,3 +62,7 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+/* red color to tab icon in tab with errors */
+.nav i.fa.fa-exclamation-circle.has-errors {
+  color: #da1910;
+}
