@@ -9,8 +9,30 @@ services:
         tags:
           - { name: 'sonata.admin.extension', global: true }
 
+    ynlo_admin.list_details_field_builder:
+        class: YnloFramework\YnloAdminBundle\Builder\ListDetailsFieldBuilder
+        tags:
+          - { name: 'ynlo.admin.list_field_builder' }
+
+    ynlo_admin.list_enum_field_builder:
+        class: YnloFramework\YnloAdminBundle\Builder\ListEnumFieldBuilder
+        tags:
+          - { name: 'ynlo.admin.list_field_builder' }
+
+    ynlo_admin.list_collection_field_builder:
+        class: YnloFramework\YnloAdminBundle\Builder\ListCollectionFieldBuilder
+        tags:
+          - { name: 'ynlo.admin.list_field_builder' }
+
+    ynlo_admin.list_enum_action_builder:
+        class: YnloFramework\YnloAdminBundle\Builder\ListActionFieldBuilder
+        tags:
+            - { name: 'ynlo.admin.list_field_builder' }
+        calls:
+            - ['setTwig', ['@twig']]
+
     sonata.admin.builder.orm_list:
         class: YnloFramework\YnloAdminBundle\Builder\ListBuilder
         arguments: ['@sonata.admin.guesser.orm_list_chain', '%sonata_doctrine_orm_admin.templates%']
         calls:
-            - ['setTwig', ['@twig']]
+            - ['setTaggedServices', ['@ynlo.tagged_services']]
