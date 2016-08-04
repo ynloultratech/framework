@@ -1,0 +1,80 @@
+{# @var admin \Sonata\AdminBundle\Admin\AdminInterface #}
+
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block actions %}
+    {% for name, action in field_description.options.actions %}
+
+        {% set visible = action.visible %}
+        {% if visible and visible != 'true'  %}
+            {#{% set visible = closure(visible,[object]) %}#}
+        {% endif %}
+
+        {% if visible %}
+                {% set divider = action.divider|default(null) %}
+                {% set separator = action.separator|default(null) %}
+
+                {% if field_description.options.dropdown is defined and field_description.options.dropdown %}
+                        {% if divider == 'prepend' or divider == 'both' %}
+                            <div class="divider"></div>
+                        {% endif %}
+                 {% else %}
+                    {% if separator is empty %}
+                        {% if divider == 'prepend' or divider == 'both' %}
+                            </div>
+                            <div class="divider"></div>
+                            <div class="btn-group">
+                            {% endif %}
+                     {% elseif separator == 'prepend' or separator == 'both' %}
+                        </div>
+                        <div class="btn-group">
+                    {% endif %}
+                {% endif %}
+
+                {% include action.template %}
+
+                 {% if field_description.options.dropdown is defined and field_description.options.dropdown %}
+                        {% if divider == 'append' or divider == 'both' %}
+                            <div class="divider"></div>
+                        {% endif %}
+                 {% else %}
+                    {% if separator is empty %}
+                        {% if divider == 'append' or divider == 'both' %}
+                            </div>
+                            <div class="divider"></div>
+                            <div class="btn-group">
+                        {% endif %}
+                    {% elseif separator == 'append' or separator == 'both' %}
+                        </div>
+                        <div class="btn-group">
+                    {% endif %}
+                 {% endif %}
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
+
+{% set _actions = block('actions') %}
+
+{% block field %}
+    {% if field_description.options.dropdown is defined and field_description.options.dropdown %}
+        {% block dropdown %}
+        <div class="btn-group">
+            <div class="dropdown">
+                <a href="#" class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    {% block dropdown_icon %}<i class="{{ field_description.options.dropdown_icon|default('fa fa-navicon') }}"></i>{% endblock %}
+                </a>
+                {% block dropdown_menu %}
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                    {{ _actions|raw }}
+                </ul>
+                {% endblock %}
+            </div>
+        </div>
+            {% endblock %}
+    {% else %}
+        <div class="btn-group">
+            {{ _actions|raw }}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{# @var admin \Sonata\AdminBundle\Admin\AdminInterface #}
+
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block field %}
+    <div class="btn-group">
+        <a id="detailsToogle_{{ admin.id(object) }}" data-toggle="collapse" href="#details_{{ admin.id(object) }}">
+            <i class="icon-arrow-down32"></i>
+        </a>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var iconDown = 'icon-arrow-down32';
+            var iconUp= 'icon-arrow-up32';
+            $('#details_{{ admin.id(object) }}').on('show.bs.collapse', function () {
+                $('#detailsToogle_{{ admin.id(object) }}').addClass('active').find('i').removeClass(iconDown).addClass(iconUp);
+
+                {% set _details = admin.datagrid.columns.offsetGet('_details') %}
+
+                {% if _details.options['ajax'] %}
+
+                $('#details_{{ admin.id(object) }}').load('{{ admin.generateObjectUrl('details', object, { 't' : _details.options['details_template_encoded'] }) }}')
+
+                {% endif %}
+
+            });
+            $('#details_{{ admin.id(object) }}').on('hidden.bs.collapse', function () {
+                $('#detailsToogle_{{ admin.id(object) }}').removeClass('active').find('i').addClass(iconDown).removeClass(iconUp);
+            });
+        })
+    </script>
+{% endblock %}

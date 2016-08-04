@@ -3,3 +3,9 @@ services:
       class: YnloFramework\YnloAdminBundle\Twig\Tests\AdminActionTest
       tags:
         - { name: twig.extension }
+
+    sonata.admin.builder.orm_list:
+      class: YnloFramework\YnloAdminBundle\Builder\ListBuilder
+      arguments: ['@sonata.admin.guesser.orm_list_chain', '%sonata_doctrine_orm_admin.templates%']
+      calls:
+        - ['setTwig', ['@twig']]

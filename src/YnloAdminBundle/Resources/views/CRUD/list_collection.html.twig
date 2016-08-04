@@ -1,0 +1,13 @@
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block field %}
+    {% if value is not null %}
+        {% if field_description.options.tag is defined %}
+            {% for val in value %}
+                <span class="label label-{{ field_description.options.tag|default('default') }}">{{ val }}</span>
+            {% endfor %}
+        {% else %}
+            {{ value|join(', ') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

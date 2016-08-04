@@ -1,0 +1,10 @@
+{% if admin.isGranted(action.role, object) and admin.hasRoute(name) %}
+    <li>
+        <a href="{{ admin.generateObjectUrl(name, object) }}" {% for attr, value in action.attrs|default([]) %}{{ attr }}="{{ value }}" {% endfor %}>
+            {% if action.icon is defined %}
+                <i class="{{ action.icon }}"></i>
+            {% endif %}
+            {{ action.label|default(name)|trans }}
+        </a>
+    </li>
+{% endif %}
