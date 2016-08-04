@@ -63,8 +63,8 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
             ->children();
 
-        $mappings->arrayNode('include')->info('Array of assets to include, only this assets will be used.')->end();
-        $mappings->arrayNode('exclude')->info('Array of assets to exclude.')->end();
+        $mappings->variableNode('include')->info('Array of assets to include, only this assets will be used.')->end();
+        $mappings->variableNode('exclude')->info('Array of assets to exclude.')->end();
         $mappings->arrayNode('override')->useAttributeAsKey('id')->prototype('scalar')->info('Array of named assets to override')->end();
         $mappings->end();
 
