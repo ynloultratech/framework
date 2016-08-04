@@ -8,7 +8,7 @@
 
     <div class="btn-group text-center">
         {% block button %}
-            <a
+            <a class="btn btn-link" title="Details"
                {% if _details.options['ajax'] %}data-list-details-url="{{ admin.generateObjectUrl('details', object, { 't' : _details.options['details_template_encoded'] }) }}"{% endif %}
                data-list-details-toggle="{{ admin.id(object) }}"
                data-toggle="collapse"
