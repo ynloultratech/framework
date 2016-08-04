@@ -10,6 +10,13 @@ YnloFramework.Admin = {
         icheck: 'square-blue'
     },
     init: function () {
+
+        if (YnloFramework.hasPlugin('Pjax')){
+            //ignore links with sonata-ba-action class in pjax
+            //e.g. (Add New) in a one to many form
+            YnloFramework.Pjax.config.links = YnloFramework.Pjax.config.links + 'a:not(.sonata-ba-action)'
+        }
+
         $(document).on('pjax:success', function () {
             YnloFramework.Admin.initAdminLTE();
             Admin.shared_setup(YnloFramework.Pjax.config.target)
