@@ -78,6 +78,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
             new AsseticAsset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper']),
             new AsseticAsset('ynlo_admin_css', 'bundles/ynloadmin/css/ynlo-admin.css', ['yfp_config_dumper']),
             new AsseticAsset('sonata_admin_override_js', 'bundles/ynloadmin/js/sonata_admin_override.js'),
+            new AsseticAsset('ynlo_admin_list_batch_js', 'bundles/ynloadmin/js/admin_list_batch.yfp.js', ['yfp_config_dumper']),
         ];
     }
 
@@ -87,7 +88,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
     public function filterAssets(array $assets, array $config)
     {
         //resolve icheck theme
-        if ($config['icheck'] && is_string($config['icheck']) && $config['icheck'] !== 'square-blue') {
+        if ($config['icheck'] && is_string($config['icheck']) && $config['icheck'] !== 'flat-blue') {
             $theme = $config['icheck'];
 
             if (strpos($theme, '-') !== false) {
@@ -96,7 +97,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
                 $theme = $theme.'/'.$theme;
             }
             $originalTheme = $assets['icheck_theme_css']->getInputs()[0];
-            $newTheme = str_replace('square/blue', $theme, $originalTheme);
+            $newTheme = str_replace('flat/blue', $theme, $originalTheme);
             $assets['icheck_theme_css'] = new AsseticAsset('icheck_theme_css', $newTheme);
         } elseif (!$config['icheck']) {
             unset($assets['icheck_js'], $assets['icheck_theme_css']);

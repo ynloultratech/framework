@@ -11,6 +11,13 @@
   margin-right: 10px;
   text-align: center;
 }
+.btn-toolbar > .divider {
+  display: inline-table;
+  height: 30px;
+  border-right: 1px solid #ccc;
+  margin: 2px 5px -15px 12px;
+  float: left;
+}
 .content-header {
   padding: 15px 15px 15px 15px;
   border-bottom: 1px solid #e7e7e7;
@@ -48,6 +55,10 @@
   border-right: none;
   border-top: none;
 }
+.content-header .right-toolbar {
+  float: right;
+  margin-top: 10px;
+}
 .editable {
   border-bottom: dashed 1px blue;
 }
@@ -65,4 +76,9 @@
 /* red color to tab icon in tab with errors */
 .nav i.fa.fa-exclamation-circle.has-errors {
   color: #da1910;
+}
+/* required to display correctly dropdowns inside panels,
+ otherwise are truncated */
+.panel-body {
+  overflow: visible;
 }

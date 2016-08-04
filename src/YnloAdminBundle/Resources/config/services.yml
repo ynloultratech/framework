@@ -1,1 +1,5 @@
 services:
+    ynlo_admin.twig_action_test:
+      class: YnloFramework\YnloAdminBundle\Twig\Tests\AdminActionTest
+      tags:
+        - { name: twig.extension }

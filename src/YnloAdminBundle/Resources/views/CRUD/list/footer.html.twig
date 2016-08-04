@@ -1,0 +1,21 @@
+{% block list_footer %}
+    {% if admin.datagrid.results|length > 0 %}
+        <div class="box-footer">
+            <div class="form-inline clearfix">
+                {% if not app.request.isXmlHttpRequest %}
+                    <div class="pull-left">
+                        {% if admin.hasRoute('batch') and batchactions|length > 0 %}
+                            {% block batch_all %}
+                                <label class="checkbox" for="{{ admin.uniqid }}_all_elements">
+                                    <input type="checkbox" name="all_elements" id="{{ admin.uniqid }}_all_elements">
+                                    {{ 'all_elements'|trans({}, 'SonataAdminBundle') }}
+                                    ({{ admin.datagrid.pager.nbresults }})
+                                </label>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

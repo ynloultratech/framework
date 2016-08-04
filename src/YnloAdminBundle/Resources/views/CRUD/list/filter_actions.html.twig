@@ -1,0 +1,21 @@
+{% block list_filters_actions %}
+    {%- if admin.datagrid.filters|length %}
+
+        <div class="btn-group">
+            <a href="#" class="btn btn-warning dropdown-toggle sonata-ba-action" data-toggle="dropdown">
+            <i class="fa fa-filter"></i>
+            {{ 'link_filters'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b>
+            </a>
+
+            <ul class="dropdown-menu pull-right" role="menu">
+                {% for filter in admin.datagrid.filters if (filter.options['show_filter'] is same as(true) or filter.options['show_filter'] is null) %}
+                    <li>
+                        <a href="#" class="sonata-toggle-filter sonata-ba-action" filter-target="filter-{{ admin.uniqid }}-{{ filter.name }}" filter-container="filter-container-{{ admin.uniqid() }}">
+                            <i class="fa {{ (filter.isActive() or filter.options['show_filter']) ? 'fa-check-square-o' : 'fa-square-o' }}"></i>{{ admin.trans(filter.label, {}, filter.translationDomain) }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif -%}
+{% endblock %}

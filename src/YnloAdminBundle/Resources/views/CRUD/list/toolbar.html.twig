@@ -1,0 +1,32 @@
+{# @var admin \YnloFramework\YnloAdminBundle\Admin\AbstractAdmin#}
+<div class="btn-toolbar" role="toolbar">
+    {% block actions %}
+        <div class="btn-group">
+            {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getListToolbarActions.all } %}
+        </div>
+    {% endblock %}
+    <div class="divider"></div>
+    {% block batch_actions %}
+        {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getBatchActionMapper.all } %}
+    {% endblock %}
+    {% block export %}
+        <div class="divider"></div>
+        {% if admin.hasRoute('export') and admin.isGranted('EXPORT') and admin.getExportFormats()|length %}
+            <div class="btn-group">
+                <button type="button" class="{% block export_class %}btn btn-default{% endblock %} dropdown-toggle" data-toggle="dropdown">
+                    <i class="{% block export_icon %}fa fa-download{% endblock %}"></i> {{ "label_export_download"|trans({}, "SonataAdminBundle") }} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    {% for format in admin.getExportFormats() %}
+                    <li>
+                        <a href="{{ admin.generateUrl('export', admin.modelmanager.paginationparameters(admin.datagrid, 0) + {'format' : format}) }}" data-pjax="false">
+                            <i class="{% block export_item_icon %}fa fa-arrow-circle-o-down{% endblock %}"></i>
+                            {{ ("export_format_" ~ format)|trans({}, 'SonataAdminBundle') }}
+                        </a>
+                    <li>
+                        {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endblock %}
+</div>

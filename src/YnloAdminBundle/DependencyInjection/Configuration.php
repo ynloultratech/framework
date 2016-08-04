@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
         $rootNode->booleanNode('sidebar_mini')->defaultValue(true)->info('Show a little sidebar bar when the sidebar is collapsed, otherwise the sidebar is hidden.');
         $rootNode->booleanNode('collapsed_sidebar')->defaultValue(false)->info('Have a collapsed sidebar upon loading.');
 
-        $rootNode->scalarNode('icheck')->defaultValue('square-blue')->info('Set the theme to use or false to disable');
+        $rootNode->scalarNode('icheck')->defaultValue('flat-blue')->info('Set the theme to use or false to disable');
 
         $this->createAssetConfig(
             $rootNode,
@@ -58,7 +58,7 @@ class Configuration implements ConfigurationInterface
                 //'fastclick_js' => 'bundles/ynloadmin/vendor/admin-lte/plugins/fastclick/fastclick.min.js',
                 'jquery_confirm_exit_js' => 'bundles/sonataadmin/jquery/jquery.confirmExit.js',
                 'icheck_js' => 'bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/icheck.min.js',
-                'icheck_theme_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/square/blue.css',
+                'icheck_theme_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/flat/blue.css',
                 'bootstrap_editable_js' => 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
                 'bootstrap_editable_css' => 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css',
                 'jquery_ui_js' => 'bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js',

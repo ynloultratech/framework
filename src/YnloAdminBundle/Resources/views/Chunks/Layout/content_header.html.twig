@@ -1,9 +1,22 @@
 {% block sonata_page_content_header %}
     <section class="content-header">
         {% block tab_menu_navbar_header %}
-            {% if _list_filters_actions is not empty %}
-                {{ _list_filters_actions|raw }}
-            {% endif %}
+            <div class="right-toolbar hidden-xs">
+                {% block content_header_right %}
+                {% endblock %}
+                {% block sonata_admin_content_actions_wrappers %}
+                    {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-navicon"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                {{ _actions|raw }}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endblock sonata_admin_content_actions_wrappers %}
+            </div>
             <h1 class="page-title">
                 {% block page_title_text %}
                     {% if admin is defined and admin.icon %}

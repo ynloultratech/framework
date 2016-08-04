@@ -1,0 +1,46 @@
+{% for action, options in actions %}
+    {% set childActions = options.dropdown.all|default(null) %}
+    {% if options.visible %}
+        {% if action starts with 'divider_' %}
+            </div>
+            <li class="divider"></li>
+            <div class="btn-group">
+        {% elseif action starts with 'separator_' %}
+    </div>
+    <div class="btn-group">
+    {% elseif options.template is not empty %}
+        {{ include(options.template, {'action': action, 'options': options}) }}
+    {% else %}
+        {% if not childActions %}
+            {% if options is batch_action %}
+                {% set link_attr = options.attributes|merge({href: '#'~action , "data-batch-action": action }) %}
+            {% else %}
+                {% set link_attr = options.attributes|merge({href: admin.generateUrl( options.route ?: action, options.routeParameters )}) %}
+            {% endif %}
+            <a {% for attrname, attrvalue in link_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}><i class="{{ options.icon|default(null) }}"></i> {{ options.label|trans([], options.translationDomain ) }}</a>
+        {% else %}
+            <div class="btn-group">
+                {% set link_attr = options.attributes|merge({'data-toggle' : 'dropdown'}) %}
+                <button {% for attrname, attrvalue in link_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                <i class="{{ options.icon|default(null) }}"></i> {{ options.label|trans }}
+                <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% for childAction, childOptions in childActions %}
+                        {% if childAction starts with 'divider_' %}
+                            <li class="divider"></li>
+                        {% else %}
+                            <li>
+                                <a {% if childOptions is batch_action %}href="#" data-batch-action="{{ action }}" {% else %}href="{{ admin.generateUrl( childOptions.route?:childAction , childOptions.routeParameters ) }}" {% for attrname, attrvalue in childOptions.attributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% endif %}>
+                                <i class="{{ childOptions.icon|default(null) }}"></i>
+                                {{ childOptions.label|trans([], childOptions.translationDomain ) }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
