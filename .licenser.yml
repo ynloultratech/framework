@@ -2,11 +2,6 @@ finders:
   php:
     in:
       - src
-  javascript:
-    in:
-      - src
-    name: '*.js'
-    path: 'Resources/public/js'
 license: symfony
 parameters:
    package: YNLOFramework

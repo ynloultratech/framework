@@ -79,6 +79,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
             new AsseticAsset('ynlo_admin_css', 'bundles/ynloadmin/css/ynlo-admin.css', ['yfp_config_dumper']),
             new AsseticAsset('sonata_admin_override_js', 'bundles/ynloadmin/js/sonata_admin_override.js'),
             new AsseticAsset('ynlo_admin_list_batch_js', 'bundles/ynloadmin/js/admin_list_batch.yfp.js', ['yfp_config_dumper']),
+            new AsseticAsset('ynlo_admin_list_details_js', 'bundles/ynloadmin/js/admin_list_details.yfp.js', ['yfp_config_dumper']),
         ];
     }
 

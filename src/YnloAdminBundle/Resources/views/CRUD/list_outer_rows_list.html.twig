@@ -1,0 +1,30 @@
+{# @var admin \Sonata\AdminBundle\Admin\AdminInterface #}
+
+{% for object in admin.datagrid.results %}
+    {% block inner_list_row %}
+        <tr>
+            {% include admin.getTemplate('inner_list_row') %}
+        </tr>
+    {% endblock %}
+
+    {% if admin.datagrid.columns.offsetExists('_details') %}
+
+        {% set _details = admin.datagrid.columns.offsetGet('_details') %}
+
+        <tr class="admin-table-collapsed-details">
+            <td colspan="{{ admin.datagrid.columns|length }}">
+                <div class="collapse" id="details_{{ admin.id(object) }}" data-list-details="{{ admin.id(object) }}">
+                    {% if  _details.options['ajax'] %}
+                        <div class="text-center m-15">
+                            <div class="loader loader-lg"></div>
+                        </div>
+                    {% else %}
+                        {% include _details.options['details_template'] %}
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {# this tr is used inly to keep odd styles in tables #}
+        <tr class="admin-table-collapsed-details-hidden"></tr>
+    {% endif %}
+{% endfor %}

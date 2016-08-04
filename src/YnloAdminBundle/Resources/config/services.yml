@@ -1,11 +1,16 @@
 services:
     ynlo_admin.twig_action_test:
-      class: YnloFramework\YnloAdminBundle\Twig\Tests\AdminActionTest
-      tags:
-        - { name: twig.extension }
+        class: YnloFramework\YnloAdminBundle\Twig\Tests\AdminActionTest
+        tags:
+            - { name: twig.extension }
+
+    ynlo_admin.list_details_extension:
+        class: YnloFramework\YnloAdminBundle\Extension\AdminListDetailsExtension
+        tags:
+          - { name: 'sonata.admin.extension', global: true }
 
     sonata.admin.builder.orm_list:
-      class: YnloFramework\YnloAdminBundle\Builder\ListBuilder
-      arguments: ['@sonata.admin.guesser.orm_list_chain', '%sonata_doctrine_orm_admin.templates%']
-      calls:
-        - ['setTwig', ['@twig']]
+        class: YnloFramework\YnloAdminBundle\Builder\ListBuilder
+        arguments: ['@sonata.admin.guesser.orm_list_chain', '%sonata_doctrine_orm_admin.templates%']
+        calls:
+            - ['setTwig', ['@twig']]

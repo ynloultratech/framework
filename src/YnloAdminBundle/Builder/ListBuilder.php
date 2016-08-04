@@ -81,7 +81,7 @@ class ListBuilder extends BaseListBuilder
         }
 
         if (null === $fieldDescription->getOption('header_style')) {
-            $fieldDescription->setOption('header_style', 'width:50px');
+            $fieldDescription->setOption('header_style', 'width:20px');
         }
 
         if (null === $fieldDescription->getOption('details_template')) {

@@ -28,7 +28,7 @@ class CRUDController extends BaseCRUDController
      */
     public function render($view, array $parameters = [], Response $response = null)
     {
-        $action = $parameters['action'];
+        $action = array_key_value($parameters, 'action', null);
         if ($this->isModalAction($action)) {
             $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
@@ -64,6 +64,19 @@ class CRUDController extends BaseCRUDController
         }
 
         return parent::renderJson($data, $status, $headers);
+    }
+
+    /**
+     * detailsAction.
+     *
+     * @return Response
+     */
+    public function detailsAction()
+    {
+        //the template is passed as argument encoded in base64
+        $template = base64_decode($this->getRequest()->get('t'));
+
+        return $this->render($template, ['object' => $this->admin->getSubject()]);
     }
 
     /**
