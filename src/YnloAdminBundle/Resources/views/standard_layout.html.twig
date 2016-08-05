@@ -142,8 +142,10 @@
         {% endblock %}
         </body>
         <script>
-            //override default Pjax target for admins
-            YnloFramework.Pjax.config.target = '#pjax-container';
+            $(document).ready(function(){
+                //override default Pjax target for admins
+                YnloFramework.Pjax.config.target = '#pjax-container';
+            })
         </script>
     {% endblock body %}
     </html>
