@@ -135,6 +135,11 @@
             </div>
         </div>
         <!-- ./wrapper -->
+        {% block foot_script_assetic %}
+            {% javascripts '@admin_js' output='assets/admin.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
         </body>
         <script>
             //override default Pjax target for admins

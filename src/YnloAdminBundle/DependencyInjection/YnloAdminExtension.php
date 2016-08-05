@@ -67,6 +67,23 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         }
 
         $container->prependExtensionConfig('twig', $vendorConfig);
+
+        //include required bundles into assetic
+        $asseticConfig = $container->getExtensionConfig('assetic')[0];
+        $asseticConfig['bundles'][] = 'YnloAdminBundle';
+        $asseticConfig['bundles'][] = 'SonataAdminBundle';
+        $container->prependExtensionConfig('assetic', $asseticConfig);
+
+        //admin asset context
+        $ynloFrameworkConfig = $container->getExtensionConfig('ynlo_framework')[0];
+        $ynloFrameworkConfig['assets_contexts']['admin'] = [
+            'include' => ['all'],
+            'override' => [
+                'pace_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/pace/pace.min.css',
+            ],
+            'exclude' => ['jquery'], //jquery is loaded separately in the header
+        ];
+        $container->prependExtensionConfig('ynlo_framework', $ynloFrameworkConfig);
     }
 
     /**
