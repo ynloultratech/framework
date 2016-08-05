@@ -18,12 +18,13 @@ Row details allow expand a row in a list in order to show detailed information f
 
 ### Creating the template
 
-Create the file named `list_details.html.twig` with your template content. eg:
+Create a file named `list_details.html.twig` with your template content. eg:
 ````twig
 
  Details of {{ object.name }}
 
 ````
+> By default instance of `object` is passed to the template.
 
 ### With Ajax
 
@@ -57,7 +58,7 @@ After create your controller and adding it to your admin service definition can 
 ### Field Settings
 
 - **details_template:** The template to expand details
-- **ajax:** (default: false) Use ajax or not to show expand details
+- **ajax:** (default: false) Use ajax or not to show details
 
 Others options can be used like other sonata fields. [Sonata Docs](https://sonata-project.org/bundles/admin/master/doc/reference/action_list.html#customizing-the-fields-displayed-on-the-list-page)
 
