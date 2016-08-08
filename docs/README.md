@@ -1,5 +1,7 @@
 ## Ynlo Framework - Documentation
 
+-  [Installation](install.md)
+
 #### Framework
  
 -  [Pace](framework/pace.md)
