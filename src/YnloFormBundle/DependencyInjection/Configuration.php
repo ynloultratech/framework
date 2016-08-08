@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ynlo_form')->children();
 
         $rootNode->booleanNode('datetimepicker')->defaultValue(true);
-        $rootNode->arrayNode('select2')->canBeEnabled()
+        $rootNode->arrayNode('select2')->canBeDisabled()
             ->children()
             ->scalarNode('theme')->defaultValue('bootstrap');
 

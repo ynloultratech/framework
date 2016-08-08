@@ -85,6 +85,7 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
         $assets[] = AssetFactory::asset('switchery_js', 'bundles/ynloform/vendor/switchery/switchery.min.js');
         $assets[] = AssetFactory::asset('switchery_css', 'bundles/ynloform/vendor/switchery/switchery.min.css');
 
+
         if (array_key_value($config, 'select2.enabled')) {
             $assets[] = AssetFactory::module('select2_js', 'bundles/ynloform/vendor/select2/js/select2.full.min.js');
             $assets[] = AssetFactory::asset('select2_css', 'bundles/ynloform/vendor/select2/css/select2.min.css');
