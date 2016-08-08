@@ -12,12 +12,9 @@ namespace YnloFramework\YnloModalBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetConfiguration;
 
 class Configuration implements ConfigurationInterface
 {
-    use AssetConfiguration;
-
     /**
      * {@inheritdoc}
      */
@@ -25,11 +22,6 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ynlo_modal')->addDefaultsIfNotSet()->children();
-
-        $this->createAssetConfig($rootNode, [
-            'bootstrap_dialog_js' => 'bundles/ynlomodal/vendor/bootstrap-dialog/bootstrap-dialog.min.js',
-            'bootstrap_dialog_css' => 'bundles/ynlomodal/vendor/bootstrap-dialog/bootstrap-dialog.min.css',
-        ]);
 
         $rootNode->scalarNode('spinicon')->defaultValue('fa fa-spinner fa-pulse');
         $rootNode->scalarNode('loaderTemplate')->defaultValue('<div class="loader loader-lg"></div>');

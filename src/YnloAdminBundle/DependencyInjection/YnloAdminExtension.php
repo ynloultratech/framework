@@ -14,8 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AsseticAsset;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegisterInterface;
+use YnloFramework\YnloAssetsBundle\Assets\AssetFactory;
+use YnloFramework\YnloAssetsBundle\Assets\AssetRegisterInterface;
 
 class YnloAdminExtension extends Extension implements AssetRegisterInterface, PrependExtensionInterface
 {
@@ -75,51 +75,67 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $container->prependExtensionConfig('assetic', $asseticConfig);
 
         //admin asset context
-        $ynloFrameworkConfig = $container->getExtensionConfig('ynlo_framework')[0];
-        $ynloFrameworkConfig['assets_contexts']['admin'] = [
+        $ynloAssetsConfig = $container->getExtensionConfig('ynlo_assets')[0];
+        $ynloAssetsConfig['contexts']['admin'] = [
             'include' => ['all'],
             'override' => [
                 'pace_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/pace/pace.min.css',
             ],
-            'exclude' => ['jquery'], //jquery is loaded separately in the header
         ];
-        $container->prependExtensionConfig('ynlo_framework', $ynloFrameworkConfig);
+        $container->prependExtensionConfig('ynlo_assets', $ynloAssetsConfig);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function registerInternalAssets()
+    public function registerAssets(array $config, ContainerBuilder $containerBuilder)
     {
-        return [
-            new AsseticAsset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper']),
-            new AsseticAsset('ynlo_admin_css', 'bundles/ynloadmin/css/ynlo-admin.css', ['yfp_config_dumper']),
-            new AsseticAsset('sonata_admin_override_js', 'bundles/ynloadmin/js/sonata_admin_override.js'),
-            new AsseticAsset('ynlo_admin_list_batch_js', 'bundles/ynloadmin/js/admin_list_batch.yfp.js', ['yfp_config_dumper']),
-            new AsseticAsset('ynlo_admin_list_details_js', 'bundles/ynloadmin/js/admin_list_details.yfp.js', ['yfp_config_dumper']),
-        ];
-    }
+        $assets = [];
+        //Vendor
+        $assets[] = AssetFactory::asset('admin_lte_css', 'bundles/ynloadmin/vendor/admin-lte/css/AdminLTE.min.css');
+        $assets[] = AssetFactory::asset('admin_lte_skins_css', 'bundles/ynloadmin/vendor/admin-lte/css/skins/_all-skins.min.css');
+        $assets[] = AssetFactory::module('admin_lte_js', 'bundles/ynloadmin/vendor/admin-lte/js/app.min.js')->setDependencies(['bootstrap']);
+        $assets[] = AssetFactory::module('jquery_slim_scroll_js', 'bundles/ynloadmin/vendor/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js')
+            ->setJqueryPlugins(['slimScroll', 'slimscroll']);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function filterAssets(array $assets, array $config)
-    {
-        //resolve icheck theme
-        if ($config['icheck'] && is_string($config['icheck']) && $config['icheck'] !== 'flat-blue') {
-            $theme = $config['icheck'];
+        $assets[] = AssetFactory::asset('jquery_confirm_exit_js', 'bundles/sonataadmin/jquery/jquery.confirmExit.js');
+
+        if ($config['icheck']) {
+            $assets[] = AssetFactory::module('icheck_js', 'bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/icheck.min.js');
+
+            $theme = 'flat-blue';
+            if (is_string($config['icheck']) && $config['icheck'] !== $theme) {
+                $theme = $config['icheck'];
+            }
 
             if (strpos($theme, '-') !== false) {
                 $theme = str_replace('-', '/', $theme);
             } else {
                 $theme = $theme.'/'.$theme;
             }
-            $originalTheme = $assets['icheck_theme_css']->getInputs()[0];
-            $newTheme = str_replace('flat/blue', $theme, $originalTheme);
-            $assets['icheck_theme_css'] = new AsseticAsset('icheck_theme_css', $newTheme);
-        } elseif (!$config['icheck']) {
-            unset($assets['icheck_js'], $assets['icheck_theme_css']);
+
+            $assets[] = AssetFactory::asset('icheck_theme_css', "bundles/ynloadmin/vendor/admin-lte/plugins/iCheck/$theme.css");
         }
+
+        $assets[] = AssetFactory::module('bootstrap_editable_js', 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js')
+            ->setDependencies(['bootstrap'])
+            ->setJqueryPlugins(['editable']);
+
+        $assets[] = AssetFactory::asset('bootstrap_editable_css', 'bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css');
+        $assets[] = AssetFactory::module('jquery_ui_js', 'bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js')
+            ->setJqueryPlugins(['sortable']);
+
+        $assets[] = AssetFactory::asset('jquery_ui_css', 'bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css');
+        $assets[] = AssetFactory::asset('tree_view_js', 'bundles/sonataadmin/treeview.js');
+        $assets[] = AssetFactory::asset('jquery_waypoints_js', 'bundles/sonataadmin/vendor/waypoints/lib/jquery.waypoints.min.js');
+        $assets[] = AssetFactory::asset('jquery_waypoints_sticky_js', 'bundles/sonataadmin/vendor/waypoints/lib/shortcuts/sticky.min.js');
+        $assets[] = AssetFactory::module('sonata_admin_js', 'bundles/sonataadmin/Admin.js');
+        //Internal
+        $assets[] = AssetFactory::asset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper']);
+        $assets[] = AssetFactory::asset('ynlo_admin_css', 'bundles/ynloadmin/css/ynlo-admin.css', ['yfp_config_dumper']);
+        $assets[] = AssetFactory::asset('sonata_admin_override_js', 'bundles/ynloadmin/js/sonata_admin_override.js');
+        $assets[] = AssetFactory::asset('ynlo_admin_list_batch_js', 'bundles/ynloadmin/js/admin_list_batch.yfp.js', ['yfp_config_dumper']);
+        $assets[] = AssetFactory::asset('ynlo_admin_list_details_js', 'bundles/ynloadmin/js/admin_list_details.yfp.js', ['yfp_config_dumper']);
 
         return $assets;
     }

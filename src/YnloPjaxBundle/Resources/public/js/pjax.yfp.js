@@ -123,32 +123,34 @@ YnloFramework.Pjax = {
                 $form.append($hidden);
             }
 
-            $form.ajaxSubmit({
-                beforeSend: function (xhr) {
-                    YnloFramework.Pjax._xhr = xhr;
-                    xhr.setRequestHeader("X-PJAX", 'true');
-                    $(document).trigger('pjax:start', [xhr]);
+            require(['jquery_form'], function () {
+                $form.ajaxSubmit({
+                    beforeSend: function (xhr) {
+                        YnloFramework.Pjax._xhr = xhr;
+                        xhr.setRequestHeader("X-PJAX", 'true');
+                        $(document).trigger('pjax:start', [xhr]);
 
-                    console.log(YnloFramework.Pjax._submitBtn);
+                        console.log(YnloFramework.Pjax._submitBtn);
 
-                },
-                success: function (output, status, xhr) {
-                    if (typeof xhr.getResponseHeader === 'function') {
-                        if (xhr.getResponseHeader('X-PJAX-URL')) {
-                            url = xhr.getResponseHeader('X-PJAX-URL');
+                    },
+                    success: function (output, status, xhr) {
+                        if (typeof xhr.getResponseHeader === 'function') {
+                            if (xhr.getResponseHeader('X-PJAX-URL')) {
+                                url = xhr.getResponseHeader('X-PJAX-URL');
+                            }
                         }
-                    }
 
-                    YnloFramework.Pjax.pushResponse(url, output);
-                    $(document).trigger('pjax:success', [output, status, xhr]);
-                },
-                error: function (xhr, reason) {
-                    if (reason == 'abort') {
-                        return;
+                        YnloFramework.Pjax.pushResponse(url, output);
+                        $(document).trigger('pjax:success', [output, status, xhr]);
+                    },
+                    error: function (xhr, reason) {
+                        if (reason == 'abort') {
+                            return;
+                        }
+                        YnloFramework.Pjax.pushResponse(url, xhr.responseText);
+                        $(document).trigger('pjax:error', [xhr, reason]);
                     }
-                    YnloFramework.Pjax.pushResponse(url, xhr.responseText);
-                    $(document).trigger('pjax:error', [xhr, reason]);
-                }
+                });
             });
         })
     },
@@ -184,18 +186,27 @@ YnloFramework.Pjax = {
                 if (YnloFramework.hasPlugin('Modal')) {
                     if (typeof xhr.getResponseHeader === 'function') {
                         if (xhr.getResponseHeader('X-MODAL')) {
-                            var options = $.extend({}, YnloFramework.Modal.config, output);
-                            var dialog = new BootstrapDialog(options);
-                            YnloFramework.Modal.setOptions(dialog, options); //required to parse options like actions
-                            dialog.open();
+                            require(['bootstrap-dialog'], function (BootstrapDialog) {
+                                var options = $.extend({}, YnloFramework.Modal.config, output);
 
-                            //set the form action url in case origin don`t have
-                            var form = dialog.getModalBody().find('form');
-                            if (form.length && !form.attr('action')) {
-                                form.attr('action', url);
-                            }
+                                //hack required to force parse elements inside modals loaded via pjax
+                                options.onshown = function () {
+                                    $(document).trigger('ajaxSuccess', [output, status, xhr]);
+                                };
 
-                            $(document).trigger('pjax:abort', [output, status, xhr]);
+                                var dialog = new BootstrapDialog(options);
+                                YnloFramework.Modal.setOptions(dialog, options); //required to parse options like actions
+
+                                dialog.open();
+
+                                //set the form action url in case origin don`t have
+                                var form = dialog.getModalBody().find('form');
+                                if (form.length && !form.attr('action')) {
+                                    form.attr('action', url);
+                                }
+
+                                $(document).trigger('pjax:abort', [output, status, xhr]);
+                            });
                             return;
                         }
                     }

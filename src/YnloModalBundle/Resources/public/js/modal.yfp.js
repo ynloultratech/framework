@@ -8,7 +8,6 @@
 YnloFramework.Modal = {
     init: function () {
         YnloFramework.Modal._setupLinks();
-        BootstrapDialog.nl2br = false;
     },
     config: {
         spinicon: 'fa fa-spinner fa-pulse',
@@ -44,32 +43,34 @@ YnloFramework.Modal = {
             var options = YnloFramework.Modal._extractPopupOptions($(this));
             var url = $(this).attr('href');
             if (options.target == 'modal') {
-                event.preventDefault && event.preventDefault();
-                var dialog = new BootstrapDialog({
-                    message: $(YnloFramework.Modal.config.loaderTemplate),
-                    closable: false,
-                    title: ' ',
-                    type: 'default',
-                    size: BootstrapDialog.SIZE_SMALL,
-                    cssClass: YnloFramework.Modal.config.loaderDialogClass,
-                    nl2br: false
-                });
-                dialog.open();
-                $.ajax({
-                    url: url,
-                    success: function (response) {
-                        YnloFramework.Modal.setOptions(dialog, response);
-                        var form = dialog.getModalBody().find('form');
+                require(['bootstrap_dialog'], function () {
+                    event.preventDefault && event.preventDefault();
+                    var dialog = new BootstrapDialog({
+                        message: $(YnloFramework.Modal.config.loaderTemplate),
+                        closable: false,
+                        title: ' ',
+                        type: 'default',
+                        size: BootstrapDialog.SIZE_SMALL,
+                        cssClass: YnloFramework.Modal.config.loaderDialogClass,
+                        nl2br: false
+                    });
+                    dialog.open();
+                    $.ajax({
+                        url: url,
+                        success: function (response) {
+                            YnloFramework.Modal.setOptions(dialog, response);
+                            var form = dialog.getModalBody().find('form');
 
-                        if (form.length && !form.attr('action')) {
-                            form.attr('action', url);
+                            if (form.length && !form.attr('action')) {
+                                form.attr('action', url);
+                            }
+                            dialog.getModal().removeClass(YnloFramework.Modal.config.loaderDialogClass);
+                            dialog.open();
+                        },
+                        error: function () {
+                            dialog.close();
                         }
-                        dialog.getModal().removeClass(YnloFramework.Modal.config.loaderDialogClass);
-                        dialog.open();
-                    },
-                    error: function () {
-                        dialog.close();
-                    }
+                    });
                 });
             }
         });
@@ -102,40 +103,42 @@ YnloFramework.Modal = {
         var form = dialog.getModalBody().find('form');
         //get the current action in case the origin don`t have
         var url = form.attr('action');
-        form.ajaxSubmit({
-            beforeSend: function (xhr) {
-                dialog.enableButtons(false);
-                dialog.setClosable(false);
-                xhr.setRequestHeader("X-MODAL", 'true');
-            },
-            success: function (response) {
-                if (!response || response.result == 'ok') {
-                    dialog.close();
+        require(['jquery_form'], function (BootstrapDialog) {
+            form.ajaxSubmit({
+                beforeSend: function (xhr) {
+                    dialog.enableButtons(false);
+                    dialog.setClosable(false);
+                    xhr.setRequestHeader("X-MODAL", 'true');
+                },
+                success: function (response) {
+                    if (!response || response.result == 'ok') {
+                        dialog.close();
 
-                    if (response.redirect) {
-                        YnloFramework.Location.go(response.redirect);
-                    }
+                        if (response.redirect) {
+                            YnloFramework.Location.go(response.redirect);
+                        }
 
-                    if (response.refresh) {
-                        YnloFramework.Location.refresh();
+                        if (response.refresh) {
+                            YnloFramework.Location.refresh();
+                        }
+                    } else {
+                        dialog.enableButtons(true);
+                        dialog.setClosable(true);
+                        YnloFramework.Modal.setOptions(dialog, response);
+                        var form = dialog.getModalBody().find('form');
+
+                        if (form.length && !form.attr('action')) {
+                            //set the action url in case origin don`t have
+                            form.attr('action', url);
+                        }
                     }
-                } else {
+                },
+                error: function (response) {
                     dialog.enableButtons(true);
                     dialog.setClosable(true);
-                    YnloFramework.Modal.setOptions(dialog, response);
-                    var form = dialog.getModalBody().find('form');
-
-                    if (form.length && !form.attr('action')) {
-                        //set the action url in case origin don`t have
-                        form.attr('action', url);
-                    }
                 }
-            },
-            error: function (response) {
-                dialog.enableButtons(true);
-                dialog.setClosable(true);
-            }
-        })
+            })
+        });
     },
     setOptions: function (dialog, options) {
         var index;
@@ -195,20 +198,22 @@ YnloFramework.Modal = {
         }
     },
     remote: function (url, options) {
-        if (options == undefined) {
-            options = {};
-        }
-
-        var defaults = {
-            message: function (dialog) {
-                dialog.enableButtons(false);
-                dialog.setClosable(false);
-                return dialog.getModalBody().load(url, function () {
-                    dialog.enableButtons(true);
-                    dialog.setClosable(true);
-                });
+        require(['bootstrap_dialog'], function () {
+            if (options == undefined) {
+                options = {};
             }
-        };
-        BootstrapDialog.show($.extend({}, YnloFramework.Modal.config, defaults, options));
+
+            var defaults = {
+                message: function (dialog) {
+                    dialog.enableButtons(false);
+                    dialog.setClosable(false);
+                    return dialog.getModalBody().load(url, function () {
+                        dialog.enableButtons(true);
+                        dialog.setClosable(true);
+                    });
+                }
+            };
+            BootstrapDialog.show($.extend({}, YnloFramework.Modal.config, defaults, options));
+        });
     }
 };

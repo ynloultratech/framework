@@ -11,12 +11,9 @@ namespace YnloFramework\YnloPjaxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetConfiguration;
 
 class Configuration implements ConfigurationInterface
 {
-    use AssetConfiguration;
-
     /**
      * {@inheritdoc}
      */

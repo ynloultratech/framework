@@ -40,9 +40,7 @@ class PaceSettingsDumper implements FilterInterface
      */
     public function filterDump(AssetInterface $asset)
     {
-        if (preg_match('/pace\.js$/', $asset->getSourcePath())) {
-            $content = $asset->getContent();
-
+        if (preg_match('/pace_settings\.js$/', $asset->getSourcePath())) {
             $ajax = $this->config['pace']['ajax'] ? 'true' : 'false';
             $document = $this->config['pace']['document'] ? 'true' : 'false';
             $eventLag = $this->config['pace']['eventLag'] ? 'true' : 'false';
@@ -58,11 +56,12 @@ var paceOptions = {
   restartOnPushState: $restartOnPushState,
   restartOnRequestAfter: $restartOnRequestAfter,
 };
+require(['pace'], function (pace) {
+  pace.start();
+});
 
 JAVASCRIPT;
-            //https://github.com/HubSpot/pace/issues/188
-            $content = str_replace('["GET"]', '["GET", "POST"]', $content);
-            $asset->setContent($settings.$content);
+            $asset->setContent($settings);
         }
     }
 }

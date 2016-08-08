@@ -14,8 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AsseticAsset;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegisterInterface;
+use YnloFramework\YnloAssetsBundle\Assets\AssetFactory;
+use YnloFramework\YnloAssetsBundle\Assets\AssetRegisterInterface;
 
 class YnloModalExtension extends Extension implements AssetRegisterInterface, PrependExtensionInterface
 {
@@ -27,10 +27,10 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
         $container->setParameter('ynlo.modal.config', $config);
         $container->setParameter(
             'ynlo.js_plugin.modal', [
-            'spinicon' => $config['spinicon'],
-            'loaderTemplate' => $config['loaderTemplate'],
-            'loaderDialogClass' => $config['loaderDialogClass'],
-        ]
+                'spinicon' => $config['spinicon'],
+                'loaderTemplate' => $config['loaderTemplate'],
+                'loaderDialogClass' => $config['loaderDialogClass'],
+            ]
         );
 
         $configDir = __DIR__.'/../Resources/config';
@@ -52,12 +52,20 @@ class YnloModalExtension extends Extension implements AssetRegisterInterface, Pr
     /**
      * {@inheritdoc}
      */
-    public function registerInternalAssets()
+    public function registerAssets(array $config, ContainerBuilder $containerBuilder)
     {
-        return [
-            new AsseticAsset('ynlo_modal_js', 'bundles/ynlomodal/js/modal.yfp.js', ['yfp_config_dumper']),
-            new AsseticAsset('ynlo_modal_css', 'bundles/ynlomodal/css/modals.css', ['yfp_config_dumper']),
-        ];
+        $assets = [];
+        //vendor
+        $assets[] = AssetFactory::module('bootstrap_dialog_js', 'bundles/ynlomodal/vendor/bootstrap-dialog/bootstrap-dialog.min.js')
+            ->setModuleName('bootstrap-dialog')->setDependencies(['bootstrap']);
+
+        $assets[] = AssetFactory::asset('bootstrap_dialog_css', 'bundles/ynlomodal/vendor/bootstrap-dialog/bootstrap-dialog.min.css');
+
+        //internal
+        $assets[] = AssetFactory::asset('ynlo_modal_js', 'bundles/ynlomodal/js/modal.yfp.js', ['yfp_config_dumper']);
+        $assets[] = AssetFactory::asset('ynlo_modal_css', 'bundles/ynlomodal/css/modals.css', ['yfp_config_dumper']);
+
+        return $assets;
     }
 
     /**

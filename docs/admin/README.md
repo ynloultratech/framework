@@ -1,5 +1,9 @@
 ## Administration
 
+#### Menus
+ 
+- [Menus](menus.md)
+
 #### List
  
 - [Custom admin action](custom-admin-action.md)

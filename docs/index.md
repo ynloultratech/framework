@@ -2,8 +2,11 @@
 
 #### Framework
  
--  [Assets](framework/assets.md)
 -  [Pace](framework/pace.md)
+
+#### Assets
+
+-  [Assets](assets/README.md)
     
 #### Bundles    
 

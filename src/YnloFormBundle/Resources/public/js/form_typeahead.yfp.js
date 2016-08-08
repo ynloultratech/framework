@@ -9,31 +9,24 @@ YnloFramework.FormTypeahead = {
     init: function () {
         var initialize = function () {
             $('[typeahead]').each(function () {
+                var element = $(this);
                 //avoid double injection
-                if ($(this).attr('typeahead-initialized') !== undefined) {
+                if (element.attr('typeahead-initialized') !== undefined) {
                     return;
                 } else {
-                    $(this).attr('typeahead-initialized', true);
+                    element.attr('typeahead-initialized', true);
                 }
-                var options = {
-                    datumTokenizer: Bloodhound.tokenizers.whitespace,
-                    queryTokenizer: Bloodhound.tokenizers.whitespace
-                };
-                if ($(this).attr('typeahead-source') != undefined) {
-                    options.local = $.parseJSON($(this).attr('typeahead-source'))
+                if (element.attr('typeahead-source') != undefined) {
+                    $(element).typeahead({source: $.parseJSON(element.attr('typeahead-source'))});
                 } else {
-                    options.remote = {
-                        url: $(this).attr('autocomplete-url') + '&q=%QUERY',
-                        wildcard: '%QUERY'
-                    }
+                    $(element).typeahead({
+                        source: function (query, process) {
+                            return $.get(element.attr('autocomplete-url') + '&q=' + query, function (data) {
+                                return process(data);
+                            });
+                        }
+                    });
                 }
-                var engine = new Bloodhound(options);
-
-                $(this).typeahead({
-                    minLength: 1
-                }, {
-                    source: engine
-                });
             })
         };
         initialize();

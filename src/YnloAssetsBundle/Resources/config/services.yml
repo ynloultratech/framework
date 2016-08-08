@@ -1,0 +1,11 @@
+services:
+    ynlo_assets.assetic_filter.require_js_config:
+        class: YnloFramework\YnloAssetsBundle\Assetic\RequireJsConfigDumper
+        arguments: ['%ynlo.assets.config%']
+        tags:
+             - { name: assetic.filter, alias: require_js_config }
+
+    ynlo_assets.assetic_filter.jquery_plugin_override:
+        class: YnloFramework\YnloAssetsBundle\Assetic\JqueryPluginOverride
+        tags:
+             - { name: assetic.filter, alias: jquery_plugin_override }

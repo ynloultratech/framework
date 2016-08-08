@@ -74,6 +74,8 @@ var YnloFramework = {
     }
 };
 
-$(document).on('ready', function () {
+//don`t use jquery, some plugins like Admin
+//hold the ready event while the admin is loaded
+document.addEventListener("DOMContentLoaded", function () {
     YnloFramework.init();
 });

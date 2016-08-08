@@ -14,7 +14,7 @@ use Symfony\Bundle\AsseticBundle\DependencyInjection\AsseticExtension;
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use YnloFramework\YnloAdminBundle\DependencyInjection\YnloAdminExtension;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegistry;
+use YnloFramework\YnloAssetsBundle\Assets\AssetRegistry;
 use YnloFramework\YnloFrameworkBundle\DependencyInjection\YnloFrameworkExtension;
 
 class AssetRegistryTest extends \PHPUnit_Framework_TestCase

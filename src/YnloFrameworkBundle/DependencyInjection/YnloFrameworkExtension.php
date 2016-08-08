@@ -12,15 +12,18 @@ namespace YnloFramework\YnloFrameworkBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetContext;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AsseticAsset;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegisterInterface;
-use YnloFramework\YnloFrameworkBundle\DependencyInjection\AssetRegister\AssetRegistry;
+use YnloFramework\YnloAssetsBundle\Assets\AssetFactory;
+use YnloFramework\YnloAssetsBundle\Assets\AssetRegisterInterface;
 
-class YnloFrameworkExtension extends Extension implements PrependExtensionInterface, AssetRegisterInterface
+/**
+ * YnloFrameworkExtension
+ */
+class YnloFrameworkExtension extends Extension implements AssetRegisterInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -42,114 +45,38 @@ class YnloFrameworkExtension extends Extension implements PrependExtensionInterf
     /**
      * {@inheritdoc}
      */
-    public function prepend(ContainerBuilder $container)
+    public function registerAssets(array $config, ContainerBuilder $containerBuilder)
     {
-        $this->prependAsseticAssets($container);
-    }
+        $assets = [];
+        $assets[] = AssetFactory::asset('jquery', 'bundles/ynloframework/vendor/jquery/jquery.min.js');
+        $assets[] = AssetFactory::module('underscore', 'bundles/ynloframework/vendor/underscore/underscore-min.js');
 
-    /**
-     * {@inheritdoc}
-     */
-    public function registerInternalAssets()
-    {
-        return [
-            new AsseticAsset(
-                'ynlo_framework_js',
-                [
-                    'bundles/ynloframework/js/framework.js',
-                    'bundles/ynloframework/js/core.yfp.js',
-                    'bundles/ynloframework/js/lib/*',
-                ],
-                [
-                    'yfp_config_dumper',
-                ]
-            ),
-            new AsseticAsset('pace_js', 'bundles/ynloframework/vendor/pace/pace.js', ['pace_settings_dumper']),
-            new AsseticAsset('ynlo_debugger_js', 'bundles/ynloframework/js/debugger.yfp.js', ['yfp_config_dumper']),
-            new AsseticAsset('ynlo_debugger_css', 'bundles/ynloframework/css/debugger.css'),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function filterAssets(array $assets, array $config)
-    {
-        if ($config['pace'] === false) {
-            unset($assets['pace_js'], $assets['pace_css']);
-        }
-        if ($config['ajax_forms'] === false) {
-            unset($assets['jquery_form']);
+        if ($config['ajax_forms']) {
+            $assets[] = AssetFactory::module('jquery_form', 'bundles/ynloframework/vendor/jquery.form/jquery.form.js');
         }
 
-        $iconSets = [
-            'fontawesome',
-            'glyphicons',
-            'icomoon',
-        ];
-        foreach ($iconSets as $iconSet) {
-            if ((is_string($config['icons']) && $config['icons'] !== $iconSet)
-                || (is_array($config['icons']) && !in_array($iconSet, $config['icons'], true))
-            ) {
-                unset($assets[$iconSet]);
-            }
+        if ($config['pace']) {
+            $assets[] = AssetFactory::module('pace_js', 'bundles/ynloframework/vendor/pace/pace.js');
+            $assets[] = AssetFactory::asset('pace_config', 'bundles/ynloframework/js/pace_settings.js', ['pace_settings_dumper']);
+            $assets[] = AssetFactory::asset('pace_css', 'bundles/ynloframework/vendor/pace/pace.css');
         }
 
-        if ($config['debug'] == false) {
-            unset($assets['ynlo_debugger']);
+        //$assets[] = AssetFactory::asset('fastclick', 'bundles/ynloframework/vendor/fastclick/fastclick.js');
+        $assets[] = AssetFactory::module('bootstrap_js', 'bundles/ynloframework/vendor/bootstrap/js/bootstrap.min.js')
+            ->setCdn('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+        $assets[] = AssetFactory::asset('bootstrap_css', 'bundles/ynloframework/vendor/bootstrap/css/bootstrap.min.css');
+        $assets[] = AssetFactory::asset('fontawesome', 'bundles/ynloframework/vendor/font-awesome/css/font-awesome.min.css');
+        $assets[] = AssetFactory::asset('glyphicons', 'bundles/ynloframework/vendor/glyphicons/css/glyphicons.css');
+        $assets[] = AssetFactory::asset('icomoon', 'bundles/ynloframework/vendor/icomoon/icomoon.css');
+        $assets[] = AssetFactory::asset('ynlo_framework_js', 'bundles/ynloframework/js/framework.js');
+        $assets[] = AssetFactory::asset('ynlo_framework_core_js', 'bundles/ynloframework/js/core.yfp.js', ['yfp_config_dumper']);
+        $assets[] = AssetFactory::asset('ynlo_framework_libraries_js', 'bundles/ynloframework/js/lib/*.js');
+
+        if ($config['debug']) {
+            $assets[] = AssetFactory::asset('ynlo_debugger_js', 'bundles/ynloframework/js/debugger.yfp.js', ['yfp_config_dumper']);
+            $assets[] = AssetFactory::asset('ynlo_debugger_css', 'bundles/ynloframework/css/debugger.css');
         }
 
         return $assets;
-    }
-
-    protected function prependAsseticAssets(ContainerBuilder $container)
-    {
-        if (!$container->hasExtension('assetic')) {
-            throw new \LogicException('The assetic bundle is required by YnloFramework bundle to work');
-        }
-
-        $asseticConfig = $container->getExtensionConfig('assetic')[0];
-
-        //Assetic base configuration
-        $asseticConfig['bundles'][] = 'YnloFrameworkBundle';
-        $asseticConfig['filters']['cssrewrite'] = null;
-        if (empty($asseticConfig['assets'])) {
-            $asseticConfig['assets'] = [];
-        }
-
-        $registry = new AssetRegistry($container);
-        $this->processAssetContexts($registry, $container);
-        $registeredAssets = $registry->getAsseticAssetsArray();
-
-        $asseticConfig['assets'] = array_merge($registeredAssets, $asseticConfig['assets']);
-        $container->setParameter('ynlo.assetic.assets', $asseticConfig['assets']);
-        $container->prependExtensionConfig('assetic', $asseticConfig);
-    }
-
-    private function processAssetContexts(AssetRegistry $registry, ContainerBuilder $containerBuilder)
-    {
-        $config = $this->processConfiguration(new Configuration(), $containerBuilder->getExtensionConfig('ynlo_framework'));
-        $defaultContexts = [
-            'app' => [
-                'include' => ['all'],
-                'exclude' => ['bundle_ynlo_admin'],
-            ],
-        ];
-
-        $config['assets_contexts'] = array_merge_recursive($config['assets_contexts'], $defaultContexts);
-
-        foreach ($config['assets_contexts'] as $context => $contextConfig) {
-            $context = new AssetContext($context, $registry);
-            $context->setInclude(array_key_value($contextConfig, 'include', []));
-            $context->setExclude(array_key_value($contextConfig, 'exclude', []));
-            $context->setOverride(array_key_value($contextConfig, 'override', []));
-
-            if (empty($contextConfig['include'])) {
-                $msg = sprintf('The context `%s` don`t have any assets to include.', $context);
-                throw new \LogicException($msg);
-            }
-
-            $registry->registerAssetBundle($context->getName(), $context->getAssets());
-        }
     }
 }
