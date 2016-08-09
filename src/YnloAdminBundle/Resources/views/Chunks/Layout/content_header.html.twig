@@ -21,8 +21,6 @@
                 {% block page_title_text %}
                     {% if admin is defined and admin.icon %}
                         <i class="{{ admin.icon }}"></i>
-                    {% elseif admin is not defined %}
-                        <i class="icon-home4"></i>
                     {% endif %}
                     {% if _navbar_title is not empty %}
                         {{ _navbar_title|raw }}
