@@ -107,7 +107,7 @@ class KernelBuilder
     }
 
     /**
-     * Exlude some bundle in some environments
+     * Exclude some bundle in some environments
      *
      * @param string            $name
      * @param string|array|null $env enviroments to exclude or null to always exclude
@@ -248,7 +248,8 @@ class KernelBuilder
             if ($bundle instanceof Bundle) {
                 $compiledBundles[$bundle->getName()] = $bundle;
             } else {
-                throw new \InvalidArgumentException('Invalid bundle');
+                $msg = sprintf('The class \'%s\' is not a valid bundle to add to the kernel', get_class($bundle));
+                throw new \InvalidArgumentException($msg);
             }
         }
 
