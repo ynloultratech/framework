@@ -153,6 +153,7 @@ class KernelBuilder
         if ($this->isCurrentEvironment($env)) {
             if ($bundle instanceof Bundle || $bundle instanceof BundleReferenceInterface) {
                 $this->bundles[$bundle->getName()] = [
+                    'name' => $bundle->getName(),
                     'bundle' => $bundle,
                     'priority' => $priority,
                 ];
@@ -219,18 +220,21 @@ class KernelBuilder
         $missingPackages = [];
         $bundles = $this->bundles;
 
-        usort(
+        $addOrder = array_flip(array_keys($bundles));
+        uasort(
             $bundles,
-            function ($a, $b) {
+            function ($a, $b) use ($addOrder) {
                 if ($a['priority'] === $b['priority']) {
-                    return 0;
+                    //added first, then first
+                    return ($addOrder[$a['name']] < $addOrder[$b['name']]) ? -1 : 1;
                 }
 
+                //greater priority first
                 return ($a['priority'] > $b['priority']) ? -1 : 1;
             }
         );
 
-        $bundles = array_column($bundles, 'bundle');
+        $bundles = array_column($bundles, 'bundle', 'name');
         foreach ($bundles as $bundle) {
             if (!$bundle instanceof Bundle && !$bundle instanceof BundleReferenceInterface) {
                 throw new \InvalidArgumentException('Invalid bundle or reference given.');
