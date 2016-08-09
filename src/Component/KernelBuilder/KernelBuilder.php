@@ -133,6 +133,7 @@ class KernelBuilder
             ->withExtraFormWidgets()
             ->withMenu()
             ->withPjax()
+            ->withModals()
             ->withAdmin();
 
         return $this;

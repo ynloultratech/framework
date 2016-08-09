@@ -76,4 +76,16 @@ trait WithYnloBundlesTrait
 
         return $this;
     }
+
+    /**
+     * Enable modal windows
+     *
+     * @return $this
+     */
+    public function withModals()
+    {
+        $this->addReference('YnloFramework\YnloModalBundle\YnloModalBundle');
+
+        return $this;
+    }
 }
