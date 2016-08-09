@@ -247,7 +247,7 @@ class KernelBuilder
             }
             if ($bundle instanceof Bundle) {
                 $compiledBundles[$bundle->getName()] = $bundle;
-            } else {
+            } elseif (!$bundle instanceof BundleReferenceInterface) {
                 $msg = sprintf('The class \'%s\' is not a valid bundle to add to the kernel', get_class($bundle));
                 throw new \InvalidArgumentException($msg);
             }
