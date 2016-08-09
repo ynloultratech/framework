@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\Exception;
+namespace YnloFramework\Component\KernelBuilder\Exception;
 
 class MissingBundleException extends \Exception
 {
