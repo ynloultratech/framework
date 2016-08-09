@@ -51,6 +51,7 @@ class KernelBuilder
             'Sensio\Bundle\DistributionBundle\SensioDistributionBundle' => 'sensio/distribution-bundle',
             'Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle' => 'sensio/generator-bundle',
             'FOS\UserBundle\FOSUserBundle' => 'friendsofsymfony/user-bundle',
+            'Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle' => 'symfony/swiftmailer-bundle',
         ];
 
     /**
@@ -171,6 +172,16 @@ class KernelBuilder
     public function withUsers()
     {
         $this->addBundle('FOS\UserBundle\FOSUserBundle');
+    }
+
+    /**
+     * Enable mail support
+     *
+     * @return $this
+     */
+    public function withMail()
+    {
+        $this->addBundle('Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle');
     }
 
     /**
