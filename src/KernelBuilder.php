@@ -24,8 +24,14 @@ class KernelBuilder
      */
     private $kernel;
 
+    /**
+     * @var array
+     */
     private $bundles = [];
 
+    /**
+     * @var array
+     */
     private $knownBundlePackages
         = [
             'Symfony\Bundle\FrameworkBundle\FrameworkBundle' => 'symfony/symfony',
