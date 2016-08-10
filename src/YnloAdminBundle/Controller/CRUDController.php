@@ -50,9 +50,22 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
+     * detailsAction.
+     *
+     * @return Response
+     */
+    public function detailsAction()
+    {
+        //the template is passed as argument encoded in base64
+        $template = base64_decode($this->getRequest()->get('t'));
+
+        return $this->render($template, ['object' => $this->admin->getSubject()]);
+    }
+
+    /**
      * {@inheritDoc}
      */
-    public function renderJson($data, $status = 200, $headers = [])
+    protected function renderJson($data, $status = 200, $headers = [])
     {
 
         if ($this->isModalRequest()) {
@@ -64,19 +77,6 @@ class CRUDController extends BaseCRUDController
         }
 
         return parent::renderJson($data, $status, $headers);
-    }
-
-    /**
-     * detailsAction.
-     *
-     * @return Response
-     */
-    public function detailsAction()
-    {
-        //the template is passed as argument encoded in base64
-        $template = base64_decode($this->getRequest()->get('t'));
-
-        return $this->render($template, ['object' => $this->admin->getSubject()]);
     }
 
     /**
