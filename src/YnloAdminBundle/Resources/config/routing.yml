@@ -7,3 +7,19 @@ sonata_user_impersonating:
 _sonata_admin:
     resource: .
     type: sonata_admin
+
+admin_login:
+    path:      /login
+    defaults:  { _controller: YnloAdminBundle:Security:login }
+
+admin_login_check:
+    path:      /login_check
+    defaults:  { _controller: YnloAdminBundle:Security:check }
+
+admin_logout:
+    path:      /logout
+    defaults:  { _controller: YnloAdminBundle:Security:logout }
+
+admin_dashboard:
+    path:      /dashboard
+    defaults:  { _controller: SonataAdminBundle:Core:dashboard }
