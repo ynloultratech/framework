@@ -228,7 +228,11 @@ class AssetContext
         }
 
         foreach ($assetsToExclude as $excludeName) {
-            unset($this->assets[$excludeName]);
+            //don`t exclude assets explicitly included
+            //e.g. include: fontawesome, exclude: all
+            if (!in_array($excludeName, $this->getInclude())) {
+                unset($this->assets[$excludeName]);
+            }
         }
     }
 
