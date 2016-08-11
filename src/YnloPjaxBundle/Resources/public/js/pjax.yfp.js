@@ -342,7 +342,7 @@ YnloFramework.Pjax = {
     },
     //remove any parameter passed to the script url
     //used in dev environment to avoid load already loaded script
-    //in dev env scripts are css has timestamp to force reload when f5 is pressed
+    //in dev env scripts and css has a timestamp to force assetic reload when page is refreshed
     __getRealAssetUrl: function (src) {
         if (YnloFramework.debug && src) {
             var regExp = /\?.+/;
