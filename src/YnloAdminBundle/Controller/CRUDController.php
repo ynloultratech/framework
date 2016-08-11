@@ -96,6 +96,14 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
+     * @return AbstractAdmin
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function configure()
