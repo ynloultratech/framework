@@ -6,7 +6,7 @@
                     <img src="{{ asset('bundles/ynlouser/img/default_avatar.png') }}" class="user-image" alt="User Image">
                 {% endblock %}
                 {% block link_name %}
-                    <span class="hidden-xs">{{ user|humanize }}</span>
+                    <span class="hidden-xs">{{ user|title }}</span>
                 {% endblock %}
             </a>
         {% endblock %}
@@ -18,7 +18,7 @@
                         <li class="user-header">
                             <img src="{{ asset('bundles/ynlouser/img/default_avatar.png') }}" class="img-circle" alt="User Image">
                             <p>
-                                {{ user|humanize }}
+                                {{ user|title }}
                             </p>
                         </li>
                     {% endblock %}

@@ -16,16 +16,16 @@ use Sonata\AdminBundle\Event\ConfigureMenuEvent;
  */
 class SidebarDashboardMenuItem
 {
-    protected $enabled;
+    protected $adminConfig;
 
     /**
      * SidebarDashboardMenuItem constructor.
      *
-     * @param bool $enabled
+     * @param array $adminConfig
      */
-    public function __construct($enabled = true)
+    public function __construct($adminConfig = [])
     {
-        $this->enabled = $enabled;
+        $this->adminConfig = $adminConfig;
     }
 
     /**
@@ -35,11 +35,11 @@ class SidebarDashboardMenuItem
      */
     public function configureMenu(ConfigureMenuEvent $event)
     {
-        if ($this->enabled) {
+        if ($this->adminConfig['menu']['main_dashboard']) {
             $order = array_merge(['Dashboard'], array_keys($event->getMenu()->getChildren()));
             $event->getMenu()
                 ->addChild('Dashboard', ['route' => 'admin_dashboard'])
-                ->setExtra('icon', 'fa fa-tachometer fa-fw');
+                ->setExtra('icon', $this->adminConfig['dashboard_icon']);
             $event->getMenu()->reorderChildren($order);
         }
     }

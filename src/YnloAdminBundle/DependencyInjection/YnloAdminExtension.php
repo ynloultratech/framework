@@ -73,6 +73,8 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
             $vendorConfig['globals']['admin_body_classes'][] = 'sidebar-collapse';
         }
 
+        $vendorConfig['globals']['admin_dashboard_icon'] = $config['dashboard_icon'];
+
         $container->prependExtensionConfig('twig', $vendorConfig);
 
         //include required bundles into assetic

@@ -52,6 +52,6 @@ services:
 
     ynlo_admin.main_menu.dashboard:
         class: '%ynlo_admin.sidebar_dashboard_menu_item_class%'
-        arguments: ['%ynlo.admin_main_menu_dashboard%']
+        arguments: ['%ynlo_admin_config%']
         tags:
             - { name: kernel.event_listener , event: admin.event.configure.menu.sidebar , method: configureMenu, priority: 255 }

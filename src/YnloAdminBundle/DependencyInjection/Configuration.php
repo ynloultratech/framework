@@ -44,6 +44,7 @@ class Configuration implements ConfigurationInterface
         $rootNode->booleanNode('collapsed_sidebar')->defaultValue(false)->info('Have a collapsed sidebar upon loading.');
 
         $rootNode->scalarNode('icheck')->defaultValue('flat-blue')->info('Set the theme to use or false to disable');
+        $rootNode->scalarNode('dashboard_icon')->defaultValue('fa fa-dashboard');
 
         $menu = $rootNode->arrayNode('menu')->addDefaultsIfNotSet()->children();
         $menu->scalarNode('main')->defaultValue('YnloAdminBundle:Builder:mainMenu');

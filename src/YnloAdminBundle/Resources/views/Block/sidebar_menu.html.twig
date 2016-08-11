@@ -1,1 +1,3 @@
-{{ knp_menu_render(menu, {'template': 'YnloAdminBundle::Menu/sidebar_menu.html.twig'}) }}
+{% block sidebar_menu %}
+    {{ knp_menu_render(menu, {'template': 'YnloAdminBundle::Menu/sidebar_menu.html.twig'}) }}
+{% endblock %}
