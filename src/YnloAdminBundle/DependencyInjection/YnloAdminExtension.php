@@ -76,12 +76,14 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
 
         //admin asset context
         $ynloAssetsConfig = $container->getExtensionConfig('ynlo_assets')[0];
-        $ynloAssetsConfig['contexts']['admin'] = [
-            'include' => ['all'],
-            'override' => [
-                'pace_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/pace/pace.min.css',
-            ],
-        ];
+        if (!isset($ynloAssetsConfig['contexts']['admin'])) {
+            $ynloAssetsConfig['contexts']['admin'] = [
+                'include' => ['all'],
+                'override' => [
+                    'pace_css' => 'bundles/ynloadmin/vendor/admin-lte/plugins/pace/pace.min.css',
+                ],
+            ];
+        }
         $container->prependExtensionConfig('ynlo_assets', $ynloAssetsConfig);
     }
 
