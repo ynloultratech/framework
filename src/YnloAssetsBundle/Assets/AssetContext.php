@@ -185,7 +185,6 @@ class AssetContext
         //resolve inclusions
         foreach ($includes as $include) {
             if (AssetRegistry::hasNamedAsset($include)) {
-                $included = true;
                 $asset = AssetRegistry::getAsset($include);
                 if ($asset instanceof AssetBundle) {
                     foreach ($asset->getAssets() as $bundleAsset) {
@@ -195,7 +194,8 @@ class AssetContext
                     $this->assets[$asset->getName()] = clone $asset;
                 }
             } else {
-                throw new \InvalidArgumentException(sprintf('There are not asset called %s', $include));
+                $name = 'asset'.mt_rand(1111, 99999999);
+                $this->assets[$name] = AssetFactory::asset($name, $include);
             }
         }
     }
