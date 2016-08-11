@@ -134,13 +134,17 @@
             </div>
         </div>
         <!-- ./wrapper -->
+        {% block override_default_pjax_container %}
+            <script>
+                $(document).on('ready pjax:success', function () {
+                    //override default Pjax container for admins
+                    //when come from login the container is body, after that
+                    //the container it the following
+                    YnloFramework.Pjax.config.target = '#pjax-container';
+                })
+            </script>
+        {% endblock %}
         </body>
-        <script>
-            $(document).ready(function(){
-                //override default Pjax target for admins
-                YnloFramework.Pjax.config.target = '#pjax-container';
-            })
-        </script>
     {% endblock body %}
     </html>
 {% endblock html %}
