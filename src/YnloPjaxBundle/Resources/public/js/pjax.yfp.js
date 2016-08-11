@@ -129,9 +129,6 @@ YnloFramework.Pjax = {
                         YnloFramework.Pjax._xhr = xhr;
                         xhr.setRequestHeader("X-PJAX", 'true');
                         $(document).trigger('pjax:start', [xhr]);
-
-                        console.log(YnloFramework.Pjax._submitBtn);
-
                     },
                     success: function (output, status, xhr) {
                         if (typeof xhr.getResponseHeader === 'function') {
