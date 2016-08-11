@@ -31,7 +31,7 @@
                     <!-- login form -->
                     {% block login_form %}
                         <form action="{{ path("admin_login_check") }}" method="post">
-                            <div class="panel panel-body login-form animated {% if error %}tada{% endif %}">
+                            <div class="{% block login_panel_class %}panel panel-body login-form animated{% endblock %} {% if error %}{% block error_animation %}tada{% endblock %}{% endif %}">
 
                                 <div class="text-center">
                                     {% block avatar %}
@@ -49,14 +49,14 @@
                                     <div class="form-group has-feedback has-feedback-left">
                                         <input type="text" class="form-control" name="_username" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" value="{{ last_username }}" autofocus autocomplete="off" required>
                                         <div class="form-control-feedback">
-                                            <i class="fa fa-user text-muted"></i>
+                                            {% block user_icon %}<i class="fa fa-user text-muted"></i>{% endblock %}
                                         </div>
                                     </div>
 
                                     <div class="form-group has-feedback has-feedback-left">
                                         <input type="password" class="form-control" autocomplete="off" name="_password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}">
                                         <div class="form-control-feedback">
-                                            <i class="fa fa-key text-muted"></i>
+                                            {% block password_icon %}<i class="fa fa-key text-muted"></i>{% endblock %}
                                         </div>
                                     </div>
                                 {% endblock inputs %}
