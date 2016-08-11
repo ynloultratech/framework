@@ -29,53 +29,68 @@
                 <!-- Content area -->
                 <div class="content">
                     <!-- login form -->
-                    <form action="{{ path("admin_login_check") }}" method="post">
-                        <div class="panel panel-body login-form animated {% if error %}tada{% endif %}">
-                            <div class="text-center">
-                                <img src="/bundles/ynlouser/img/default_avatar.png" class="profile-user-img img-responsive img-circle" alt="">
-                                <h5 class="content-group">{{ 'login_to_your_account'|trans({},'AdminBundle') }}
-                                    <small class="display-block">{{ 'enter_your_credentials'|trans({},'AdminBundle') }}</small>
-                                </h5>
-                            </div>
+                    {% block login_form %}
+                        <form action="{{ path("admin_login_check") }}" method="post">
+                            <div class="panel panel-body login-form animated {% if error %}tada{% endif %}">
 
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                                <div class="text-center">
+                                    {% block avatar %}
+                                        <img src="/bundles/ynlouser/img/default_avatar.png" class="profile-user-img img-responsive img-circle" alt="">
+                                    {% endblock %}
 
-                            <div class="form-group has-feedback has-feedback-left">
-                                <input type="text" class="form-control" name="_username" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" value="{{ last_username }}" autofocus autocomplete="off" required>
-                                <div class="form-control-feedback">
-                                    <i class="fa fa-user text-muted"></i>
+                                    <h5 class="content-group">{{ 'login_to_your_account'|trans({},'AdminBundle') }}
+                                        <small class="display-block">{{ 'enter_your_credentials'|trans({},'AdminBundle') }}</small>
+                                    </h5>
+                                </div>
+
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+                                {% block inputs %}
+                                    <div class="form-group has-feedback has-feedback-left">
+                                        <input type="text" class="form-control" name="_username" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" value="{{ last_username }}" autofocus autocomplete="off" required>
+                                        <div class="form-control-feedback">
+                                            <i class="fa fa-user text-muted"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-feedback has-feedback-left">
+                                        <input type="password" class="form-control" autocomplete="off" name="_password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}">
+                                        <div class="form-control-feedback">
+                                            <i class="fa fa-key text-muted"></i>
+                                        </div>
+                                    </div>
+                                {% endblock inputs %}
+
+                                {% if error %}
+                                    {% block error_msg %}
+                                        <div class="alert bg-danger">
+                                            {% if error %}
+                                                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endblock %}
+                                {% endif %}
+
+                                <div class="form-group">
+                                    {% block submit_btn %}
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
+                                            {% block submit_btn_icon %}
+                                                <i class="fa fa-chevron-right pull-right"></i>
+                                            {% endblock %}
+                                        </button>
+                                    {% endblock %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" class="styled" name="_remember_me" value="on"/>
+                                        {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                                    </label>
                                 </div>
                             </div>
-
-                            <div class="form-group has-feedback has-feedback-left">
-                                <input type="password" class="form-control" autocomplete="off" name="_password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}">
-                                <div class="form-control-feedback">
-                                    <i class="fa fa-key text-muted"></i>
-                                </div>
-                            </div>
-
-                            {% if error %}
-                                <div class="alert bg-danger">
-                                    {% if error %}
-                                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }} <i class="fa fa-chevron-right pull-right"></i>
-                                </button>
-                            </div>
-
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" class="styled" name="_remember_me" value="on"/>
-                                    {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-                                </label>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    {% endblock login_form %}
                     <!-- /login form -->
 
                     <!-- Footer -->
