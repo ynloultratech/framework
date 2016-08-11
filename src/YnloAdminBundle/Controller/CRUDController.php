@@ -10,6 +10,7 @@
 namespace YnloFramework\YnloAdminBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use YnloFramework\YnloAdminBundle\Admin\AbstractAdmin;
 use YnloFramework\YnloModalBundle\Controller\ModalControllerTrait;
@@ -22,6 +23,11 @@ use YnloFramework\YnloModalBundle\Response\AjaxRefreshResponse;
 class CRUDController extends BaseCRUDController
 {
     use ModalControllerTrait;
+
+    /**
+     * @var Request
+     */
+    protected $request;
 
     /**
      * {@inheritDoc}
@@ -63,6 +69,46 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
+     * {@inheritdoc}
+     * Override to allow pass custom request using setRequest()
+     */
+    public function getRequest()
+    {
+        if (!$this->request) {
+            $this->request = parent::getRequest();
+        }
+
+        return $this->request;
+    }
+
+    /**
+     * Allow the use of custom request instance.
+     *
+     * @param Request $request
+     *
+     * @return $this
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configure()
+    {
+        parent::configure();
+        if (!$this->admin instanceof AbstractAdmin) {
+            $adminClass = get_class($this->admin);
+            $msg = sprintf('The admin "%s" is not a valid admin, should extends from "%s"', $adminClass, AbstractAdmin::class);
+            throw new \InvalidArgumentException($msg);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function renderJson($data, $status = 200, $headers = [])
@@ -91,5 +137,20 @@ class CRUDController extends BaseCRUDController
         $ajax = ($this->isXmlHttpRequest() || $this->isModalRequest() || $this->getRequest()->headers->get('X-Pjax'));
 
         return $ajax && $this->admin->isActionOnModal($action);
+    }
+
+    /**
+     * trans
+     *
+     * @param string $id         #TranslationMessage
+     * @param array  $parameters array of parameters
+     * @param null   $domain     #Domain
+     * @param null   $locale
+     *
+     * @return string translated string
+     */
+    protected function trans($id, array $parameters = [], $domain = null, $locale = null)
+    {
+        return $this->get('translator')->trans($id, $parameters, $domain, $locale);
     }
 }
