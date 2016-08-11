@@ -63,6 +63,8 @@ ynlo_assets:
 {% endjavascripts %}
 ````   
 
+> After modify a context or asset, may be necessary clear the cache(clear:cache), inclusive in dev environments.
+
 ## Assets
 
 YnloFramework work with named assets, then can register one asset with a name to reuse later in others contexts.
