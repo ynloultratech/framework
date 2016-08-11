@@ -145,7 +145,7 @@ class AssetContext
     }
 
     /**
-     * Resolve assets names variants for array fo assets
+     * Resolve assets names variants for array of assets
      *
      * @param array $assetsArray
      *
@@ -153,14 +153,15 @@ class AssetContext
      */
     private function resolveVariants(array $assetsArray)
     {
-        foreach ($assetsArray as $assetName) {
+        $assetsArray = array_values($assetsArray);//force indexed keys
+        foreach ($assetsArray as $offset => $assetName) {
             $hasVariants = false;
             if (AssetRegistry::hasNamedAsset($assetName.'_js')) {
-                $assetsArray[] = $assetName.'_js';
+                array_splice($assetsArray, $offset, 0, $assetName.'_js');
                 $hasVariants = true;
             }
             if (AssetRegistry::hasNamedAsset($assetName.'_css')) {
-                $assetsArray[] = $assetName.'_css';
+                array_splice($assetsArray, $offset, 0, $assetName.'_css');
                 $hasVariants = true;
             }
             if ($hasVariants && !AssetRegistry::hasNamedAsset($assetName)) {
