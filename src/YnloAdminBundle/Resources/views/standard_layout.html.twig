@@ -11,49 +11,35 @@
 {% set _navbar_title         = block('navbar_title') %}
 {% set _list_filters_actions = block('list_filters_actions') %}
 
-{% use 'YnloAdminBundle:Chunks/Layout:head.html.twig' %}
-{% use 'YnloAdminBundle:Chunks/Layout:main_header.html.twig' %}
-{% use 'YnloAdminBundle:Chunks/Layout:main_sidebar.html.twig' %}
-{% use 'YnloAdminBundle:Chunks/Layout:main_footer.html.twig' %}
-{% use 'YnloAdminBundle:Chunks/Layout:content_header.html.twig' %}
-{% use 'YnloAdminBundle:Chunks/Layout:content.html.twig' %}
-
-{% set _head                 = block('head') %}
-{% set _main_header          = block('main_header') %}
-{% set _main_sidebar         = block('main_sidebar') %}
-{% set _main_footer          = block('main_footer') %}
-{% set _page_content_header  = block('sonata_page_content_header') %}
-{% set _page_content         = block('sonata_page_content') %}
-
 {% block html %}
     <!DOCTYPE html>
     <html lang="en" dir="ltr" {% block html_attributes %}class="no-js"{% endblock %}>
 
-    {{ _head|raw }}
+    {% include 'YnloAdminBundle:Chunks/Layout:head.html.twig' %}
 
     {% block body %}
         <body {% block body_attributes %}class="{% for class in admin_body_classes %}{{ class }} {% endfor %}"{% endblock %}>
         <div class="wrapper">
 
             <!-- Main Header -->
-            {{ _main_header|raw }}
+            {% include 'YnloAdminBundle:Chunks/Layout:main_header.html.twig' %}
 
             <div id="pjax-container">
                 <!-- Left side column. contains the logo and sidebar -->
-                {{ _main_sidebar|raw }}
+                {% include 'YnloAdminBundle:Chunks/Layout:main_sidebar.html.twig' %}
 
                 <!-- Content Wrapper. Contains page content -->
                 <div class="content-wrapper" style="min-height: 854px;">
-                    {{ _page_content_header|raw }}
+                    {% include 'YnloAdminBundle:Chunks/Layout:content_header.html.twig' %}
 
                     <!-- Main content -->
-                    {{ _page_content|raw }}
+                    {% include 'YnloAdminBundle:Chunks/Layout:content.html.twig' %}
                     <!-- /.content -->
                 </div>
                 <!-- /.content-wrapper -->
 
                 <!-- Main Footer -->
-                {{ _main_footer|raw }}
+                {% include 'YnloAdminBundle:Chunks/Layout:main_footer.html.twig' %}
 
 
                 <!-- Control Sidebar -->
