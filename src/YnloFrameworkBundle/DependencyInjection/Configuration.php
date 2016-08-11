@@ -24,10 +24,12 @@ class Configuration implements ConfigurationInterface
 
         /* @noinspection UnNecessaryDoubleQuotesInspection */
         $rootNode->scalarNode('debug')->defaultValue('false');
+        $rootNode->booleanNode('animate_css')->defaultValue(true)->info('Include Animate.css');
         $pace = $rootNode->arrayNode('pace')
             ->canBeDisabled()
             ->info('Enable or disable the Pace loader.')
             ->children();
+
         $pace->scalarNode('ajax')->defaultValue(true);
         $pace->scalarNode('document')->defaultValue(true);
         $pace->scalarNode('eventLag')->defaultValue(true);
