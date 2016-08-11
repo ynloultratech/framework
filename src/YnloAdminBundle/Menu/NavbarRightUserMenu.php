@@ -37,6 +37,6 @@ class NavbarRightUserMenu
     {
         $event->getMenu()
             ->addChild('logout')
-            ->setExtra('template', ['YnloAdminBundle::Menu/logout.html.twig', ['user' => $this->user]]);
+            ->setExtra('template', ['YnloAdminBundle::Menu/navbar_right_user_menu.html.twig', ['user' => $this->user]]);
     }
 }

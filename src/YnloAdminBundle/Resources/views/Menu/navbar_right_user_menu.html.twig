@@ -1,0 +1,39 @@
+{% block user_menu_item %}
+    <li class="{% block user_menu_item_class %}dropdown user user-menu{% endblock %}">
+        {% block menu_link %}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% block link_avatar %}
+                    <img src="{{ asset('bundles/ynlouser/img/default_avatar.png') }}" class="user-image" alt="User Image">
+                {% endblock %}
+                {% block link_name %}
+                    <span class="hidden-xs">{{ user|humanize }}</span>
+                {% endblock %}
+            </a>
+        {% endblock %}
+        {% block user_profile_menu %}
+            <ul {% block user_profile_menu_attributes %}class="dropdown-menu"{% endblock %}>
+                {% block user_profile_menu_content %}
+                    <!-- User image -->
+                    {% block menu_avatar %}
+                        <li class="user-header">
+                            <img src="{{ asset('bundles/ynlouser/img/default_avatar.png') }}" class="img-circle" alt="User Image">
+                            <p>
+                                {{ user|humanize }}
+                            </p>
+                        </li>
+                    {% endblock %}
+                    {% block user_body %}
+                    {% endblock %}
+
+                    {% block user_profile_footer %}
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a data-pjax="false" href="{{ path('admin_logout') }}" class="btn btn-default btn-flat">{{ 'layout.logout'|trans([],'FOSUserBundle') }}</a>
+                            </div>
+                        </li>
+                    {% endblock %}
+                {% endblock %}
+            </ul>
+        {% endblock %}
+    </li>
+{% endblock %}
