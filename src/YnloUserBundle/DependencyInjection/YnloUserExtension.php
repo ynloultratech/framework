@@ -23,6 +23,8 @@ class YnloUserExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('user_class', KernelBuilder::$userClass);
+
         $configDir = __DIR__.'/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
         $loader->load('services.yml');

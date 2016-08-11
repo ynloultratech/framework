@@ -1,0 +1,139 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% import "knp_menu.html.twig" as macros %}
+
+{% block item %}
+    {% if item.displayed %}
+        {% set attributes = item.attributes %}
+        {% set is_dropdown = attributes.dropdown|default(false) %}
+        {% set is_template = item.extra('template')|default(false) %}
+        {% set is_remote = item.linkAttribute('data-url')|default(false) %}
+        {% set animation = item.getExtra('animation')|default(null) %}
+
+        {# unset bootstrap specific attributes #}
+        {% set attributes = attributes|merge({'dropdown': null}) %}
+
+        {% if item.extra('divider') == 'prepend' or item.extra('divider') == 'both' %}
+            {{ block('dividerElement') }}
+        {% endif %}
+
+        {# building the class of the item #}
+        {% set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+
+        {% if matcher.isCurrent(item) %}
+            {% set classes = classes|merge([options.currentClass]) %}
+        {% elseif matcher.isAncestor(item, options.depth) %}
+            {% set classes = classes|merge([options.ancestorClass]) %}
+        {% endif %}
+
+        {# building the class of the children #}
+        {% set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+
+        {# adding classes for dropdown #}
+        {% if is_dropdown %}
+            {% if item.level == 1 %}
+                {% set classes = classes|merge(['dropdown']) %}
+            {% else %}
+                {% set classes = classes|merge(['dropdown-submenu']) %}
+            {% endif %}
+            {% set childrenClasses = childrenClasses|merge(['dropdown-menu animated ' ~ animation]) %}
+        {% endif %}
+
+        {# putting classes together #}
+        {% if classes is not empty %}
+            {% set attributes = attributes|merge({'class': classes|join(' ')}) %}
+        {% endif %}
+
+        {% set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+
+        {# displaying the item #}
+        <li{{ macros.attributes(attributes) }}>
+            {% if is_template %}
+                {{ block('templateElement') }}
+            {% elseif is_dropdown %}
+                {{ block('dropdownElement') }}
+            {% elseif item.uri is not empty and (not item.current or options.currentAsLink) %}
+                {{ block('linkElement') }}
+            {% else %}
+                {{ block('spanElement') }}
+            {% endif %}
+            {# render the list of children #}
+            {% if is_remote %}
+                <div class="dropdown-menu padding-10 animated {{ animation }}"></div>
+            {% else %}
+                {{ block('list') }}
+            {% endif %}
+        </li>
+
+        {% if item.extra('divider') == 'append' or item.extra('divider') == 'both' %}
+            {{ block('dividerElement') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block badge %}
+    {% set badge  = item.extra('badge') %}
+    {% if badge is not empty %}
+        {% set class = badge.class|default('badge badge-default') %}
+        <span class="{{ class }}">{{ badge.value }}</span>
+    {% endif %}
+{% endblock %}
+
+{% block templateElement %}
+    {% set template  = item.extra('template') %}
+    {% if template is iterable %}
+        {{ include(template[0],template[1]) }}
+    {% else %}
+        {{ include(item.extra('template')) }}
+    {% endif %}
+{% endblock %}
+
+{% block dividerElement %}
+    <li class="divider"></li>
+{% endblock %}
+
+{% block linkElement %}
+    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
+        {% if item.extra('icon') is not empty %}
+            <i class="{{ item.extra('icon') }}"></i>
+        {% endif %}
+        {{ block('label') }}
+        {{ block('badge') }}
+    </a>
+{% endblock %}
+
+{% block spanElement %}
+    <span {{ macros.attributes(item.labelAttributes) }}>
+        {% if item.extra('icon') is not empty %}
+            <i class="{{ item.extra('icon') }}"></i>
+        {% endif %}
+        {{ block('label') }}
+        {{ block('badge') }}
+    </span>
+{% endblock %}
+
+{% block dropdownElement %}
+    {% set linkable = item.extra('linkable') %}
+    {% set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+    {% set classes = classes|merge(['dropdown-toggle']) %}
+    {% set attributes = item.linkAttributes %}
+    {% set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {% set attributes = attributes|merge({'data-toggle': 'dropdown'}) %}
+
+    <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}"{% if not linkable %}{{ macros.attributes(attributes) }}{% endif %}>
+        {% if item.extra('icon') is not empty %}
+            <i class="{{ item.extra('icon') }}"></i>
+        {% endif %}
+        {{ block('label') }}
+        {% if item.level == 1 %}
+            <b class="caret"></b>
+        {% endif %}
+        {{ block('badge') }}
+    </a>
+
+    {% if linkable %}
+        <span{{ macros.attributes(attributes) }}></span>
+    {% endif %}
+{% endblock %}
+
+{% block label %}{{ item.label|trans }}{% endblock %}

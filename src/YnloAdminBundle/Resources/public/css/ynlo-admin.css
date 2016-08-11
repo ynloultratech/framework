@@ -16,12 +16,21 @@
 .login-container .content-wrapper .content .login-form .btn .fa.fa-chevron-right.pull-right {
   margin-top: 4px;
 }
-.sidebar-menu .treeview-menu > li > a > .fa,
-.sidebar-menu .treeview-menu > li > a > .glyphicon,
-.sidebar-menu .treeview-menu > li > a > .ion {
+.main-sidebar .sidebar-menu .treeview-menu > li > a > .fa,
+.main-sidebar .sidebar-menu > li > a > .fa,
+.main-sidebar .sidebar-menu .treeview-menu > li > a > .glyphicon,
+.main-sidebar .sidebar-menu > li > a > .glyphicon,
+.main-sidebar .sidebar-menu .treeview-menu > li > a > .ion,
+.main-sidebar .sidebar-menu > li > a > .ion {
   width: 20px;
-  margin-right: 10px;
+  margin-right: 5px;
   text-align: center;
+}
+.main-sidebar .sidebar-menu .treeview-menu a {
+  margin-left: 10px;
+}
+.main-sidebar .header {
+  text-transform: uppercase;
 }
 .btn-toolbar > .divider {
   display: inline-table;

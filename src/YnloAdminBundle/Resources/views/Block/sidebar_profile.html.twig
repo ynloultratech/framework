@@ -1,0 +1,13 @@
+<div class="user-panel">
+    <div class="pull-left image">
+        {% block avatar %}
+            <img src="{{ asset('bundles/ynlouser/img/default_avatar.png') }}" class="img-circle" alt="User Image">
+        {% endblock %}
+    </div>
+    {% block user_info %}
+        <div class="pull-left info">
+            <p>{{ user|humanize }}</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+    {% endblock %}
+</div>

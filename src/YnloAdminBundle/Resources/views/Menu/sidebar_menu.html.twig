@@ -1,0 +1,140 @@
+{# @var item \Knp\Menu\ItemInterface #}
+
+{% extends 'knp_menu.html.twig' %}
+
+{% import "knp_menu.html.twig" as macros %}
+
+{% block item %}
+
+    {% if item.displayed %}
+        {% set attributes = item.attributes %}
+        {% set is_collapsible = item.hasChildren %}
+        {% set is_template = item.extra('template')|default(false) %}
+
+        {% if item.extra('divider') == 'prepend' or item.extra('divider') == 'both' %}
+            {{ block('dividerElement') }}
+        {% endif %}
+
+        {# building the class of the item #}
+        {# panel class is required to create accordion #}
+        {% set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+
+        {% if matcher.isCurrent(item) or matcher.isAncestor(item, options.depth) %}
+            {% set classes = classes|merge(['active']) %}
+        {% endif %}
+
+        {# adding classes for dropdown #}
+        {% if is_collapsible %}
+            {% set collapseId = 'cid' ~ random() %}
+
+            {% if matcher.isCurrent(item) or matcher.isAncestor(item, options.depth) %}
+                {% set expanded = 'true' %}
+            {% else %}
+                {% set expanded = 'false' %}
+            {% endif %}
+
+            {% set listAttributes = item.childrenAttributes|merge({'id': collapseId, 'aria-expanded' : expanded, 'class': 'treeview-menu' }) %}
+
+            {% if not matcher.isCurrent(item) and not matcher.isAncestor(item, options.depth) %}
+                {% set listAttributes = listAttributes|merge({'class': 'treeview-menu', 'id' : item.name }) %}
+            {% endif %}
+        {% endif %}
+
+        {% if is_template %}
+            {% set _element =  block('templateElement') %}
+        {% elseif is_collapsible %}
+            {% set classes = classes|merge(['treeview']) %}
+            {% set _element = block('accordionElement') %}
+        {% elseif item.uri is not empty and (not item.current or options.currentAsLink) %}
+            {% set _element = block('linkElement') %}
+        {% else %}
+            {% set classes = classes|merge(['header']) %}
+            {% set _element = block('navigationHeader') %}
+        {% endif %}
+
+        {# putting classes together #}
+        {% if classes is not empty %}
+            {% set attributes = attributes|merge({'class': classes|join(' ')}) %}
+        {% endif %}
+
+        {# displaying the item #}
+        <li{{ macros.attributes(attributes) }}>
+
+            {{ _element|raw }}
+
+            {# render the list of children #}
+            {{ block('list') }}
+        </li>
+
+        {% if item.extra('divider') == 'append' or item.extra('divider') == 'both' %}
+            {{ block('dividerElement') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block badge %}
+    {% set badge  = item.extra('badge') %}
+    {% if badge is not empty %}
+
+        {% set animation = badge.animation|default(null) %}
+        {% if animation %}
+            {% set animation =  'animated ' ~ animation %}
+        {% endif %}
+        <span class="pull-right-container">
+            <small class="label pull-right label-{{ badge.type|default('default') }} {{ animation }}">{{ badge.value }}</small>
+        </span>
+    {% endif %}
+{% endblock %}
+
+{% block templateElement %}
+    {% set template  = item.extra('template') %}
+    {% if template is iterable %}
+        {{ include(template[0],template[1]) }}
+    {% else %}
+        {{ include(item.extra('template')) }}
+    {% endif %}
+{% endblock %}
+
+{% block dividerElement %}
+    <li class="divider"></li>
+{% endblock %}
+
+{% block linkElement %}
+    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
+        {{ block('icon') }}
+        {{ block('label') }}
+        {{ block('badge') }}
+    </a>
+{% endblock %}
+
+{% block navigationHeader %}
+    {{ block('label') }}
+{% endblock %}
+
+{% block icon %}
+    {% if item.extra('icon') is not empty %}
+        {% if 'class=' in item.extra('icon') %}
+            {{ item.extra('icon')|raw }}
+        {% else %}
+            <i class="{{ item.extra('icon') }}"></i>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block accordionElement %}
+    {% set linkable = item.extra('linkable') %}
+    {% set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+    {% set attributes = item.linkAttributes %}
+    {% set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {% set parent = (item.parent.parent is null) ? '.nav' : '#' ~ item.parent.name %}
+
+    <a href="#{{ item.name }}">
+        {{ block('icon') }}
+        {{ block('label') }}
+        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+{% endblock %}
+
+{% block label %}<span>{{ item.label|trans }}</span>{% endblock %}

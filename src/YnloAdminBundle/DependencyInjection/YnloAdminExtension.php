@@ -24,12 +24,19 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('ynlo_admin_config', $config);
+
         $container->setParameter(
             'ynlo.js_plugin.admin',
             [
                 'icheck' => $config['icheck'],
             ]
         );
+
+        $container->setParameter('ynlo.admin_main_menu', $config['menu']['main']);
+        $container->setParameter('ynlo.admin_navbar_left_menu', $config['menu']['navbar_left']);
+        $container->setParameter('ynlo.admin_navbar_right_menu', $config['menu']['navbar_right']);
+        $container->setParameter('ynlo.admin_main_menu_dashboard', $config['menu']['main_dashboard']);
 
         $configDir = __DIR__.'/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));

@@ -15,24 +15,75 @@ This is the default configuration for all menus inside `ynlo_admin` configuratio
 
 ````yml
 menu:
-    main:                 'ToplibAdminBundle:Builder:mainMenu'
-    navbar_left:          'ToplibAdminBundle:Builder:navbarLeftMenu'
-    navbar_right:         'ToplibAdminBundle:Builder:navbarRightMenu'
+    main:                 'YnloAdminBundle:Builder:mainMenu'
+    main_admins:          true
+    main_dashboard:       true
+    main_menu_class:      sidebar-menu
+    main_navigation_header:  true
+    navbar_left:          'YnloAdminBundle:Builder:navbarLeftMenu'
+    navbar_right:         'YnloAdminBundle:Builder:navbarRightMenu'
 ````
 
 YnloAdmin use [the easy way](http://symfony.com/doc/current/bundles/KnpMenuBundle/index.html#method-a-the-easy-way-yay)
-of KnpMenu to create all menus. It`s easy to customize and override.
+of KnpMenu to create all menus. It`s easy to customize and override. 
+On the other hand use sonata blocks to render menus inside the template.
 
-## Create a custom menu for `navbar-left` position
+## Main Menu
+
+The main sidebar menu is based on sonata admin menu, then the following documentation describe how do any modification:
+
+[Sonata Main Menu](https://sonata-project.org/bundles/admin/master/doc/cookbook/recipe_knp_menu.html)
+
+## Extending menu
+
+You can modify the menu via events easily. 
+You can register as many listeners as you want for the event with one of the following names:
+ 
+- admin.event.configure.menu.sidebar
+- admin.event.configure.menu.navbar_left
+- admin.event.configure.menu.navbar_right
+
+````php
+<?php
+namespace AppBundle\EventListener;
+
+use Sonata\AdminBundle\Event\ConfigureMenuEvent;
+
+class MenuBuilderListener
+{
+    public function configureMenu(ConfigureMenuEvent $event)
+    {
+        $menu = $event->getMenu();
+
+        $child = $menu->addChild('reports', array(
+            'route' => 'app_reports_index',
+            'labelAttributes' => array('icon' => 'fa fa-bar-chart'),
+        ));
+
+        $child->setLabel('Daily and monthly reports');
+    }
+}
+````
+
+service:
+````yml
+services:
+    app.menu_listener:
+        class: AppBundle\EventListener\MenuBuilderListener
+        tags:
+            - { name: kernel.event_listener, event: admin.event.configure.menu.navbar_left, method: configureMenu }
+````            
+
+## Override entire menu
 
 Create your menu builder class inside `Menu` folder in your bundle.
-Can extends from `YnloFramework\\YnloAdminBundle\\Menu\\Builder`.
+Can extends from `YnloFramework\YnloAdminBundle\Menu\Builder`.
 
 ````php
 namespace AppBundle\Menu;
 
-use Knp\\Menu\\FactoryInterface;
-use YnloFramework\\YnloAdminBundle\\Menu\\Builder as BaseBuilder;
+use Knp\Menu\FactoryInterface;
+use YnloFramework\YnloAdminBundle\Menu\Builder as BaseBuilder;
 
 class Builder extends BaseBuilder
 {
@@ -49,7 +100,7 @@ class Builder extends BaseBuilder
 }
 ````
 
-Override the toplib default menu with your menu in the `config.yml`
+Override the default menu with your menu in the `config.yml`
 
 ````yml
 #config.yml
@@ -121,6 +172,8 @@ Highlight new or unread menu items by adding an badge.
 
 ### Remote (Dropdown)
 
+> Coming soon...
+
 Render custom dropdown content based on the response of a remote action.
 
 ##### Usage
@@ -168,7 +221,6 @@ $menu->addChild('dropdown', ['uri' => '#'])
     ->setAttribute('dropdown', true)
     ->setExtra('icon', 'fa fa-list')
     ->setExtra('animation', 'lightSpeedIn');
-````php
-
+````
 
 

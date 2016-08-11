@@ -45,6 +45,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->scalarNode('icheck')->defaultValue('flat-blue')->info('Set the theme to use or false to disable');
 
+        $menu = $rootNode->arrayNode('menu')->addDefaultsIfNotSet()->children();
+        $menu->scalarNode('main')->defaultValue('YnloAdminBundle:Builder:mainMenu');
+        $menu->booleanNode('main_admins')->defaultTrue();
+        $menu->booleanNode('main_dashboard')->defaultTrue();
+        $menu->scalarNode('main_menu_class')->defaultValue('sidebar-menu');
+        $menu->booleanNode('main_navigation_header')->defaultTrue();
+        $menu->scalarNode('navbar_left')->defaultValue('YnloAdminBundle:Builder:navbarLeftMenu');
+        $menu->scalarNode('navbar_right')->defaultValue('YnloAdminBundle:Builder:navbarRightMenu');
+
         return $treeBuilder;
     }
 }

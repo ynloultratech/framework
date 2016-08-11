@@ -1,3 +1,10 @@
+parameters:
+   ynlo_admin.sidebar_dashboard_menu_item_class: YnloFramework\YnloAdminBundle\Menu\SidebarDashboardMenuItem
+   ynlo_admin.navbar_right_user_menu_class: YnloFramework\YnloAdminBundle\Menu\NavbarRightUserMenu
+
+imports:
+  - { resource: "block.yml" }
+
 services:
     ynlo_admin.twig_action_test:
         class: YnloFramework\YnloAdminBundle\Twig\Tests\AdminActionTest
@@ -36,3 +43,15 @@ services:
         arguments: ['@sonata.admin.guesser.orm_list_chain', '%sonata_doctrine_orm_admin.templates%']
         calls:
             - ['setTaggedServices', ['@ynlo.tagged_services']]
+
+    ynlo_admin.main_menu.navbar_right_user_menu:
+        class: '%ynlo_admin.navbar_right_user_menu_class%'
+        arguments: ['@logged_user']
+        tags:
+            - { name: kernel.event_listener , event: admin.event.configure.menu.navbar_right, method: configureMenu, priority: -255 }
+
+    ynlo_admin.main_menu.dashboard:
+        class: '%ynlo_admin.sidebar_dashboard_menu_item_class%'
+        arguments: ['%ynlo.admin_main_menu_dashboard%']
+        tags:
+            - { name: kernel.event_listener , event: admin.event.configure.menu.sidebar , method: configureMenu, priority: 255 }

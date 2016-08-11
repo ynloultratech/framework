@@ -1,0 +1,8 @@
+services:
+  logged_user_factory:
+      class: YnloFramework\YnloUserBundle\LoggedUser\LoggedUserFactory
+      arguments: ['@security.token_storage']
+
+  logged_user:
+      class: '%user_class%'
+      factory: ['@logged_user_factory', getLoggedUser ]

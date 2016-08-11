@@ -1,40 +1,13 @@
 {% block main_sidebar %}
     <aside class="main-sidebar">
-
-        <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-
-            <!-- Sidebar user panel (optional) -->
-            {#<div class="user-panel">#}
-                {#<div class="pull-left image">#}
-                    {#<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">#}
-                {#</div>#}
-                {#<div class="pull-left info">#}
-                    {#<p>Alexander Pierce</p>#}
-                    {#<!-- Status -->#}
-                    {#<a href="#"><i class="fa fa-circle text-success"></i> Online</a>#}
-                {#</div>#}
-            {#</div>#}
-
-            <!-- search form (Optional) -->
-            {#<form action="#" method="get" class="sidebar-form">#}
-                {#<div class="input-group">#}
-                    {#<input type="text" name="q" class="form-control" placeholder="Search...">#}
-                    {#<span class="input-group-btn">#}
-                {#<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>#}
-                {#</button>#}
-              {#</span>#}
-                {#</div>#}
-            {#</form>#}
-            <!-- /.search form -->
-
-            <!-- Sidebar Menu -->
-            {% block side_bar_nav %}
-                {% if app.user and is_granted('ROLE_SONATA_ADMIN') %}
-                    {{ knp_menu_render('sonata_admin_sidebar', {template: sonata_admin.adminPool.getTemplate('knp_menu_template')}) }}
-                {% endif %}
-            {% endblock side_bar_nav %}
-            <!-- /.sidebar-menu -->
+            {{ sonata_block_render_event('admin.sidebar.top') }}
+            <!-- Main navigation -->
+            {% if app.user and is_granted('ROLE_ADMIN') %}
+                {{ sonata_block_render_event('admin.sidebar.menu') }}
+            {% endif %}
+            <!-- /main navigation -->
+            {{ sonata_block_render_event('admin.sidebar.bottom') }}
         </section>
         <!-- /.sidebar -->
     </aside>

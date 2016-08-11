@@ -1,0 +1,39 @@
+parameters:
+  admin_main_menu_block: YnloFramework\YnloAdminBundle\Block\MainMenuBlock
+
+services:
+  admin.block.sidebar_menu:
+      class: '%admin_main_menu_block%'
+      arguments: ['admin.block.sidebar_menu', '@templating']
+      calls:
+          - [ 'setParameters' , [ { menu: '%ynlo.admin_main_menu%'} ]]
+      tags:
+          - { name: 'sonata.block' }
+          - { name: 'kernel.event_listener', event: sonata.block.event.admin.sidebar.menu, method: onBlock}
+
+  admin.block.navbar_right_menu:
+      class: YnloFramework\YnloAdminBundle\Block\NavbarRightMenuBlock
+      arguments: ['admin.block.navbar_right_menu', '@templating']
+      calls:
+          - [ 'setParameters' , [ { menu: '%ynlo.admin_navbar_right_menu%'} ]]
+      tags:
+          - { name: 'sonata.block' }
+          - { name: 'kernel.event_listener', event: sonata.block.event.admin.navbar_right.menu, method: onBlock}
+
+  admin.block.navbar_left_menu:
+      class: YnloFramework\YnloAdminBundle\Block\NavbarLeftMenuBlock
+      arguments: ['admin.block.navbar_left_menu', '@templating']
+      calls:
+          - [ 'setParameters' , [ { menu: '%ynlo.admin_navbar_left_menu%'} ]]
+      tags:
+          - { name: 'sonata.block' }
+          - { name: 'kernel.event_listener', event: sonata.block.event.admin.navbar_left.menu, method: onBlock}
+
+  admin.block.sidebar_profile:
+      class: YnloFramework\YnloAdminBundle\Block\SidebarProfileBlock
+      arguments: ['admin.block.sidebar_profile','@templating']
+      calls:
+          - [ 'setUser' , ['@logged_user'] ]
+      tags:
+          - { name: 'sonata.block' }
+          - { name: 'kernel.event_listener', event: sonata.block.event.admin.sidebar.top, method: onBlock}

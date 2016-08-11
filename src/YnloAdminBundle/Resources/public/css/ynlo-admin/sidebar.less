@@ -1,16 +1,26 @@
-.sidebar-menu {
-  .treeview-menu {
-    & > li {
-      & > a {
-        & > .fa,
-        & > .glyphicon,
-        & > .ion {
-          //fix the pjax spinner icon with smooth movements
-          width: 20px;
-          margin-right: 10px;
-          text-align: center;
+.main-sidebar {
+  .sidebar-menu {
+    .treeview-menu, & {
+      & > li {
+        & > a {
+          & > .fa,
+          & > .glyphicon,
+          & > .ion {
+            //fix the pjax spinner icon with smooth movements
+            width: 20px;
+            margin-right: 5px;
+            text-align: center;
+          }
         }
       }
     }
+    .treeview-menu {
+      a {
+        margin-left: 10px;
+      }
+    }
+  }
+  .header {
+    text-transform: uppercase;
   }
 }
