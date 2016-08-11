@@ -14,8 +14,3 @@ services:
   ynlo.tagged_services:
       class: YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServices
       arguments: [ '@service_container' ]
-
-  ynlo.asset_cache_warmer:
-    class: YnloFramework\YnloFrameworkBundle\Cache\AssetCacheWarmer
-    tags:
-      - { name: 'kernel.cache_warmer' }

@@ -1,4 +1,10 @@
 {% block head %}
+
+    {% use 'YnloAdminBundle:Chunks/Layout:assetic_assets.html.twig' %}
+
+    {% set js_assets = block('assetic_js_assets') %}
+    {% set css_assets = block('assetic_css_assets') %}
+
     <head>
         {% block meta_tags %}
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +13,7 @@
         {% endblock %}
 
         {% block stylesheets %}
-            {% stylesheets '@admin_css' output='assets/admin.css' filter='cssrewrite' %}
-            <link rel="stylesheet" href="{{ asset_url }}"/>
-            {% endstylesheets %}
+            {{ css_assets|raw }}
         {% endblock %}
 
         {% block javascripts %}
@@ -21,7 +25,7 @@
                     USE_STICKYFORMS: {% if sonata_admin.adminPool.getOption('use_stickyforms') %}true{% else %}false{% endif %}
                 };
                 window.SONATA_TRANSLATIONS = {
-                    CONFIRM_EXIT:  '{{ 'confirm_exit'|trans({}, 'SonataAdminBundle')|escape('js') }}'
+                    CONFIRM_EXIT: '{{ 'confirm_exit'|trans({}, 'SonataAdminBundle')|escape('js') }}'
                 };
 
                 // http://getbootstrap.com/getting-started/#support-ie10-width
@@ -31,10 +35,7 @@
                     document.querySelector('head').appendChild(msViewportStyle);
                 }
             </script>
-
-            {% javascripts '@admin_js' output='assets/admin.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            {{ js_assets|raw }}
         {% endblock %}
 
         <title>

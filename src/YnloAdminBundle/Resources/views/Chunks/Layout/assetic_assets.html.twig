@@ -1,0 +1,11 @@
+{% block assetic_js_assets %}
+    {% javascripts '@admin_js' output='assets/admin.js' %}
+    <script type="text/javascript" src="{{ asset_url }}{% if app.environment == 'dev' %}?v={{ random() }}{% endif %}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block assetic_css_assets %}
+    {% stylesheets '@admin_css' output='assets/admin.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}{% if app.environment == 'dev' %}?v={{ random() }}{% endif %}"/>
+    {% endstylesheets %}
+{% endblock %}

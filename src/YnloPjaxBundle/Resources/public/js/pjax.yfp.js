@@ -284,18 +284,22 @@ YnloFramework.Pjax = {
         }
     },
     loadScripts: function (output) {
+
+
+
         //already loaded scripts to avoid load again
         var loadedScripts = [];
         $(document).find('script').each(function () {
             if ($(this).attr('src')) {
-                loadedScripts.push($(this).attr('src'));
+                var src = $(this).attr('src');
+                loadedScripts.push(YnloFramework.Pjax.__getRealAssetUrl(src));
             }
         });
 
         var onThisPage = [];
         $(output).find('script').each(function () {
             var script = $(this);
-            var src = $(this).attr('src');
+            var src = YnloFramework.Pjax.__getRealAssetUrl($(this).attr('src'));
             onThisPage.push(src);
             if (loadedScripts.indexOf(src) == -1 && src) {
                 YnloFramework.log('Loading Script:' + src);
@@ -313,13 +317,13 @@ YnloFramework.Pjax = {
         var loadedStyles = [];
         $(document).find('link').each(function () {
             if ($(this).attr('href')) {
-                loadedStyles.push($(this).attr('href'));
+                loadedStyles.push(YnloFramework.Pjax.__getRealAssetUrl($(this).attr('href')));
             }
         });
         var onThisPage = [];
         $(output).find('link').each(function () {
             var style = $(this);
-            var href = $(this).attr('href');
+            var href = YnloFramework.Pjax.__getRealAssetUrl($(this).attr('href'));
             onThisPage.push(href);
             if (loadedStyles.indexOf(href) == -1 && href) {
                 YnloFramework.log('Loading Stylesheet:' + href);
@@ -332,12 +336,23 @@ YnloFramework.Pjax = {
         //avoid apply styles for other pages
         $('head').find('link').each(function () {
             var style = $(this);
-            var href = $(this).attr('href');
+            var href = YnloFramework.Pjax.__getRealAssetUrl($(this).attr('href'));
             if (onThisPage.indexOf(href) == -1 && href) {
                 YnloFramework.log('Removing Stylesheet:' + href);
                 $(style).remove();
             }
         });
+    },
+    //remove any parameter passed to the script url
+    //used in dev environment to avoid load already loaded script
+    //in dev env scripts are css has timestamp to force reload when f5 is pressed
+    __getRealAssetUrl: function (src) {
+        if (YnloFramework.debug && src) {
+            var regExp = /\?.+/;
+            src = src.replace(regExp, '');
+        }
+
+        return src;
     }
 };
 YnloFramework.register('Pjax');

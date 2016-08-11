@@ -1,18 +1,19 @@
+{% use 'YnloAdminBundle:Chunks/Layout:assetic_assets.html.twig' %}
+
+{% set js_assets = block('assetic_js_assets') %}
+{% set css_assets = block('assetic_css_assets') %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     {% block stylesheets %}
-        {% stylesheets '@admin_css' output='assets/admin.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}"/>
-        {% endstylesheets %}
+        {{ css_assets|raw }}
     {% endblock %}
 
     {% block javascripts %}
-        {% javascripts '@admin_js' output='assets/admin.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        {{ js_assets|raw }}
     {% endblock %}
 
     <title>Admin - {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</title>
