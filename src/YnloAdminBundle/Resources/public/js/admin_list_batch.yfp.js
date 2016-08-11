@@ -19,20 +19,23 @@ YnloFramework.AdminListBatch = {
         });
     },
     initCheckboxes: function () {
-        $(document).on('ifChanged', '#list_batch_checkbox', function () {
-            $(this)
+        $(document).on('change ifChanged', '#list_batch_checkbox', function () {
+            var e = $(this)
                 .closest('table')
-                .find('td.sonata-ba-list-field-batch input[type="checkbox"], div.sonata-ba-list-field-batch input[type="checkbox"]')
-                .iCheck($(this).is(':checked') ? 'check' : 'uncheck')
-            ;
+                .find('td.sonata-ba-list-field-batch input[type="checkbox"], div.sonata-ba-list-field-batch input[type="checkbox"]');
+
+            if (e.iCheck !== undefined) {
+                e.iCheck($(this).is(':checked') ? 'check' : 'uncheck')
+            } else {
+                e.prop('checked', $(this).is(':checked') ? true : false);
+            }
         });
         $(document)
-            .on('ifChanged', 'td.sonata-ba-list-field-batch input[type="checkbox"], div.sonata-ba-list-field-batch input[type="checkbox"]', function () {
+            .on('change ifChanged', 'td.sonata-ba-list-field-batch input[type="checkbox"], div.sonata-ba-list-field-batch input[type="checkbox"]', function () {
                 $(this)
                     .closest('tr, div.sonata-ba-list-field-batch')
-                    .toggleClass('active sonata-ba-list-row-selected', $(this).is(':checked'))
-                ;
+                    .toggleClass('active sonata-ba-list-row-selected', $(this).is(':checked'));
             })
-            .trigger('ifChanged');
+            .trigger('change ifChanged');
     }
 };

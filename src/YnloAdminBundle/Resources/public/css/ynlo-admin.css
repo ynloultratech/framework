@@ -99,8 +99,11 @@
   border-top: none;
 }
 .content-header .right-toolbar {
-  float: right;
-  margin-top: 10px;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  height: 36px;
+  margin-top: -18px;
 }
 .loader {
   width: 20px;

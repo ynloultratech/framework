@@ -1,111 +1,121 @@
-{% block sonata_page_content_header %}
+{% block page_content_header %}
     <section class="content-header">
-        {% block tab_menu_navbar_header %}
-            <div class="right-toolbar hidden-xs">
-                {% block content_header_right %}
-                {% endblock %}
-                {% block sonata_admin_content_actions_wrappers %}
-                    {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-navicon"></i>
-                            </a>
-                            <ul class="dropdown-menu pull-right" role="menu">
-                                {{ _actions|raw }}
-                            </ul>
-                        </div>
-                    {% endif %}
-                {% endblock sonata_admin_content_actions_wrappers %}
-            </div>
-            <h1 class="page-title">
-                {% block page_title_text %}
-                    {% if admin is defined and admin.icon %}
-                        <i class="{{ admin.icon }}"></i>
-                    {% endif %}
-                    {% if _navbar_title is not empty %}
-                        {{ _navbar_title|raw }}
-                    {% elseif admin is defined and action is defined %}
-                        {% set menu = admin.breadcrumbs(action)|last %}
-                        {{ menu.label }}
-                    {% elseif _title is not empty %}
-                        {{ _title|raw }}
-                    {% endif %}
-                {% endblock %}
-            </h1>
-            {% block sonata_breadcrumb %}
-                {% if _breadcrumb is not empty or action is defined %}
-                    <ul class="breadcrumb">
-                        {% if _breadcrumb is empty %}
-                            {% if action is defined %}
-                                {% for menu in breadcrumbs_builder.breadcrumbs(admin, action) %}
-                                    {% if not loop.last %}
-                                        <li>
-                                            {% if menu.uri is not empty %}
-                                                <a href="{{ menu.uri }}">{{ menu.label|raw }}</a>
-                                            {% else %}
-                                                {{ menu.label }}
-                                            {% endif %}
-                                        </li>
-                                    {% else %}
-                                        <li class="active"><span>{{ menu.label }}</span></li>
-                                    {% endif %}
-                                {% endfor %}
+        {% block page_content_header_content %}
+            {% block tab_menu_navbar_header %}
+
+                {% block page_title %}
+                    <h1 class="page-title">
+                        {% block page_title_text %}
+                            {% if admin is defined and admin.icon %}
+                                <i class="{{ admin.icon }}"></i>
                             {% endif %}
-                        {% else %}
-                            {{ _breadcrumb|raw }}
+                            {% if _navbar_title is not empty %}
+                                {{ _navbar_title|raw }}
+                            {% elseif admin is defined and action is defined %}
+                                {% set menu = admin.breadcrumbs(action)|last %}
+                                {{ menu.label }}
+                            {% elseif _title is not empty %}
+                                {{ _title|raw }}
+                            {% endif %}
+                        {% endblock %}
+                    </h1>
+
+                    <!-- Breadcrumbs ---->
+                    {% block sonata_breadcrumb %}
+                        {% if _breadcrumb is not empty or action is defined %}
+                            <ul {% block breadcrumb_list_attributes %}class="breadcrumb"{% endblock %}>
+                                {% if _breadcrumb is empty %}
+                                    {% if action is defined %}
+                                        {% for menu in breadcrumbs_builder.breadcrumbs(admin, action) %}
+                                            {% if not loop.last %}
+                                                <li>
+                                                    {% if menu.uri is not empty %}
+                                                        <a href="{{ menu.uri }}">{{ menu.label|raw }}</a>
+                                                    {% else %}
+                                                        {{ menu.label }}
+                                                    {% endif %}
+                                                </li>
+                                            {% else %}
+                                                <li class="active"><span>{{ menu.label }}</span></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% else %}
+                                    {{ _breadcrumb|raw }}
+                                {% endif %}
+                            </ul>
                         {% endif %}
-                    </ul>
-                {% endif %}
-            {% endblock sonata_breadcrumb %}
-        {% endblock %}
+                    {% endblock sonata_breadcrumb %}
+                {% endblock %}
+            {% endblock %}
+
+            <!-- Right content ---->
+            {% block content_header_right %}
+                <div {% block content_header_right_attributes %}class="right-toolbar hidden-xs"{% endblock %}>
+                    {% block actions %}
+                        {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-navicon"></i>
+                                </a>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    {{ _actions|raw }}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
 
 
-        {#{% block sonata_page_content_nav %}#}
-        {#{% if _tab_menu is not empty or _actions is not empty or _list_filters_actions is not empty %}#}
-        {#<nav class="navbar navbar-default" role="navigation">#}
-        {#<div class="container-fluid">#}
+
+            {#{% block sonata_page_content_nav %}#}
+            {#{% if _tab_menu is not empty or _actions is not empty or _list_filters_actions is not empty %}#}
+            {#<nav class="navbar navbar-default" role="navigation">#}
+            {#<div class="container-fluid">#}
 
 
 
 
-        {#<div class="navbar-collapse">#}
-        {#<div class="navbar-left">#}
-        {#{% if _tab_menu is not empty %}#}
-        {#{{ _tab_menu|raw }}#}
-        {#{% endif %}#}
-        {#</div>#}
+            {#<div class="navbar-collapse">#}
+            {#<div class="navbar-left">#}
+            {#{% if _tab_menu is not empty %}#}
+            {#{{ _tab_menu|raw }}#}
+            {#{% endif %}#}
+            {#</div>#}
 
-        {#{% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}#}
-        {#<div class="nav navbar-right btn-group">#}
-        {#{% for mode, settings in admin.listModes %}#}
-        {#<a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}"><i class="{{ settings.class }}"></i></a>#}
-        {#{% endfor %}#}
-        {#</div>#}
-        {#{% endif %}#}
+            {#{% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}#}
+            {#<div class="nav navbar-right btn-group">#}
+            {#{% for mode, settings in admin.listModes %}#}
+            {#<a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}"><i class="{{ settings.class }}"></i></a>#}
+            {#{% endfor %}#}
+            {#</div>#}
+            {#{% endif %}#}
 
-        {#{% block sonata_admin_content_actions_wrappers %}#}
-        {#{% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}#}
-        {#<ul class="nav navbar-nav navbar-right">#}
-        {#{% if _actions|split('</a>')|length > 2 %}#}
-        {#<li class="dropdown sonata-actions">#}
-        {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>#}
-        {#<ul class="dropdown-menu" role="menu">#}
-        {#{{ _actions|raw }}#}
-        {#</ul>#}
-        {#</li>#}
-        {#{% else %}#}
-        {#{{ _actions|raw }}#}
-        {#{% endif %}#}
-        {#</ul>#}
-        {#{% endif %}#}
-        {#{% endblock sonata_admin_content_actions_wrappers %}#}
+            {#{% block sonata_admin_content_actions_wrappers %}#}
+            {#{% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}#}
+            {#<ul class="nav navbar-nav navbar-right">#}
+            {#{% if _actions|split('</a>')|length > 2 %}#}
+            {#<li class="dropdown sonata-actions">#}
+            {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>#}
+            {#<ul class="dropdown-menu" role="menu">#}
+            {#{{ _actions|raw }}#}
+            {#</ul>#}
+            {#</li>#}
+            {#{% else %}#}
+            {#{{ _actions|raw }}#}
+            {#{% endif %}#}
+            {#</ul>#}
+            {#{% endif %}#}
+            {#{% endblock sonata_admin_content_actions_wrappers %}#}
 
 
-        {#</div>#}
-        {#</div>#}
-        {#</nav>#}
-        {#{% endif %}#}
-        {#{% endblock sonata_page_content_nav %}#}
+            {#</div>#}
+            {#</div>#}
+            {#</nav>#}
+            {#{% endif %}#}
+            {#{% endblock sonata_page_content_nav %}#}
+        {% endblock page_content_header_content %}
     </section>
     {% if _tab_menu is not empty %}
         <nav class="navbar navbar-default" role="navigation">
@@ -116,4 +126,4 @@
             </div>
         </nav>
     {% endif %}
-{% endblock sonata_page_content_header %}
+{% endblock page_content_header %}

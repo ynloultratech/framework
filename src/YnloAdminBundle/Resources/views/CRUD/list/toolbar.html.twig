@@ -7,7 +7,9 @@
     {% endblock %}
     <div class="divider"></div>
     {% block batch_actions %}
-        {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getBatchActionMapper.all } %}
+        <div class="btn-group">
+            {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getBatchActionMapper.all } %}
+        </div>
     {% endblock %}
     {% block export %}
         <div class="divider"></div>

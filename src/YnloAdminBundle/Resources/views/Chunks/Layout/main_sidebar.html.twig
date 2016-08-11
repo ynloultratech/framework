@@ -1,13 +1,15 @@
 {% block main_sidebar %}
     <aside class="main-sidebar">
         <section class="sidebar">
-            {{ sonata_block_render_event('admin.sidebar.top') }}
-            <!-- Main navigation -->
-            {% if app.user and is_granted('ROLE_ADMIN') %}
-                {{ sonata_block_render_event('admin.sidebar.menu') }}
-            {% endif %}
-            <!-- /main navigation -->
-            {{ sonata_block_render_event('admin.sidebar.bottom') }}
+            {% block main_sidebar_content %}
+                {{ sonata_block_render_event('admin.sidebar.top') }}
+                <!-- Main navigation -->
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    {{ sonata_block_render_event('admin.sidebar.menu') }}
+                {% endif %}
+                <!-- /main navigation -->
+                {{ sonata_block_render_event('admin.sidebar.bottom') }}
+            {% endblock %}
         </section>
         <!-- /.sidebar -->
     </aside>
