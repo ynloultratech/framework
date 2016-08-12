@@ -1,18 +1,22 @@
 {# @var admin \YnloFramework\YnloAdminBundle\Admin\AbstractAdmin#}
 <div class="btn-toolbar" role="toolbar">
-    {% block actions %}
-        <div class="btn-group">
-            {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getListToolbarActions.all } %}
-        </div>
-    {% endblock %}
-    <div class="divider"></div>
+    {% if admin.getListToolbarActions.all %}
+        {% block actions %}
+            <div class="btn-group">
+                {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getListToolbarActions.all } %}
+            </div>
+        {% endblock %}
+        <div class="divider"></div>
+    {% endif %}
     {% block batch_actions %}
         <div class="btn-group">
             {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getBatchActionMapper.all } %}
         </div>
     {% endblock %}
     {% block export %}
-        <div class="divider"></div>
+        {% if admin.getBatchActionMapper.all %}
+            <div class="divider"></div>
+        {% endif %}
         {% if admin.hasRoute('export') and admin.isGranted('EXPORT') and admin.getExportFormats()|length %}
             <div class="btn-group">
                 <button type="button" class="{% block export_class %}btn btn-default{% endblock %} dropdown-toggle" data-toggle="dropdown">
