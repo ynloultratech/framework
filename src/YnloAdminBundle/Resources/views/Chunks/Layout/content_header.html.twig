@@ -117,13 +117,15 @@
             {#{% endblock sonata_page_content_nav %}#}
         {% endblock page_content_header_content %}
     </section>
-    {% if _tab_menu is not empty %}
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="navbar-collapse">
-                <div class="navbar-left">
-                    {{ _tab_menu|raw }}
+    {% block tab_menu_wrapper %}
+        {% if _tab_menu is not empty %}
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-collapse">
+                    <div class="navbar-left">
+                        {{ _tab_menu|raw }}
+                    </div>
                 </div>
-            </div>
-        </nav>
-    {% endif %}
+            </nav>
+        {% endif %}
+    {% endblock %}
 {% endblock page_content_header %}

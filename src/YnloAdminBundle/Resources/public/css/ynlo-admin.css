@@ -92,11 +92,13 @@
   padding: 0 5px;
   color: #333;
 }
-.content-header + .navbar {
+.content-header + .navbar,
+.content-header + .sticky-wrapper .navbar {
   border-radius: 0;
   border-left: none;
   border-right: none;
   border-top: none;
+  margin-bottom: 0;
 }
 .content-header .right-toolbar {
   position: absolute;
