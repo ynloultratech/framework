@@ -1,17 +1,19 @@
 <hr style="margin: 0">
 <div class="panel-body">
     <div class="info-box">
-        <span class="info-box-icon bg-aqua"><i class="fa fa-arrow-circle-right"></i></span>
+        <span class="info-box-icon bg-aqua">
+            {% if admin is defined and admin.icon %}
+                <i class="{{ admin.icon }}"></i>
+            {% else %}
+                <i class="fa fa-arrow-circle-right"></i>
+            {% endif %}
+        </span>
         <div class="info-box-content">
             <span class="info-box-text">{{ 'no_result'|trans({}, 'SonataAdminBundle') }}</span>
-            <div class="progress">
-                <div class="progress-bar" style="width: 0%"></div>
-            </div>
-            <span class="progress-description">
+            <hr style="margin: 0 0 5px">
             {% if not app.request.xmlHttpRequest %}
                 {% include 'SonataAdminBundle:Button:create_button.html.twig' %}
             {% endif %}
-        </span>
         </div>
     </div>
 </div>
