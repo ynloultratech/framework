@@ -1,9 +1,10 @@
 {% extends '@SonataAdmin/CRUD/base_list.html.twig' %}
 
-{% block content_header_right %}
+{% block header_actions %}
     {% if _list_filters_actions is not empty %}
         {{ _list_filters_actions|raw }}
     {% endif %}
+    {{ parent() }}
 {% endblock %}
 
 {% block list_table %}

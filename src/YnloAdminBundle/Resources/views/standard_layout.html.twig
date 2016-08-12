@@ -11,48 +11,65 @@
 {% set _navbar_title         = block('navbar_title') %}
 {% set _list_filters_actions = block('list_filters_actions') %}
 
+{% use 'YnloAdminBundle:Chunks/Layout:head.html.twig' %}
+{% use 'YnloAdminBundle:Chunks/Layout:main_header.html.twig' %}
+{% use 'YnloAdminBundle:Chunks/Layout:main_sidebar.html.twig' %}
+{% use 'YnloAdminBundle:Chunks/Layout:main_footer.html.twig' %}
+{% use 'YnloAdminBundle:Chunks/Layout:content_header.html.twig' %}
+{% use 'YnloAdminBundle:Chunks/Layout:content.html.twig' %}
+{% use 'YnloAdminBundle:Chunks/Layout:control_sidebar.html.twig' %}
+
+{% set _head                 = block('head') %}
+{% set _main_header          = block('main_header') %}
+{% set _main_sidebar         = block('main_sidebar') %}
+{% set _main_footer          = block('main_footer') %}
+{% set _page_content_header  = block('page_content_header') %}
+{% set _page_content         = block('page_content') %}
+{% set _control_sidebar      = block('control_sidebar') %}
+
 {% block html %}
     <!DOCTYPE html>
     <html lang="en" dir="ltr" {% block html_attributes %}class="no-js"{% endblock %}>
 
-    {% include 'YnloAdminBundle:Chunks/Layout:head.html.twig' %}
+    {{ _head|raw }}
 
     {% block body %}
         <body {% block body_attributes %}class="{% for class in admin_body_classes %}{{ class }} {% endfor %}"{% endblock %}>
 
         <!-- Main Header -->
-        {% block main_header %}
-            {% include 'YnloAdminBundle:Chunks/Layout:main_header.html.twig' %}
+        {% block main_header_wrapper %}
+            {{ _main_header|raw }}
         {% endblock %}
 
         <div {% block page_wrappper_attributes %}class="wrapper" id="pjax-container"{% endblock %}>
 
             {% block page_wrapper_content %}
 
-                {% block main_sidebar %}
+                {% block main_sidebar_wrapper %}
                     <!-- Left side column. contains the logo and sidebar -->
-                    {% include 'YnloAdminBundle:Chunks/Layout:main_sidebar.html.twig' %}
+                    {{ _main_sidebar|raw }}
                 {% endblock %}
 
                 {% block content_wrapper %}
                     <!-- Content Wrapper. Contains page content -->
                     <div class="content-wrapper">
-                        {% include 'YnloAdminBundle:Chunks/Layout:content_header.html.twig' %}
+                        {#{% use 'YnloAdminBundle:Chunks/Layout:content.html.twig' %}#}
+                        {{ _page_content_header|raw }}
 
                         <!-- Main content -->
-                        {% include 'YnloAdminBundle:Chunks/Layout:content.html.twig' %}
+                        {{ _page_content|raw }}
                         <!-- /.content -->
                     </div>
                 {% endblock %}
                 <!-- /.content-wrapper -->
 
                 <!-- Main Footer -->
-                {% block main_footer %}
-                    {% include 'YnloAdminBundle:Chunks/Layout:main_footer.html.twig' %}
+                {% block main_footer_wrapper %}
+                    {{ _main_footer|raw }}
                 {% endblock %}
 
-                {% block control_sidebar %}
-                    {% include 'YnloAdminBundle:Chunks/Layout:control_sidebar.html.twig' %}
+                {% block control_sidebar_wrapper %}
+                    {{ _control_sidebar|raw }}
                 {% endblock %}
 
             {% endblock page_wrapper_content %}

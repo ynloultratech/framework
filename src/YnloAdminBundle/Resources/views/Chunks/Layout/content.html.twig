@@ -1,39 +1,43 @@
-{% block sonata_page_content %}
-    <div class="content">
-        {% block sonata_admin_content %}
+{% block page_content %}
+    {% block sonat_page_content %}
+        <div class="content">
+            {% block admin_content %}
+                {% block sonata_admin_content %}
 
-            {% block notice %}
-                {% include 'YnloAdminBundle:FlashMessage:render.html.twig' %}
-            {% endblock notice %}
+                    {% block notice %}
+                        {% include 'YnloAdminBundle:FlashMessage:render.html.twig' %}
+                    {% endblock notice %}
 
-            {% if _preview is not empty %}
-                <div class="sonata-ba-preview">{{ _preview|raw }}</div>
-            {% endif %}
+                    {% if _preview is not empty %}
+                        <div class="sonata-ba-preview">{{ _preview|raw }}</div>
+                    {% endif %}
 
-            {% if _content is not empty %}
-                <div class="sonata-ba-content">{{ _content|raw }}</div>
-            {% endif %}
+                    {% if _content is not empty %}
+                        <div class="sonata-ba-content">{{ _content|raw }}</div>
+                    {% endif %}
 
-            {% if _show is not empty %}
-                <div class="sonata-ba-show">{{ _show|raw }}</div>
-            {% endif %}
+                    {% if _show is not empty %}
+                        <div class="sonata-ba-show">{{ _show|raw }}</div>
+                    {% endif %}
 
-            {% if _form is not empty %}
-                <div class="sonata-ba-form">{{ _form|raw }}</div>
-            {% endif %}
+                    {% if _form is not empty %}
+                        <div class="sonata-ba-form">{{ _form|raw }}</div>
+                    {% endif %}
 
-            {% if _list_table is not empty or _list_filters is not empty %}
-                {% if _list_filters|trim %}
-                    <div class="row">
-                        {{ _list_filters|raw }}
-                    </div>
-                {% endif %}
+                    {% if _list_table is not empty or _list_filters is not empty %}
+                        {% if _list_filters|trim %}
+                            <div class="row">
+                                {{ _list_filters|raw }}
+                            </div>
+                        {% endif %}
 
-                <div class="row">
-                    {{ _list_table|raw }}
-                </div>
+                        <div class="row">
+                            {{ _list_table|raw }}
+                        </div>
 
-            {% endif %}
-        {% endblock sonata_admin_content %}
-    </div>
-{% endblock sonata_page_content %}
+                    {% endif %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

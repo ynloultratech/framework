@@ -25,7 +25,7 @@
                         {% if _breadcrumb is not empty or action is defined %}
                             <ul {% block breadcrumb_list_attributes %}class="breadcrumb"{% endblock %}>
                                 {% if _breadcrumb is empty %}
-                                    {% if action is defined %}
+                                    {% if action is defined and breadcrumbs_builder is defined %}
                                         {% for menu in breadcrumbs_builder.breadcrumbs(admin, action) %}
                                             {% if not loop.last %}
                                                 <li>
@@ -50,9 +50,10 @@
             {% endblock %}
 
             <!-- Right content ---->
-            {% block content_header_right %}
-                <div {% block content_header_right_attributes %}class="right-toolbar hidden-xs"{% endblock %}>
-                    {% block actions %}
+
+            <div {% block content_header_right_attributes %}class="right-toolbar hidden-xs"{% endblock %}>
+                {% block content_header_right %}
+                    {% block header_actions %}
                         {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
                             <div class="btn-group">
                                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -64,9 +65,8 @@
                             </div>
                         {% endif %}
                     {% endblock %}
-                </div>
-            {% endblock %}
-
+                {% endblock %}
+            </div>
 
 
             {#{% block sonata_page_content_nav %}#}
