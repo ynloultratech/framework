@@ -48,8 +48,9 @@ You can register as many listeners as you want for the event with one of the fol
 namespace AppBundle\EventListener;
 
 use Sonata\AdminBundle\Event\ConfigureMenuEvent;
+use YnloFramework\YnloAdminBundle\Menu\AbstractMenuBuilderListener;
 
-class MenuBuilderListener
+class MenuBuilderListener extends AbstractMenuBuilderListener
 {
     public function configureMenu(ConfigureMenuEvent $event)
     {
@@ -70,6 +71,7 @@ service:
 services:
     app.menu_listener:
         class: AppBundle\EventListener\MenuBuilderListener
+        parent: 'ynlo_admin.menu_builder_listener'
         tags:
             - { name: kernel.event_listener, event: admin.event.configure.menu.navbar_left, method: configureMenu }
 ````            

@@ -14,7 +14,7 @@ use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 /**
  * Class NavbarRightUserMenu
  */
-class NavbarRightUserMenu
+class NavbarRightUserMenu extends AbstractMenuBuilderListener
 {
     protected $user;
 

@@ -1,6 +1,7 @@
 parameters:
    ynlo_admin.sidebar_dashboard_menu_item_class: YnloFramework\YnloAdminBundle\Menu\SidebarDashboardMenuItem
    ynlo_admin.navbar_right_user_menu_class: YnloFramework\YnloAdminBundle\Menu\NavbarRightUserMenu
+   ynlo_admin.abstract_menu_builder_listener: YnloFramework\YnloAdminBundle\Menu\AbstractMenuBuilderListener
 
 imports:
   - { resource: "block.yml" }
@@ -44,14 +45,22 @@ services:
         calls:
             - ['setTaggedServices', ['@ynlo.tagged_services']]
 
+    ynlo_admin.menu_builder_listener:
+        class: '%ynlo_admin.abstract_menu_builder_listener%'
+        abstract: true
+        calls:
+              - ['setContainer', ['@service_container']]
+
     ynlo_admin.main_menu.navbar_right_user_menu:
         class: '%ynlo_admin.navbar_right_user_menu_class%'
         arguments: ['@logged_user']
+        parent: 'ynlo_admin.menu_builder_listener'
         tags:
             - { name: kernel.event_listener , event: admin.event.configure.menu.navbar_right, method: configureMenu, priority: -255 }
 
     ynlo_admin.main_menu.dashboard:
         class: '%ynlo_admin.sidebar_dashboard_menu_item_class%'
         arguments: ['%ynlo_admin_config%']
+        parent: 'ynlo_admin.menu_builder_listener'
         tags:
             - { name: kernel.event_listener , event: admin.event.configure.menu.sidebar , method: configureMenu, priority: 255 }

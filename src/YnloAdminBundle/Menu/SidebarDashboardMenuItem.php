@@ -9,12 +9,12 @@
 
 namespace YnloFramework\YnloAdminBundle\Menu;
 
-use Sonata\AdminBundle\Event\ConfigureMenuEvent;
+use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 
 /**
  * Class SidebarDashboardMenuItem
  */
-class SidebarDashboardMenuItem
+class SidebarDashboardMenuItem extends AbstractMenuBuilderListener
 {
     protected $adminConfig;
 
