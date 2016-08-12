@@ -47,7 +47,7 @@ You can register as many listeners as you want for the event with one of the fol
 <?php
 namespace AppBundle\EventListener;
 
-use Sonata\AdminBundle\Event\ConfigureMenuEvent;
+use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 use YnloFramework\YnloAdminBundle\Menu\AbstractMenuBuilderListener;
 
 class MenuBuilderListener extends AbstractMenuBuilderListener
