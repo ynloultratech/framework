@@ -6,7 +6,7 @@
  */
 
 YnloFramework.Debugger = {
-    lastAjaxRequest: null,
+    lastError: null,
     lastDebugTokenLink: null,
     init: function () {
         if (!YnloFramework.debug) {
@@ -18,12 +18,15 @@ YnloFramework.Debugger = {
             }
         });
 
-        $(document).on('ajaxError pjax:error', function (event, xhr) {
-            YnloFramework.Debugger.showAjaxError(xhr);
+        $(document).on('pjax:error', function (event, xhr) {
+            YnloFramework.Debugger.showAjaxError(xhr, true);
+        });
+        $(document).on('ajaxError', function (event, xhr) {
+            YnloFramework.Debugger.showAjaxError(xhr, false);
         });
     },
-    showAjaxError: function (xhr) {
-        if (xhr.statusText == 'abort' || xhr.statusText == 'canceled' || xhr.status == 403) {
+    showAjaxError: function (xhr, expanded) {
+        if (xhr.statusText == 'abort' || xhr.statusText == 'canceled' || xhr.status == 403 || xhr === YnloFramework.Debugger.lastError) {
             return;
         }
 
@@ -38,27 +41,34 @@ YnloFramework.Debugger = {
         $('body').append(element);
         element.html('(' + xhr.status + ') ' + xhr.statusText);
         element.show();
-        element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastRequest()" style="margin: 0 5px">[RESPONSE]</a>');
+        element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastError()" style="margin: 0 5px">[RESPONSE]</a>');
 
         YnloFramework.error('Error Code: ' + xhr.status + ', Error: ' + xhr.statusText);
 
-        YnloFramework.Debugger.lastAjaxRequest = xhr;
+        YnloFramework.Debugger.lastError = xhr;
         if (xhr.getResponseHeader('X-Debug-Token-Link')) {
             YnloFramework.Debugger.lastDebugTokenLink = xhr.getResponseHeader('X-Debug-Token-Link');
-            element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastRequest(true)">[PROFILE]</a>');
+            element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastError(true)">[PROFILE]</a>');
+        }
+        if (expanded) {
+            YnloFramework.Debugger.showLastError();
         }
     },
-    showLastRequest: function (profile) {
+    showLastError: function (profile) {
         if ($('.ynlo-debugger-error-preview').length) {
             $('.ynlo-debugger-error-preview').remove();
         }
         var element = $('<div class="ynlo-debugger-error-preview"><a href="#" data-pjax="false" onclick="$(\'.ynlo-debugger-error-preview\').remove();">[ CLOSE ]</a><iframe frameborder="0"></iframe></div>');
+
+        if (profile == undefined && YnloFramework.Debugger.lastDebugTokenLink) {
+            element.find('a').after('<a data-pjax="false" style="margin: 0 5px 0 0" href="#" onclick="YnloFramework.Debugger.showLastError(true)">[PROFILE]</a> ');
+        }
         $('body').append(element);
         var iframe = element.find('iframe');
         if (profile) {
             iframe.prop('src', YnloFramework.Debugger.lastDebugTokenLink + '?panel=exception');
         } else {
-            iframe.prop('srcdoc', YnloFramework.Debugger.lastAjaxRequest.responseText);
+            iframe.prop('srcdoc', YnloFramework.Debugger.lastError.responseText);
         }
         element.show();
     }
