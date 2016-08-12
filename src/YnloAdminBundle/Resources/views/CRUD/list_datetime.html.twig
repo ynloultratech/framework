@@ -1,0 +1,14 @@
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block field %}
+    {%- if value is empty -%}
+        &nbsp;
+    {%- elseif field_description.options.format is defined -%}
+        {% set timezone = field_description.options.timezone is defined ? field_description.options.timezone : null %}
+        {{ value|localizeddate('medium', 'short', null, timezone, field_description.options.format ) }}
+    {%- elseif field_description.options.timezone is defined -%}
+        {{ value|localizeddate('medium', 'short', null , field_description.options.timezone) }}
+    {%- else -%}
+        {{ value|localizeddate('medium', 'short') }}
+    {%- endif -%}
+{% endblock %}

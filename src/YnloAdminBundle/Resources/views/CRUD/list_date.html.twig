@@ -1,0 +1,11 @@
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block field %}
+    {%- if value is empty -%}
+        &nbsp;
+    {%- elseif field_description.options.format is defined -%}
+        {{ value|localizeddate('medium', 'none', null, null, field_description.options.format ) }}
+    {%- else -%}
+        {{ value|localizeddate('medium', 'none') }}
+    {%- endif -%}
+{% endblock %}
