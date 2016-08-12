@@ -18,7 +18,7 @@ YnloFramework.Debugger = {
             }
         });
 
-        $(document).on('ajaxErrorr pjax:error', function (event, xhr) {
+        $(document).on('ajaxError pjax:error', function (event, xhr) {
             YnloFramework.Debugger.showAjaxError(xhr);
         });
     },
@@ -30,6 +30,10 @@ YnloFramework.Debugger = {
         if ($('.ynlo-debugger-error').length) {
             $('.ynlo-debugger-error').remove();
         }
+
+        var audio = new Audio('/bundles/ynloframework/media/error.mp3');
+        audio.play();
+
         var element = $('<div class="ynlo-debugger-error"></div>');
         $('body').append(element);
         element.html('(' + xhr.status + ') ' + xhr.statusText);
