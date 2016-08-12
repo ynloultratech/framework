@@ -74,7 +74,9 @@ YnloFramework.Pjax = {
         $(document).on('click.pjax', YnloFramework.Pjax.config.links, function (event) {
             var url = $(this).attr("href");
 
-            if (!url || url.substr(0, 1) == '#' || YnloFramework.Location.getURLParameter('data-pjax', url)) {
+            if (!url || url.substr(0, 1) == '#'
+                || YnloFramework.Location.getURLParameter('data-pjax', url)
+                || url.substr(0, 11) == 'javascript:') {
                 return;
             }
 
