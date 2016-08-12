@@ -24,6 +24,38 @@ YnloFramework.Debugger = {
         $(document).on('ajaxError', function (event, xhr) {
             YnloFramework.Debugger.showAjaxError(xhr, false);
         });
+
+        //keep syToolbar up to date when pjax target is not the body
+        $(document).on('ajaxSuccess', function (event, output, status, xhr) {
+            if (xhr.getResponseHeader('X-MODAL')) {
+                YnloFramework.Debugger.updateProfiler(xhr);
+            }
+        });
+
+        $(document).on('pjax:success', function (event, output, status, xhr) {
+            if (YnloFramework.Pjax.config.target !== 'body') {
+                YnloFramework.Debugger.updateProfiler(xhr);
+            }
+        });
+    },
+    updateProfiler: function (xhr) {
+        if (xhr.getResponseHeader('X-Debug-Token')) {
+            //TODO: resolve the current environment
+            var url = '/app_dev.php/_wdt/' + xhr.getResponseHeader('X-Debug-Token');
+            if ($('body').find('.sf-toolbarreset').length) {
+                $('body').find('.sf-toolbarreset > .sf-toolbar-block').addClass('sf-ajax-request-loading');
+                $.ajax(url, {
+                    success: function (response) {
+                        response = $('<div>' + response + '</div>');
+                        $('body').find('.sf-toolbarreset > .sf-toolbar-block').remove();
+                        $('body').find('.sf-toolbarreset').append(response.find('.sf-toolbarreset > .sf-toolbar-block'));
+                        $('.sf-toolbar-info').css('right', '0');
+                    }
+                });
+            } else {
+                $('<div class="profiler"></div>').load(url).appendTo('body');
+            }
+        }
     },
     showAjaxError: function (xhr, expanded) {
         if (xhr.statusText == 'abort' || xhr.statusText == 'canceled' || xhr.status == 403 || xhr === YnloFramework.Debugger.lastError) {
