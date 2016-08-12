@@ -1,33 +1,35 @@
 {% block before_navigation %}{% endblock %}
-<div class="box box-solid">
-    {% block navigation_header %}
-        <div class="box-header with-border">
-            <h3 class="box-title">{% block navigation_title %}Navigation{% endblock %}</h3>
-            <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
+{% block navigation_panel %}
+    <div class="box box-solid">
+        {% block navigation_header %}
+            <div class="box-header with-border">
+                <h3 class="box-title">{% block navigation_title %}Navigation{% endblock %}</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-    {% endblock %}
-    <div class="box-body no-padding nav-tabs">{# the class 'nav-tabs' is only used to keep sonata Admin.show_form_first_tab_with_errors #}
-        {% block navigation_list %}
-            <ul class="nav nav-pills nav-stacked">
-                {% block navigation_items %}
-                    {% for name, form_tab in admin.formtabs %}
-                        <li{% if loop.index == 1 %} class="active"{% endif %}>
-                            <a href="#tab_{{ admin.uniqid }}_{{ loop.index }}" data-toggle="tab">
-                                {% if form_tab.icon is defined %}
-                                    <i class="{{ form_tab.icon }} fa-fw"></i>
-                                {% endif %}
-                                <i class="fa fa-exclamation-circle has-errors hide pull-right"></i>
-                                {{ admin.trans(name, {}, form_tab.translation_domain) }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                {% endblock %}
-            </ul>
         {% endblock %}
+        <div class="box-body no-padding nav-tabs">{# the class 'nav-tabs' is only used to keep sonata Admin.show_form_first_tab_with_errors #}
+            {% block navigation_list %}
+                <ul {% block navigation_list_attributes %}class="nav nav-pills nav-stacked"{% endblock %}>
+                    {% block navigation_items %}
+                        {% for name, form_tab in admin.formtabs %}
+                            <li{% if loop.index == 1 %} class="active"{% endif %}>
+                                <a href="#tab_{{ admin.uniqid }}_{{ loop.index }}" data-toggle="tab">
+                                    {% if form_tab.icon is defined %}
+                                        <i class="{{ form_tab.icon }} fa-fw"></i>
+                                    {% endif %}
+                                    <i class="fa fa-exclamation-circle has-errors hide pull-right"></i>
+                                    {{ admin.trans(name, {}, form_tab.translation_domain) }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endblock %}
+                </ul>
+            {% endblock %}
+        </div>
     </div>
-</div>
+{% endblock %}
 {% block after_navigation %}{% endblock %}

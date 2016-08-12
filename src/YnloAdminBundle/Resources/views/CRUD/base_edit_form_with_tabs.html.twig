@@ -1,17 +1,25 @@
-<div class="col-md-3">
-    {% include admin.getSideBarTemplate %}
-</div>
+{% block form_with_tab %}
+    {% block tab_side %}
+        <div class="col-md-3">
+            {% include admin.getSideBarTemplate %}
+        </div>
+    {% endblock %}
 
-<div class="col-md-9">
-    <div class="tab-content">
-        {% for code, form_tab in admin.formtabs %}
-            <div class="tab-pane fade{% if loop.first %} in active{% endif %}" id="tab_{{ admin.uniqid }}_{{ loop.index }}">
-                {% if form_tab.description != false %}
-                    <p>{{ form_tab.description|trans({}, form_tab.translation_domain)|raw }}</p>
-                {% endif %}
+    {% block form_side %}
+        <div class="col-md-9">
+            <div class="tab-content">
+                {% block form_content %}
+                    {% for code, form_tab in admin.formtabs %}
+                        <div class="tab-pane fade{% if loop.first %} in active{% endif %}" id="tab_{{ admin.uniqid }}_{{ loop.index }}">
+                            {% if form_tab.description != false %}
+                                <p>{{ form_tab.description|trans({}, form_tab.translation_domain)|raw }}</p>
+                            {% endif %}
 
-                {{ form_helper.render_groups(admin, form, form_tab['groups'], has_tab) }}
+                            {{ form_helper.render_groups(admin, form, form_tab['groups'], has_tab) }}
+                        </div>
+                    {% endfor %}
+                {% endblock %}
             </div>
-        {% endfor %}
-    </div>
-</div>
+        </div>
+    {% endblock %}
+{% endblock %}

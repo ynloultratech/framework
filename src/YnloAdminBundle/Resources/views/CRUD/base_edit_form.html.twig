@@ -9,16 +9,19 @@
 {% block sonata_tab_content %}
     {% set has_tab = ((admin.formtabs|length == 1 and admin.formtabs|keys[0] != 'default') or admin.formtabs|length > 1 ) %}
     {% if has_tab %}
-        {% include 'YnloAdminBundle:CRUD:base_edit_form_with_tabs.html.twig' %}
+        {% block tabbed_content %}
+            {% include 'YnloAdminBundle:CRUD:base_edit_form_with_tabs.html.twig' %}
+        {% endblock %}
     {% else %}
-        <div class="col-md-12">
-            {% if admin.formtabs['default'].groups|length <= 1 and app.request.isxmlhttprequest  %}
-                {{ form_rest(form) }}
-            {% else %}
-                {{ form_helper.render_groups(admin, form, admin.formtabs['default'].groups, has_tab) }}
-            {% endif %}
-        </div>
+        {% block normal_content %}
+            <div class="col-md-12">
+                {% if admin.formtabs['default'].groups|length <= 1 and app.request.isxmlhttprequest %}
+                    {{ form_rest(form) }}
+                {% else %}
+                    {{ form_helper.render_groups(admin, form, admin.formtabs['default'].groups, has_tab) }}
+                {% endif %}
+            </div>
+        {% endblock %}
     {% endif %}
-
 {% endblock %}
 
