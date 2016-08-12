@@ -230,7 +230,9 @@ class AbstractAdmin extends BaseAbstractAdmin
         $this->configureBatchActionsUsingMapper($mapper);
 
         //customize delete action
-        $mapper->get('delete')->setIcon('fa fa-trash')->addAttributes(['class' => 'btn btn-danger']);
+        if ($mapper->has('delete')) {
+            $mapper->get('delete')->setIcon('fa fa-trash')->addAttributes(['class' => 'btn btn-danger']);
+        }
 
         //this return a array in the format expected by sonata
         //sonata don`t allow dropdowns, for that reason some child elements
