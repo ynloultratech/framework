@@ -18,28 +18,31 @@ YnloFramework.Debugger = {
             }
         });
 
-        $(document).on('ajaxError', function (event, xhr) {
-            if (xhr.statusText == 'abort' || xhr.statusText == 'canceled' || xhr.status == 403) {
-                return;
-            }
-
-            if ($('.ynlo-debugger-error').length) {
-                $('.ynlo-debugger-error').remove();
-            }
-            var element = $('<div class="ynlo-debugger-error"></div>');
-            $('body').append(element);
-            element.html('(' + xhr.status + ') ' + xhr.statusText);
-            element.show();
-            element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastRequest()" style="margin: 0 5px">[RESPONSE]</a>');
-
-            YnloFramework.error('Error Code: ' + xhr.status + ', Error: ' + xhr.statusText);
-
-            YnloFramework.Debugger.lastAjaxRequest = xhr;
-            if (xhr.getResponseHeader('X-Debug-Token-Link')) {
-                YnloFramework.Debugger.lastDebugTokenLink = xhr.getResponseHeader('X-Debug-Token-Link');
-                element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastRequest(true)">[PROFILE]</a>');
-            }
+        $(document).on('ajaxErrorr pjax:error', function (event, xhr) {
+            YnloFramework.Debugger.showAjaxError(xhr);
         });
+    },
+    showAjaxError: function (xhr) {
+        if (xhr.statusText == 'abort' || xhr.statusText == 'canceled' || xhr.status == 403) {
+            return;
+        }
+
+        if ($('.ynlo-debugger-error').length) {
+            $('.ynlo-debugger-error').remove();
+        }
+        var element = $('<div class="ynlo-debugger-error"></div>');
+        $('body').append(element);
+        element.html('(' + xhr.status + ') ' + xhr.statusText);
+        element.show();
+        element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastRequest()" style="margin: 0 5px">[RESPONSE]</a>');
+
+        YnloFramework.error('Error Code: ' + xhr.status + ', Error: ' + xhr.statusText);
+
+        YnloFramework.Debugger.lastAjaxRequest = xhr;
+        if (xhr.getResponseHeader('X-Debug-Token-Link')) {
+            YnloFramework.Debugger.lastDebugTokenLink = xhr.getResponseHeader('X-Debug-Token-Link');
+            element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastRequest(true)">[PROFILE]</a>');
+        }
     },
     showLastRequest: function (profile) {
         if ($('.ynlo-debugger-error-preview').length) {

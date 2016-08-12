@@ -140,12 +140,11 @@ YnloFramework.Pjax = {
                         YnloFramework.Pjax.pushResponse(url, output);
                         $(document).trigger('pjax:success', [output, status, xhr]);
                     },
-                    error: function (xhr, reason) {
+                    error: function (event, xhr, reason) {
                         if (reason == 'abort') {
                             return;
                         }
-                        YnloFramework.Pjax.pushResponse(url, xhr.responseText);
-                        $(document).trigger('pjax:error', [xhr, reason]);
+                        $(document).trigger('pjax:error', [event, xhr, reason]);
                     }
                 });
             });
@@ -213,12 +212,11 @@ YnloFramework.Pjax = {
 
                 $(document).trigger('pjax:success', [output, status, xhr]);
             },
-            error: function (xhr, reason) {
+            error: function (event, xhr, reason) {
                 if (reason == 'abort') {
                     return;
                 }
-                YnloFramework.Pjax.pushResponse(url, xhr.responseText);
-                $(document).trigger('pjax:error', [xhr, reason]);
+                $(document).trigger('pjax:error', [event, xhr, reason]);
             }
         });
     },
