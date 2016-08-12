@@ -27,8 +27,10 @@ YnloFramework.Debugger = {
 
         //keep syToolbar up to date when pjax target is not the body
         $(document).on('ajaxSuccess', function (event, output, status, xhr) {
-            if (xhr.getResponseHeader('X-MODAL')) {
-                YnloFramework.Debugger.updateProfiler(xhr);
+            if (typeof xhr.getResponseHeader === 'function') {
+                if (xhr.getResponseHeader('X-MODAL')) {
+                    YnloFramework.Debugger.updateProfiler(xhr);
+                }
             }
         });
 
