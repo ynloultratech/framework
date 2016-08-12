@@ -12,7 +12,7 @@ YnloFramework.Debugger = {
         if (!YnloFramework.debug) {
             return;
         }
-        $(document).on('ajaxStart', function (event, xhr) {
+        $(document).on('ajaxStart pjax:start', function (event, xhr) {
             if ($('.ynlo-debugger-error').length) {
                 $('.ynlo-debugger-error').remove();
             }
