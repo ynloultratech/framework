@@ -1,0 +1,10 @@
+{#
+ Use this view as base for controlloer without specific entity admin related
+ this view should be used with the StandaloneAdminController to create custom admin pages without entity
+#}
+
+{% extends base_template %}
+
+{% if admin is defined and action is defined %}
+    {% block tab_menu %}{{ knp_menu_render(admin.sidemenu(action), {'allow_safe_labels': true, 'currentClass' : 'active', 'template': admin_pool.getTemplate('tab_menu_template')}, 'twig') }}{% endblock %}
+{% endif %}
