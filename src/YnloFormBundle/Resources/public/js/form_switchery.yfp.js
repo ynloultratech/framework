@@ -17,7 +17,8 @@ YnloFramework.FormSwitchery = {
                     } else {
                         $(element).attr('switchery-initialized', true);
                     }
-                    var e =  Switchery(element, $.parseJSON($(element).attr('switchery-options')));
+                    //FIXME: Switchery are not working with RequireJs, fix or migrate to bootstrap switch
+                  //  var e =  Switchery(element, $.parseJSON($(element).attr('switchery-options')));
                 //})
             });
         };
