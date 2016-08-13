@@ -185,12 +185,16 @@ YnloFramework.Pjax = {
                     if (typeof xhr.getResponseHeader === 'function') {
                         if (xhr.getResponseHeader('X-MODAL')) {
                             require(['bootstrap-dialog'], function (BootstrapDialog) {
+
+                                //hack required to force parse elements inside modals
+                                //and avoid a flicker while is creating the modal
+                                var message = $('<div class="col-md-12">' + output.message + '</div>');
+                                $('body').append(message);
+                                $(document).trigger('ajaxSuccess', [output, status, xhr]);
+
                                 var options = $.extend({}, YnloFramework.Modal.config, output);
 
-                                //hack required to force parse elements inside modals loaded via pjax
-                                options.onshown = function () {
-                                    $(document).trigger('ajaxSuccess', [output, status, xhr]);
-                                };
+                                options.message = message;
 
                                 var dialog = new BootstrapDialog(options);
                                 YnloFramework.Modal.setOptions(dialog, options); //required to parse options like actions
@@ -202,7 +206,6 @@ YnloFramework.Pjax = {
                                 if (form.length && !form.attr('action')) {
                                     form.attr('action', url);
                                 }
-
                                 $(document).trigger('pjax:abort', [output, status, xhr]);
                             });
                             return;
