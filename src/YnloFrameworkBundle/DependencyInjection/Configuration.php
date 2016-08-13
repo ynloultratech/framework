@@ -23,7 +23,11 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ynlo_framework')->children();
 
         /* @noinspection UnNecessaryDoubleQuotesInspection */
-        $rootNode->scalarNode('debug')->defaultValue('false');
+        $rootNode->scalarNode('debug')->defaultValue(false)->beforeNormalization()->ifString()->then(
+            function ($value) {
+                return ($value === 'false') ? false : true;
+            }
+        );
         $rootNode->booleanNode('animate_css')->defaultValue(true)->info('Include Animate.css');
         $pace = $rootNode->arrayNode('pace')
             ->canBeDisabled()

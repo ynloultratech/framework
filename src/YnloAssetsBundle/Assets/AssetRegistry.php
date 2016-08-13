@@ -135,6 +135,9 @@ class AssetRegistry
     {
         $finalAssets = [];
         foreach (self::$assets as $name => $asset) {
+            if ($asset instanceof JavascriptModule) {
+                continue;
+            }
             if ($asset instanceof AssetBundle) {
                 $finalAssets[$asset->getName()] = [
                     'inputs' => $asset->getPaths(),

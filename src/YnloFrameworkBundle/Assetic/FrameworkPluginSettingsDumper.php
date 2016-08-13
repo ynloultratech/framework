@@ -59,7 +59,7 @@ class FrameworkPluginSettingsDumper implements FilterInterface
                 if ($this->parameterBag->has("ynlo.js_plugin.$name")) {
                     $config = $this->parameterBag->get("ynlo.js_plugin.$name");
                 }
-                $jsonConfig = json_encode($config);
+                $jsonConfig = json_encode($config, JSON_FORCE_OBJECT);
 
                 $autoRegister = null;
                 if (strpos($content, "YnloFramework.register('$pluginName')") === false
@@ -68,7 +68,8 @@ class FrameworkPluginSettingsDumper implements FilterInterface
                     $autoRegister = "\nYnloFramework.register('$pluginName');";
                 }
 
-                $settings = <<<JAVASCRIPT
+                $settings
+                    = <<<JAVASCRIPT
 $autoRegister
 YnloFramework.$pluginName.config = $.extend({}, YnloFramework.$pluginName.config, $jsonConfig);
 
