@@ -25,37 +25,54 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($options) {
-                if ($options['autocomplete']) {
-                    /** @var FormInterface $form */
-                    $form = $event->getForm();
-                    $data = $event->getData();
+        $preSubmitCallBack = function (FormEvent $event, $eventName) use ($options, &$submitted) {
+            if ($options['autocomplete'] && !$options['autocomplete_initialized']) {
+                /** @var FormInterface $form */
+                $form = $event->getForm();
+                $data = $event->getData();
 
-                    if (!array_key_exists('em', $options)) {
-                        return;
-                    }
+                if (!array_key_exists('em', $options)) {
+                    return;
+                }
+                $idReader = $options['id_reader'];
+                $em = $options['em'];
 
-                    $idReader = $options['id_reader'];
-                    $em = $options['em'];
+                $items = $em->getRepository($options['class'])->findBy([$idReader->getIdField() => $data]);
 
-                    $items = $em->getRepository($options['class'])->findBy([$idReader->getIdField() => $data]);
-                    foreach ($items as $item) {
-                        $options['choices'][$idReader->getIdValue($item)] = $item;
-                    }
+                $options['choices'] = [];
+                foreach ($items as $item) {
+                    $options['choices'][$idReader->getIdValue($item)] = $item;
+                }
 
+                if ($eventName === FormEvents::PRE_SUBMIT) {
                     if ($options['multiple']) {
                         $options['data'] = $options['choices'];
                     } else {
                         $options['data'] = current($options['choices']);
                     }
+                    $options['autocomplete_initialized'] = true;
+                }
 
-                    $type = get_class($form->getConfig()->getType()->getInnerType());
-                    $form->getParent()->add($form->getName(), $type, $options);
+                $type = get_class($form->getConfig()->getType()->getInnerType());
+                $form->getParent()->add($form->getName(), $type, $options);
+
+                if ($eventName === FormEvents::PRE_SUBMIT) {
+                    $form->getParent()->get($form->getName())->submit($data);
                 }
             }
-        );
+        };
+        $preSetDataCallBack = function (FormEvent $event, $eventName) use ($options, $preSubmitCallBack) {
+            if ($options['autocomplete']) {
+                if (!$event->getData() || $options['choices'] || $event->getForm()->isSubmitted()) {
+                    return;
+                }
+
+                $preSubmitCallBack($event, $eventName);
+            }
+        };
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $preSetDataCallBack);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $preSubmitCallBack);
     }
 
     /**
@@ -67,6 +84,10 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
+
+        //this option is used internally to know when the autocomplete
+        //has been initialized in the pre-submit data
+        $resolver->setDefault('autocomplete_initialized', false);
 
         $choiceNormalizer = function (OptionsResolver $options, $prevValue) {
             if ($prevValue === null && $options['autocomplete']) {
