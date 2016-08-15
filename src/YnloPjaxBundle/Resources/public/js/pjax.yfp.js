@@ -230,6 +230,9 @@ YnloFramework.Pjax = {
         YnloFramework.Pjax.lastLocation = YnloFramework.Pjax.currentLocation();
     },
     pushResponse: function (url, response) {
+        if (YnloFramework.Pjax.lastLocation !== url){
+            window.scrollTo(0,0);
+        }
         YnloFramework.Pjax.pushState(url);
 
         if (!response) {
