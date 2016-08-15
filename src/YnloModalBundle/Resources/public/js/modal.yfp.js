@@ -43,7 +43,7 @@ YnloFramework.Modal = {
             var options = YnloFramework.Modal._extractPopupOptions($(this));
             var url = $(this).attr('href');
             if (options.target == 'modal') {
-                require(['bootstrap_dialog'], function () {
+                require(['bootstrap-dialog'], function (BootstrapDialog) {
                     event.preventDefault && event.preventDefault();
                     var dialog = new BootstrapDialog({
                         message: $(YnloFramework.Modal.config.loaderTemplate),
