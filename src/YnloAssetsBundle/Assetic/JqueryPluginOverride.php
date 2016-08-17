@@ -15,7 +15,7 @@ use YnloFramework\YnloAssetsBundle\Assets\AssetRegistry;
 use YnloFramework\YnloAssetsBundle\Assets\JavascriptModule;
 
 /**
- * This filter override some jquery plugins to load when is used with requireJs
+ * This filter override some jquery plugins to load when is used with requireJs.
  */
 class JqueryPluginOverride implements FilterInterface
 {
@@ -31,9 +31,7 @@ class JqueryPluginOverride implements FilterInterface
      */
     public function filterDump(AssetInterface $asset)
     {
-
         if (preg_match('/jquery_plugins_overrides\.js$/', $asset->getSourcePath())) {
-
             $content = '';
             foreach (AssetRegistry::getAssets() as $module) {
                 if (($module instanceof JavascriptModule) && $module->getJqueryPlugins()) {

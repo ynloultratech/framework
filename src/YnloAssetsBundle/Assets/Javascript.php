@@ -10,12 +10,12 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * Javascript
+ * Javascript.
  */
 class Javascript extends AbstractAsseticAsset
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getType()
     {

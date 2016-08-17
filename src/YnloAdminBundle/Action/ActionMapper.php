@@ -10,10 +10,9 @@
 namespace YnloFramework\YnloAdminBundle\Action;
 
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Traversable;
 
 /**
- * ActionMapper
+ * ActionMapper.
  */
 class ActionMapper implements \ArrayAccess, \IteratorAggregate
 {
@@ -130,7 +129,7 @@ class ActionMapper implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -138,7 +137,7 @@ class ActionMapper implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -146,7 +145,7 @@ class ActionMapper implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -159,7 +158,7 @@ class ActionMapper implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {
@@ -167,7 +166,7 @@ class ActionMapper implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getIterator()
     {

@@ -325,7 +325,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isVisible()
     {
@@ -333,7 +333,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @param boolean $visible
+     * @param bool $visible
      *
      * @return $this
      */

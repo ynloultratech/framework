@@ -14,7 +14,7 @@ use Rafrsr\LibArray2Object\Object2ArrayInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
- * Class BatchActionMapper
+ * Class BatchActionMapper.
  */
 class BatchActionMapper extends ActionMapper implements Object2ArrayInterface
 {
@@ -33,7 +33,7 @@ class BatchActionMapper extends ActionMapper implements Object2ArrayInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {

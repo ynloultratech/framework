@@ -10,7 +10,7 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * Class AssetBundle
+ * Class AssetBundle.
  */
 class AssetBundle
 {
@@ -64,7 +64,7 @@ class AssetBundle
     }
 
     /**
-     * getPaths
+     * getPaths.
      *
      * @return array
      */

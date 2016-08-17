@@ -17,7 +17,7 @@ use Sonata\DoctrineORMAdminBundle\Builder\ListBuilder as BaseListBuilder;
 use YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServices;
 
 /**
- * ListBuilder
+ * ListBuilder.
  */
 class ListBuilder extends BaseListBuilder
 {

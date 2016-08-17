@@ -10,7 +10,7 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * AbstractAsseticAsset
+ * AbstractAsseticAsset.
  */
 abstract class AbstractAsseticAsset extends AbstractAsset
 {
@@ -20,7 +20,7 @@ abstract class AbstractAsseticAsset extends AbstractAsset
     protected $filters = [];
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct($name, $assetPath, $filters = [])
     {
@@ -28,7 +28,6 @@ abstract class AbstractAsseticAsset extends AbstractAsset
 
         $this->filters = $filters;
     }
-
 
     /**
      * @return array

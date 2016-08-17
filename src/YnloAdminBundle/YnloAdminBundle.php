@@ -12,7 +12,7 @@ namespace YnloFramework\YnloAdminBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * YnloAdminBundle
+ * YnloAdminBundle.
  */
 class YnloAdminBundle extends Bundle
 {

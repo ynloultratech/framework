@@ -13,7 +13,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 
 /**
- * Class ListActionFieldBuilder
+ * Class ListActionFieldBuilder.
  */
 class ListActionFieldBuilder implements ListFieldBuilderInterface
 {
@@ -23,7 +23,7 @@ class ListActionFieldBuilder implements ListFieldBuilderInterface
     protected $twig;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportThisField(FieldDescriptionInterface $fieldDescription)
     {
@@ -31,7 +31,7 @@ class ListActionFieldBuilder implements ListFieldBuilderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fixFieldDescription(AdminInterface $admin, FieldDescriptionInterface $fieldDescription)
     {

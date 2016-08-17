@@ -10,7 +10,7 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * AbstractAsset
+ * AbstractAsset.
  */
 abstract class AbstractAsset implements AssetInterface
 {

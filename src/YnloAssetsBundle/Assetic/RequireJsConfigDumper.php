@@ -15,7 +15,7 @@ use YnloFramework\YnloAssetsBundle\Assets\AssetRegistry;
 use YnloFramework\YnloAssetsBundle\Assets\JavascriptModule;
 
 /**
- * This filter is used to dump the locations and settings fo all js Modules
+ * This filter is used to dump the locations and settings fo all js Modules.
  */
 class RequireJsConfigDumper implements FilterInterface
 {

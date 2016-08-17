@@ -28,7 +28,7 @@ trait ModalControllerTrait
      * Ajax redirect response is helpful for modals to redirect
      * to another location after modal is submitted.
      *
-     * @param string $route #Route
+     * @param string $route           #Route
      * @param array  $routeParameters
      *
      * @return AjaxRedirectResponse
@@ -84,7 +84,7 @@ trait ModalControllerTrait
     /**
      * Create simple modal with given view and parameters.
      *
-     * @param string|FormView|FormInterface $view view or form to render
+     * @param string|FormView|FormInterface $view       view or form to render
      * @param array                         $parameters
      * @param string                        $title
      * @param string                        $icon

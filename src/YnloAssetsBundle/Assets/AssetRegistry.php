@@ -45,7 +45,7 @@ class AssetRegistry
 
     /**
      * Return serialized registry
-     * used save as parameter in the container
+     * used save as parameter in the container.
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class AssetRegistry
     }
 
     /**
-     * Re-build the registry using a serialized string
+     * Re-build the registry using a serialized string.
      *
      * @param array $serializedRegistry
      */
@@ -89,7 +89,7 @@ class AssetRegistry
     }
 
     /**
-     * addAsset
+     * addAsset.
      *
      * @param AssetInterface $asset
      */
@@ -162,7 +162,7 @@ class AssetRegistry
      *
      * @param string                $bundlePrefix  prefix tu use in the bundle, assets has been separated in prefix_css and prefix_js
      * @param array|AbstractAsset[] $assets        array of assets to create the bundle
-     * @param boolean               $ignoreModules assets marked as javascript module is not compiled into the bundle
+     * @param bool                  $ignoreModules assets marked as javascript module is not compiled into the bundle
      */
     public static function registerAssetBundle($bundlePrefix, array $assets, $ignoreModules = false)
     {
@@ -252,7 +252,7 @@ class AssetRegistry
     }
 
     /**
-     * Register all assets and modules given in the asset configuration
+     * Register all assets and modules given in the asset configuration.
      */
     private static function registerConfigAssets()
     {
@@ -282,7 +282,7 @@ class AssetRegistry
     }
 
     /**
-     * refreshBundleAll
+     * refreshBundleAll.
      */
     private static function refreshBundleAll()
     {

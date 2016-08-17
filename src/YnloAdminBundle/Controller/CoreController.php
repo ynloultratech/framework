@@ -12,9 +12,8 @@ namespace YnloFramework\YnloAdminBundle\Controller;
 use Sonata\AdminBundle\Controller\CoreController as BaseCoreController;
 
 /**
- * Class CoreController
+ * Class CoreController.
  */
 class CoreController extends BaseCoreController
 {
-
 }

@@ -10,12 +10,12 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * Class AssetFactory
+ * Class AssetFactory.
  */
 class AssetFactory
 {
     /**
-     * create
+     * create.
      *
      * @param string $name
      * @param string $path

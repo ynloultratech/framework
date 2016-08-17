@@ -30,7 +30,7 @@ class CRUDController extends BaseCRUDController
     protected $request;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render($view, array $parameters = [], Response $response = null)
     {
@@ -70,7 +70,7 @@ class CRUDController extends BaseCRUDController
 
     /**
      * {@inheritdoc}
-     * Override to allow pass custom request using setRequest()
+     * Override to allow pass custom request using setRequest().
      */
     public function getRequest()
     {
@@ -104,7 +104,7 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -117,11 +117,10 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function renderJson($data, $status = 200, $headers = [])
     {
-
         if ($this->isModalRequest()) {
             if ($this->getRequest()->getMethod() === 'DELETE') {
                 return new AjaxRedirectResponse($this->admin->generateUrl('list'));
@@ -148,7 +147,7 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * trans
+     * trans.
      *
      * @param string $id         #TranslationMessage
      * @param array  $parameters array of parameters

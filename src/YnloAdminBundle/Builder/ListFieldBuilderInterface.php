@@ -14,11 +14,10 @@ use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 
 /**
  * This interface is used to create some type of fields in the
- * list without the need of override the entire ListBuilder
+ * list without the need of override the entire ListBuilder.
  */
 interface ListFieldBuilderInterface
 {
-
     /**
      * @param FieldDescriptionInterface $fieldDescription
      *

@@ -29,7 +29,7 @@ class AbstractAdmin extends BaseAbstractAdmin
 
     /**
      * Array of actions
-     * to show inside a modal
+     * to show inside a modal.
      *
      * @var array
      */
@@ -66,7 +66,7 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
-     * isActionOnModal
+     * isActionOnModal.
      *
      * @param string $action
      *
@@ -78,7 +78,7 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
-     * Override this method to customize the modal
+     * Override this method to customize the modal.
      *
      * @param string $action
      * @param Modal  $modal
@@ -181,7 +181,7 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
-     * Configure actions to shown in the list toolbar
+     * Configure actions to shown in the list toolbar.
      *
      * @param ActionMapper $actions
      */
@@ -197,7 +197,7 @@ class AbstractAdmin extends BaseAbstractAdmin
 
     /**
      * This method return a batch of actions but inside a mapper object
-     * is used by YnloAdmin to render better batch actions
+     * is used by YnloAdmin to render better batch actions.
      *
      * @return BatchActionMapper
      */
@@ -214,9 +214,10 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
-     * NOTE: use configureBatchActionsUsingMapper to customize batch actions
+     * NOTE: use configureBatchActionsUsingMapper to customize batch actions.
      *
-     * @inheritDoc
+     * {@inheritdoc}
+     *
      * @internal
      *
      * Override to call configureBatchActionsUsingMapper with mapper instance with current actions
@@ -250,6 +251,5 @@ class AbstractAdmin extends BaseAbstractAdmin
      */
     protected function configureBatchActionsUsingMapper(ActionMapper $actions)
     {
-
     }
 }

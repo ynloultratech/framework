@@ -10,7 +10,7 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * AssetInterface
+ * AssetInterface.
  */
 interface AssetInterface
 {
@@ -18,21 +18,21 @@ interface AssetInterface
     const STYLESHEET = 'css';
 
     /**
-     * Name to represent the asset
+     * Name to represent the asset.
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Array of assets
+     * Array of assets.
      *
      * @return array
      */
     public function getPath();
 
     /**
-     * One of the AssetInterface:: constants
+     * One of the AssetInterface:: constants.
      *
      * @return mixed
      */

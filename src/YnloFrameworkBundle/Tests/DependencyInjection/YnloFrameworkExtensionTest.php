@@ -33,7 +33,6 @@ class YnloFrameworkExtensionTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals($assets, $filteredAssets);
 
-
         //disable pace
         $configModified = $config;
         $configModified['pace'] = false;

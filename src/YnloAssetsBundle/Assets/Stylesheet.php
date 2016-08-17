@@ -10,12 +10,12 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * Stylesheet
+ * Stylesheet.
  */
 class Stylesheet extends AbstractAsseticAsset
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getType()
     {

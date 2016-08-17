@@ -13,17 +13,17 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use YnloFramework\YnloAssetsBundle\Assets\AssetRegistry;
 
 /**
- * Class YnloAssetsBundle
+ * Class YnloAssetsBundle.
  */
 class YnloAssetsBundle extends Bundle
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function boot()
     {
         //re-build the registry using a saved parameter
-        $assetsArray =  $this->container->getParameter('ynlo.assets');
+        $assetsArray = $this->container->getParameter('ynlo.assets');
         AssetRegistry::unserialize($assetsArray);
     }
 }

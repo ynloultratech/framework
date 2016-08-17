@@ -12,12 +12,12 @@ namespace YnloFramework\YnloAssetsBundle\Assets;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Interface AssetRegisterInterface
+ * Interface AssetRegisterInterface.
  */
 interface AssetRegisterInterface
 {
     /**
-     * Register specific bundle assets
+     * Register specific bundle assets.
      *
      * @param array            $config           array of current bundle configuration, use this to filter assets based on current config.
      * @param ContainerBuilder $containerBuilder instance of ContainerBuilder if you depend another bundle config or need more complex logic

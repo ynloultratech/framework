@@ -10,7 +10,7 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * JavascriptModule
+ * JavascriptModule.
  */
 class JavascriptModule extends AbstractAsset
 {
@@ -41,14 +41,14 @@ class JavascriptModule extends AbstractAsset
 
     /**
      * Array of jquery plugins functions used by this asset
-     * this is used to create an autoloader for some jquery plugins
+     * this is used to create an autoloader for some jquery plugins.
      *
      * @var array
      */
     protected $jqueryPlugins = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct($name, $assetPath)
     {
@@ -160,7 +160,7 @@ class JavascriptModule extends AbstractAsset
     }
 
     /**
-     * addJqueryPlugin
+     * addJqueryPlugin.
      *
      * @param string $functionName
      *
@@ -194,7 +194,7 @@ class JavascriptModule extends AbstractAsset
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getType()
     {

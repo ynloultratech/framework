@@ -95,7 +95,7 @@ class Builder implements ContainerAwareInterface
     }
 
     /**
-     * resolveAdminIcons
+     * resolveAdminIcons.
      *
      * @param ItemInterface $menu
      */

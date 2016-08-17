@@ -17,7 +17,7 @@ use YnloFramework\YnloAssetsBundle\Assets\AssetFactory;
 use YnloFramework\YnloAssetsBundle\Assets\AssetRegisterInterface;
 
 /**
- * YnloFrameworkExtension
+ * YnloFrameworkExtension.
  */
 class YnloFrameworkExtension extends Extension implements AssetRegisterInterface
 {

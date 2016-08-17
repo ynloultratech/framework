@@ -19,7 +19,7 @@ use YnloFramework\YnloAssetsBundle\Assets\AssetFactory;
 use YnloFramework\YnloAssetsBundle\Assets\AssetRegistry;
 
 /**
- * YnloAssetsExtension
+ * YnloAssetsExtension.
  */
 class YnloAssetsExtension extends Extension implements PrependExtensionInterface
 {
@@ -39,7 +39,7 @@ class YnloAssetsExtension extends Extension implements PrependExtensionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {

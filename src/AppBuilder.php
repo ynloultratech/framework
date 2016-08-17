@@ -13,12 +13,12 @@ use Symfony\Component\HttpKernel\Kernel;
 use YnloFramework\Component\KernelBuilder\KernelBuilder;
 
 /**
- * AppBuilder
+ * AppBuilder.
  */
 class AppBuilder
 {
     /**
-     * Prepare the kernel to setup
+     * Prepare the kernel to setup.
      *
      * @param Kernel $kernel
      *

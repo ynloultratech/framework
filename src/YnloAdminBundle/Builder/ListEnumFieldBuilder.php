@@ -14,12 +14,12 @@ use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 
 /**
- * Class ListEnumFieldBuilder
+ * Class ListEnumFieldBuilder.
  */
 class ListEnumFieldBuilder implements ListFieldBuilderInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportThisField(FieldDescriptionInterface $fieldDescription)
     {
@@ -27,7 +27,7 @@ class ListEnumFieldBuilder implements ListFieldBuilderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fixFieldDescription(AdminInterface $admin, FieldDescriptionInterface $fieldDescription)
     {

@@ -12,7 +12,7 @@ namespace YnloFramework\YnloAdminBundle\Block;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * NavbarLeftMenuBlock
+ * NavbarLeftMenuBlock.
  */
 class NavbarLeftMenuBlock extends TemplateBlock
 {

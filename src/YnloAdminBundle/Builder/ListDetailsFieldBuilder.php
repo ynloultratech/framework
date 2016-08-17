@@ -13,12 +13,12 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 
 /**
- * Class ListDetailsFieldBuilder
+ * Class ListDetailsFieldBuilder.
  */
 class ListDetailsFieldBuilder implements ListFieldBuilderInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportThisField(FieldDescriptionInterface $fieldDescription)
     {
@@ -26,7 +26,7 @@ class ListDetailsFieldBuilder implements ListFieldBuilderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fixFieldDescription(AdminInterface $admin, FieldDescriptionInterface $fieldDescription)
     {

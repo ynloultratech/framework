@@ -12,7 +12,7 @@ namespace YnloFramework\YnloAdminBundle\Action;
 use Rafrsr\LibArray2Object\Object2ArrayInterface;
 
 /**
- * Class BatchAction
+ * Class BatchAction.
  *
  * @method BatchActionMapper getDropDown()
  */

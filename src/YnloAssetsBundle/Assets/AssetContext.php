@@ -10,7 +10,7 @@
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
 /**
- * Class AssetContext
+ * Class AssetContext.
  */
 class AssetContext
 {
@@ -130,7 +130,7 @@ class AssetContext
     }
 
     /**
-     * getAssets
+     * getAssets.
      *
      * @return array|AbstractAsset[]
      */
@@ -145,7 +145,7 @@ class AssetContext
     }
 
     /**
-     * Resolve assets names variants for array of assets
+     * Resolve assets names variants for array of assets.
      *
      * @param array $assetsArray
      *
@@ -176,7 +176,7 @@ class AssetContext
 
     /**
      * Resolve name of assets to include
-     * in this context and populate the list of assets
+     * in this context and populate the list of assets.
      */
     private function resolveInclusions()
     {
@@ -203,7 +203,7 @@ class AssetContext
 
     /**
      * Resolve name of assets to exclude
-     * from this context and clean the list of assets
+     * from this context and clean the list of assets.
      */
     private function resolveExclusions()
     {
@@ -237,7 +237,7 @@ class AssetContext
     }
 
     /**
-     * Override some asset with given version
+     * Override some asset with given version.
      */
     private function overrideAssets()
     {

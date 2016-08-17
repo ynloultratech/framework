@@ -25,7 +25,7 @@ class AssetRegistryTest extends \PHPUnit_Framework_TestCase
     protected $container;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function setUp()
     {

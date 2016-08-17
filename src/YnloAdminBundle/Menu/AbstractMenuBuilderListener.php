@@ -1,10 +1,10 @@
 <?php
 
-/**
- * LICENSE: This file is subject to the terms and conditions defined in
- * file 'LICENSE', which is part of this source code package.
+/*
+ * This file is part of the YNLOFramework package.
  *
- * @copyright 2016 Copyright(c) - All rights reserved.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace YnloFramework\YnloAdminBundle\Menu;
@@ -14,14 +14,14 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 
 /**
- * AbstractMenuBuilderListener
+ * AbstractMenuBuilderListener.
  */
 abstract class AbstractMenuBuilderListener implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
     /**
-     * configureMenu
+     * configureMenu.
      *
      * @param ConfigureMenuEvent $event
      */
@@ -65,7 +65,7 @@ abstract class AbstractMenuBuilderListener implements ContainerAwareInterface
     }
 
     /**
-     * Check for permissions
+     * Check for permissions.
      *
      * @param      $attributes
      * @param null $object
