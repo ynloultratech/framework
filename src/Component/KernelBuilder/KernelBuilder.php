@@ -1,10 +1,10 @@
 <?php
 
-/**
- * LICENSE: This file is subject to the terms and conditions defined in
- * file 'LICENSE', which is part of this source code package.
+/*
+ * This file is part of the YNLOFramework package.
  *
- * @copyright 2016 Copyright(c) - All rights reserved.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace YnloFramework\Component\KernelBuilder;
@@ -14,9 +14,6 @@ use Symfony\Component\HttpKernel\Kernel;
 use YnloFramework\Component\KernelBuilder\Exception\MissingBundleException;
 use YnloFramework\Component\KernelBuilder\Exception\MissingPackageException;
 
-/**
- * Class KernelBuilder.
- */
 class KernelBuilder
 {
     use WithYnloBundlesTrait;
@@ -30,7 +27,7 @@ class KernelBuilder
     /**
      * @var array
      */
-    protected $devEvironments = ['test', 'dev'];
+    protected $devEnvironments = ['test', 'dev'];
 
     /**
      * @var Kernel
@@ -48,15 +45,15 @@ class KernelBuilder
     }
 
     /**
-     * Register all required bundles to create basic YnloFramework applications
+     * Register all required bundles to create basic YnloFramework applications.
      *
      * @return $this
      */
     public function basicApplication()
     {
-        $this->addReference('Symfony\Bundle\FrameworkBundle\FrameworkBundle', 'symfony/smfony', null, 255);
-        $this->addReference('Symfony\Bundle\SecurityBundle\SecurityBundle', 'symfony/smfony', null, 250);
-        $this->addReference('Symfony\Bundle\TwigBundle\TwigBundle', 'symfony/smfony', null, 250);
+        $this->addReference('Symfony\Bundle\FrameworkBundle\FrameworkBundle', 'symfony/symfony', null, 255);
+        $this->addReference('Symfony\Bundle\SecurityBundle\SecurityBundle', 'symfony/symfony', null, 250);
+        $this->addReference('Symfony\Bundle\TwigBundle\TwigBundle', 'symfony/symfony', null, 250);
         $this->addReference('Symfony\Bundle\AsseticBundle\AsseticBundle', 'symfony/assetic-bundle', null, 250);
         $this->addReference('Symfony\Bundle\MonologBundle\MonologBundle', 'symfony/monolog-bundle', null, 250);
         $this->addReference('YnloFramework\YnloFrameworkBundle\YnloFrameworkBundle', null, null, 250);
@@ -69,31 +66,31 @@ class KernelBuilder
         }
 
         //dev
-        $this->addReference('Symfony\Bundle\DebugBundle\DebugBundle', 'symfony/symfony', $this->devEvironments, -255);
-        $this->addReference('Symfony\Bundle\WebProfilerBundle\WebProfilerBundle', 'symfony/symfony', $this->devEvironments, -255);
-        $this->addReference('Sensio\Bundle\DistributionBundle\SensioDistributionBundle', 'sensio/distribution-bundle', $this->devEvironments, -255);
-        $this->addReference('Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle', 'sensio/generator-bundle', $this->devEvironments, -255);
+        $this->addReference('Symfony\Bundle\DebugBundle\DebugBundle', 'symfony/symfony', $this->devEnvironments, -255);
+        $this->addReference('Symfony\Bundle\WebProfilerBundle\WebProfilerBundle', 'symfony/symfony', $this->devEnvironments, -255);
+        $this->addReference('Sensio\Bundle\DistributionBundle\SensioDistributionBundle', 'sensio/distribution-bundle', $this->devEnvironments, -255);
+        $this->addReference('Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle', 'sensio/generator-bundle', $this->devEnvironments, -255);
 
         return $this;
     }
 
     /**
-     * Set array of environemnts used for deleopment purposes
+     * Set array of environments used for development purposes
      * used to add some bundles in this environments.
      *
-     * @param array $devEvironments
+     * @param array $devEnvironments
      *
      * @return $this
      */
-    public function setDevEvironments($devEvironments)
+    public function setDevEnvironments($devEnvironments)
     {
-        $this->devEvironments = $devEvironments;
+        $this->devEnvironments = $devEnvironments;
 
         return $this;
     }
 
     /**
-     * Add new dev environment
+     * Add new dev environment.
      *
      * @param string $env
      *
@@ -101,27 +98,27 @@ class KernelBuilder
      */
     public function addDevEnvironment($env)
     {
-        $this->devEvironments[] = $env;
+        $this->devEnvironments[] = $env;
 
         return $this;
     }
 
     /**
-     * Exclude some bundle in some environments
+     * Exclude some bundle in some environments.
      *
      * @param string            $name
-     * @param string|array|null $env enviroments to exclude or null to always exclude
+     * @param string|array|null $env  environments to exclude or null to always exclude
      */
     public function excludeBundle($name, $env = null)
     {
-        if ($this->hasBundle($name) && $this->isCurrentEvironment($$env)) {
+        if ($this->hasBundle($name) && $this->isCurrentEnvironment($env)) {
             unset($this->bundles[$name]);
         }
     }
 
     /**
      * Register all required bundles to create basic YnloFramework applications
-     * with administration backend
+     * with administration backend.
      *
      * @return $this
      */
@@ -150,7 +147,7 @@ class KernelBuilder
      */
     public function addBundle($bundle, $env = null, $priority = 0)
     {
-        if ($this->isCurrentEvironment($env)) {
+        if ($this->isCurrentEnvironment($env)) {
             if ($bundle instanceof Bundle || $bundle instanceof BundleReferenceInterface) {
                 $this->bundles[$bundle->getName()] = [
                     'name' => $bundle->getName(),
@@ -166,7 +163,7 @@ class KernelBuilder
     }
 
     /**
-     * Register multiple bundles
+     * Register multiple bundles.
      *
      * @param array|Bundle[]|BundleReference[] $bundles
      * @param null                             $env
@@ -183,7 +180,7 @@ class KernelBuilder
     }
 
     /**
-     * hasBundle
+     * hasBundle.
      *
      * @param string $name
      *
@@ -195,7 +192,7 @@ class KernelBuilder
     }
 
     /**
-     * Clear all bundles and references
+     * Clear all bundles and references.
      *
      * @return $this
      */
@@ -207,7 +204,7 @@ class KernelBuilder
     }
 
     /**
-     * Return the array of bundles according to your preferences
+     * Return the array of bundles according to your preferences.
      *
      * @return array|Bundle[]
      *
@@ -266,13 +263,13 @@ class KernelBuilder
     }
 
     /**
-     * Check if given enviroment is current environment
+     * Check if given environment is current environment.
      *
      * @param string|array $env
      *
      * @return bool
      */
-    protected function isCurrentEvironment($env)
+    protected function isCurrentEnvironment($env)
     {
         return $env === null
         || $env === $this->kernel->getEnvironment()
@@ -280,7 +277,7 @@ class KernelBuilder
     }
 
     /**
-     * addReference
+     * addReference.
      *
      * @param string $class
      * @param string $package
@@ -293,7 +290,7 @@ class KernelBuilder
     }
 
     /**
-     * makeReference
+     * makeReference.
      *
      * @param string $class
      * @param string $package
