@@ -11,10 +11,10 @@ namespace YnloFramework\YnloFormBundle\Form\Guesser;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use YnloFramework\YnloFormBundle\Form\Type\SwitcheryType;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
+use YnloFramework\YnloFormBundle\Form\Type\SwitcheryType;
 
 /**
  * Class SwitcheryTypeGuesser.

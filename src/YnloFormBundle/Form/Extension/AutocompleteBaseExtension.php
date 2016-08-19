@@ -10,7 +10,6 @@
 namespace YnloFramework\YnloFormBundle\Form\Extension;
 
 use Doctrine\ORM\QueryBuilder;
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContext;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -19,6 +18,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContext;
 
 abstract class AutocompleteBaseExtension extends AbstractTypeExtension implements ContainerAwareInterface
 {

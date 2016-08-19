@@ -9,10 +9,10 @@
 
 namespace YnloFramework\YnloFormBundle\Autocomplete\Provider;
 
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteResults;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteResults;
 
 class Select2TagsProvider extends SimpleEntityProvider
 {

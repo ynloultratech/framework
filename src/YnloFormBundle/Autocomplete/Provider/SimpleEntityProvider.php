@@ -10,12 +10,12 @@
 namespace YnloFramework\YnloFormBundle\Autocomplete\Provider;
 
 use Doctrine\ORM\QueryBuilder;
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteProviderInterface;
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteResults;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteProviderInterface;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteResults;
 
 class SimpleEntityProvider implements AutocompleteProviderInterface
 {

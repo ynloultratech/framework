@@ -9,12 +9,12 @@
 
 namespace YnloFramework\YnloFormBundle\Autocomplete\Provider;
 
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteResults;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteResults;
 
 class Select2Provider extends SimpleEntityProvider implements ContainerAwareInterface
 {

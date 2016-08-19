@@ -76,10 +76,10 @@ class TagSpecification
     }
 
     /**
-     * @return mixed
-     *
      * @throws ServiceCircularReferenceException
      * @throws ServiceNotFoundException
+     *
+     * @return mixed
      */
     public function getService()
     {

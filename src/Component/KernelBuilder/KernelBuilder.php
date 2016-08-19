@@ -206,10 +206,10 @@ class KernelBuilder
     /**
      * Return the array of bundles according to your preferences.
      *
-     * @return array|Bundle[]
-     *
      * @throws MissingBundleException
      * @throws MissingPackageException
+     *
+     * @return array|Bundle[]
      */
     public function build()
     {

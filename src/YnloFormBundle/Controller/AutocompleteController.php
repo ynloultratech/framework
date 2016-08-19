@@ -9,9 +9,9 @@
 
 namespace YnloFramework\YnloFormBundle\Controller;
 
-use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextInterface;
 use YnloFramework\YnloFormBundle\Autocomplete\AutocompleteProviderInterface;
 
 class AutocompleteController extends Controller

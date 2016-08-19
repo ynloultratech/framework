@@ -31,11 +31,11 @@ trait ModalControllerTrait
      * @param string $route           #Route
      * @param array  $routeParameters
      *
-     * @return AjaxRedirectResponse
-     *
      * @throws InvalidParameterException
      * @throws MissingMandatoryParametersException
      * @throws RouteNotFoundException
+     *
+     * @return AjaxRedirectResponse
      */
     public function ajaxRedirect($route, array $routeParameters = [])
     {
