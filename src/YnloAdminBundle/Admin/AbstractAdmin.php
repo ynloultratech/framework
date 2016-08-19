@@ -249,7 +249,7 @@ class AbstractAdmin extends BaseAbstractAdmin
      *
      * @param BatchActionMapper $actions List of actions
      */
-    protected function configureBatchActionsUsingMapper(ActionMapper $actions)
+    protected function configureBatchActionsUsingMapper(BatchActionMapper $actions)
     {
     }
 }
