@@ -27,6 +27,16 @@ services:
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
 
+  ynlo.form.form.ordered_extension:
+      class: YnloFramework\YnloFormBundle\Form\Extension\OrderedExtension
+      tags:
+          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+  ynlo.form.form.bootstrap_extension:
+      class: YnloFramework\YnloFormBundle\Form\Extension\BootstrapFromExtension
+      tags:
+          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
   ynlo.form.form.autocomplete.typeahead_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\TypeaheadExtension
       calls:
