@@ -9,6 +9,7 @@
 
 namespace YnloFramework\YnloFormBundle\Form\Extension;
 
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -104,8 +105,21 @@ abstract class AutocompleteBaseExtension extends AbstractTypeExtension implement
         } elseif (isset($options['query'])) { //support for sonata ModelType
             $qb = $options['query'];
         }
+
         if ($qb instanceof QueryBuilder) {
             $context->setParameter('dql_parts', $qb->getDQLParts());
+
+            if (!$qb->getParameters()->isEmpty()) {
+                /** @var Parameter[] $parameters */
+                $parameters = $qb->getParameters()->toArray();
+                foreach ($parameters as $parameter) {
+                    $value = $parameter->getValue();
+                    if (is_object($value) && method_exists($value, 'getId')) {
+                        $parameter->setValue($value->getId());
+                    }
+                }
+                $context->setParameter('dql_parameters', $parameters);
+            }
         }
 
         return $context;

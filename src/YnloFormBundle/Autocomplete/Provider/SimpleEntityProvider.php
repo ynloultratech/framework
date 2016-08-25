@@ -123,6 +123,7 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
         if (is_string($fields)) {
             $fields = [$fields];
         }
+
         if ($term) {
             $or = $qb->expr()->orX();
             $search = $qb->expr()->literal('%'.$term.'%');
@@ -131,8 +132,13 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
             }
             $qb->andWhere($or);
         }
+
         foreach ($extraParameters as $paramName => $value) {
             $qb->setParameter($paramName, $value);
+        }
+
+        if ($dqlParameters = $context->getParameter('dql_parameters')) {
+            array_map([$qb->getParameters(), 'add'], $dqlParameters);
         }
     }
 
