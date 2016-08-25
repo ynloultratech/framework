@@ -1,4 +1,4 @@
-{% extends ['MopaBootstrapBundle::Form/fields.html.twig', 'form_div_layout.html.twig'] %}
+{% extends ['@SonataAdmin/Form/form_admin_fields.html.twig', 'MopaBootstrapBundle::Form/fields.html.twig'] %}
 
 {% use 'YnloFormBundle::Widgets/embedded_template.html.twig' %}
 {% use 'YnloFormBundle::Widgets/angular_form.html.twig' %}
@@ -22,7 +22,15 @@
         {{ include(template_prepend, template_parameters) }}
     {% endif %}
 
+    {% if input_wrapper_class %}
+        <div class="{{ input_wrapper_class }}">
+    {% endif %}
+
     {{ parent() }}
+
+    {% if input_wrapper_class %}
+        </div>
+    {% endif %}
 
     {% if template_append %}
         {{ include(template_append, template_parameters) }}
