@@ -4,6 +4,13 @@
 {% use 'YnloFormBundle::Widgets/angular_form.html.twig' %}
 
 {% block form_row %}
+    {% if prepend_separator %}
+        <hr style="clear: both">
+    {% endif %}
+
+    {% if prepend_clearfix %}
+        <div class="clearfix"></div>
+    {% endif %}
 
     {% if toggle_groups is defined %}
         {% for group in toggle_groups %}
@@ -11,20 +18,28 @@
         {% endfor %}
     {% endif %}
 
-    {% if template_prepend is defined %}
-        {{ template_prepend|raw }}
+    {% if template_prepend %}
+        {{ include(template_prepend, template_parameters) }}
     {% endif %}
 
     {{ parent() }}
 
-    {% if template_append is defined %}
-        {{ template_append|raw }}
+    {% if template_append %}
+        {{ include(template_append, template_parameters) }}
     {% endif %}
 
     {% if toggle_groups is defined %}
         {% for group in toggle_groups %}
             </div>
         {% endfor %}
+    {% endif %}
+
+    {% if append_clearfix %}
+        <div class="clearfix"></div>
+    {% endif %}
+
+    {% if append_separator %}
+        <hr style="clear: both">
     {% endif %}
 
     {#{% include 'YnloFormBundle:Extensions:form_toggle.html.twig' %}#}

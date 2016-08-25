@@ -6,7 +6,6 @@ services:
 
   ynlo.form.widget_template_form_extension:
       class: YnloFramework\YnloFormBundle\Form\Extension\WidgetTemplateExtension
-      arguments: ['@templating']
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
@@ -32,8 +31,8 @@ services:
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.form.bootstrap_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\BootstrapFormExtension
+  ynlo.form.form.form_extension:
+      class: YnloFramework\YnloFormBundle\Form\Extension\FormExtension
       tags:
           - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 

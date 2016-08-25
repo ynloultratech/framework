@@ -21,18 +21,17 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class WidgetTemplateExtension extends AbstractTypeExtension
 {
-    /**
-     * @var EngineInterface
-     */
-    private $templating;
-
-    /**
-     * @param EngineInterface $templating
-     */
-    public function __construct(EngineInterface $templating)
-    {
-        $this->templating = $templating;
-    }
+    private $defaults
+        = [
+            'template_append' => null,
+            'template_prepend' => null,
+            'template_parameters' => [],
+            'input_wrapper_class' => 'col-md-12',
+            'append_clearfix' => false,
+            'prepend_clearfix' => false,
+            'append_separator' => false,
+            'prepend_separator' => false,
+        ];
 
     /**
      * {@inheritdoc}
@@ -40,18 +39,9 @@ class WidgetTemplateExtension extends AbstractTypeExtension
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $options['template_parameters'] = array_merge(['form' => $view], $options['template_parameters']);
-        if (isset($options['template_append'])) {
-            $view->vars['template_append'] = $this->templating->render(
-                $options['template_append'],
-                $options['template_parameters']
-            );
-        }
 
-        if (isset($options['template_prepend'])) {
-            $view->vars['template_prepend'] = $this->templating->render(
-                $options['template_prepend'],
-                $options['template_parameters']
-            );
+        foreach (array_keys($this->defaults) as $key) {
+            $view->vars[$key] = $options[$key];
         }
     }
 
@@ -60,16 +50,15 @@ class WidgetTemplateExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            [
-                'template_append' => null,
-                'template_prepend' => null,
-                'template_parameters' => [],
-            ]
-        );
+        $resolver->setDefaults($this->defaults);
         $resolver->setAllowedTypes('template_append', ['null', 'string']);
         $resolver->setAllowedTypes('template_prepend', ['null', 'string']);
         $resolver->setAllowedTypes('template_parameters', ['array']);
+        $resolver->setAllowedTypes('input_wrapper_class', ['null', 'string']);
+        $resolver->setAllowedTypes('append_clearfix', ['bool']);
+        $resolver->setAllowedTypes('prepend_clearfix', ['bool']);
+        $resolver->setAllowedTypes('append_separator', ['bool']);
+        $resolver->setAllowedTypes('prepend_separator', ['bool']);
     }
 
     /**

@@ -18,18 +18,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BootstrapFormExtension extends AbstractTypeExtension
+class FormExtension extends AbstractTypeExtension
 {
-    private $defaults
-        = [
-            'input_wrapper_class' => 'col-md-12',
-            'append_clearfix' => false,
-            'prepend_clearfix' => false,
-            'append_separator' => false,
-            'prepend_separator' => false,
-            'default' => null,
-        ];
-
     /**
      * {@inheritdoc}
      */
@@ -52,19 +42,11 @@ class BootstrapFormExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        foreach (array_keys($this->defaults) as $name) {
-            $view->vars[$name] = $options[$name];
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults($this->defaults);
+        $resolver->setDefaults([
+            'default' => null,
+        ]);
     }
 
     /**
