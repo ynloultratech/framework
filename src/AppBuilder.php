@@ -12,9 +12,6 @@ namespace YnloFramework;
 use Symfony\Component\HttpKernel\Kernel;
 use YnloFramework\Component\KernelBuilder\KernelBuilder;
 
-/**
- * AppBuilder.
- */
 class AppBuilder
 {
     /**
