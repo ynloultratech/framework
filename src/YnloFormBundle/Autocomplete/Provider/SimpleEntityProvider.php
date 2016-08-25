@@ -71,10 +71,6 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
                 $id = current(array_values($ids));
                 $results->offsetSet($id, $result);
             }
-
-            $count = $this->getTotalOverAll($qb);
-
-            $results->setTotalOverAll($count);
         }
 
         return $results;
@@ -140,24 +136,6 @@ class SimpleEntityProvider implements AutocompleteProviderInterface
         if ($dqlParameters = $context->getParameter('dql_parameters')) {
             array_map([$qb->getParameters(), 'add'], $dqlParameters);
         }
-    }
-
-    /**
-     * Get all possible results for current query without limits.
-     *
-     * @param QueryBuilder $qb
-     *
-     * @return mixed
-     */
-    protected function getTotalOverAll(QueryBuilder $qb)
-    {
-        $alias = $qb->getRootAliases()[0];
-        $qb->resetDQLPart('select');
-        $qb->select($qb->expr()->count("$alias.id"));
-        $qb->setMaxResults(null);
-        $qb->setFirstResult(null);
-
-        return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

@@ -19,11 +19,6 @@ class AutocompleteResults implements AutocompleteResultsInterface
     private $elements;
 
     /**
-     * @var bool
-     */
-    private $totalOverAll = false;
-
-    /**
      * Initializes a new ArrayCollection.
      *
      * @param array $elements
@@ -89,24 +84,6 @@ class AutocompleteResults implements AutocompleteResultsInterface
     public function getIterator()
     {
         return new \ArrayIterator($this->elements);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTotalOverAll()
-    {
-        return $this->totalOverAll;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setTotalOverAll($total)
-    {
-        $this->totalOverAll = $total;
-
-        return $this;
     }
 
     /**

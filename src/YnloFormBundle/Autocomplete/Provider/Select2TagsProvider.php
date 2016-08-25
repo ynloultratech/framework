@@ -29,29 +29,27 @@ class Select2TagsProvider extends SimpleEntityProvider
      */
     public function buildResponse(AutocompleteResults $results, AutocompleteContextInterface $context)
     {
-        $array = [];
-
-        $property = $context->getParameter('autocomplete');
-
         $accessor = new PropertyAccessor();
+
+        $data['results'] = [];
+        $property = $context->getParameter('autocomplete');
 
         foreach ($results as $id => $result) {
             if ($accessor->isReadable($result, $property)) {
                 $value = $accessor->getValue($result, $property);
-                $array[] = [
+                $data['results'][] = [
                     'id' => $value,
                     'text' => $value,
                 ];
             }
         }
 
-        return new JsonResponse(
-            [
-                'results' => $array,
-                'pagination' => [
-                    'more' => $results->getTotalOverAll() > $results->count(),
-                ],
-            ]
-        );
+        if ($max = $context->getParameter('max_results', false)) {
+            $data['pagination'] = [
+                'more' => $results->count() == $max,
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 }

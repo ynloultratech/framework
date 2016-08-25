@@ -17,20 +17,4 @@ interface AutocompleteResultsInterface extends \Countable, \IteratorAggregate, \
      * @return array
      */
     public function toArray();
-
-    /**
-     * Should return the amount of items available
-     * in case of partial result this should be greater than
-     * current $elements count.
-     *
-     * @return bool
-     */
-    public function getTotalOverAll();
-
-    /**
-     * @param int $total
-     *
-     * @return $this
-     */
-    public function setTotalOverAll($total);
 }

@@ -33,26 +33,25 @@ class Select2Provider extends SimpleEntityProvider implements ContainerAwareInte
      */
     public function buildResponse(AutocompleteResults $results, AutocompleteContextInterface $context)
     {
-        $array = [];
+        $data['results'] = [];
         $templateResult = $context->getParameter('select2_template_result');
         $templateSelection = $context->getParameter('select2_template_selection');
 
         foreach ($results as $id => $result) {
-            $array[] = [
+            $data['results'][] = [
                 'id' => $id,
                 'text' => $this->renderSelect2Item($id, $result, $templateResult),
                 'selection_text' => $this->renderSelect2Item($id, $result, $templateSelection),
             ];
         }
 
-        return new JsonResponse(
-            [
-                'results' => $array,
-                'pagination' => [
-                    'more' => $results->getTotalOverAll() > $results->count(),
-                ],
-            ]
-        );
+        if ($max = $context->getParameter('max_results', false)) {
+            $data['pagination'] = [
+                'more' => $results->count() == $max,
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 
     /**
