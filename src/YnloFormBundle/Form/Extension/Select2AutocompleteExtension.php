@@ -9,6 +9,7 @@
 
 namespace YnloFramework\YnloFormBundle\Form\Extension;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -37,6 +38,9 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
                 $idReader = $options['id_reader'];
                 $em = $options['em'];
 
+                if ($data instanceof Collection) {
+                    $data = $data->toArray();
+                }
                 $items = $em->getRepository($options['class'])->findBy([$idReader->getIdField() => $data]);
 
                 $options['choices'] = [];
