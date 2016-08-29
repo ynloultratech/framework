@@ -36,4 +36,21 @@ abstract class AbstractAsseticAsset extends AbstractAsset
     {
         return $this->filters;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize([$this->filters, parent::serialize()]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        list($this->filters, $parentSerialized) = unserialize($serialized);
+        parent::unserialize($parentSerialized);
+    }
 }

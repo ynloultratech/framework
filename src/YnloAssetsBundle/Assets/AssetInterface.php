@@ -12,7 +12,7 @@ namespace YnloFramework\YnloAssetsBundle\Assets;
 /**
  * AssetInterface.
  */
-interface AssetInterface
+interface AssetInterface extends \Serializable
 {
     const JAVASCRIPT = 'js';
     const STYLESHEET = 'css';

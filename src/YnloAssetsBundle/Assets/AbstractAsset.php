@@ -75,4 +75,20 @@ abstract class AbstractAsset implements AssetInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize([$this->name, $this->path]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        list($this->name, $this->path) = unserialize($serialized);
+    }
 }
