@@ -15,9 +15,8 @@
             <input type="hidden" name="_sonata_csrf_token" value="{{ csrf_token }}">
             {% endif %}
 
-            {# Add a margin if no pager to prevent dropdown cropping on window #}
             <div class="panel panel-default">
-                <div class="panel-body {% if admin.datagrid.results|length > 0 %}table-responsive{% endif %}">
+                <div class="panel-body">
                     {% include 'YnloAdminBundle:CRUD/list:toolbar.html.twig' %}
                 </div>
                 {{ sonata_block_render_event('sonata.admin.list.table.top', { 'admin': admin }) }}
