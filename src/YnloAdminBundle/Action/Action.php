@@ -42,10 +42,7 @@ class Action implements ActionInterface
     /**
      * @var array
      */
-    protected $attributes
-        = [
-            'class' => 'btn btn-default',
-        ];
+    protected $attributes = [];
 
     /**
      * @var string
