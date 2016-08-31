@@ -1,6 +1,6 @@
 {% block list_footer %}
     {% if admin.datagrid.results|length > 0 %}
-        <div class="box-footer">
+        <div class="panel-footer">
             <div class="form-inline clearfix">
                 {% if not app.request.isXmlHttpRequest %}
                     <div class="pull-left">
@@ -13,6 +13,12 @@
                                 </label>
                             {% endblock %}
                         {% endif %}
+                    </div>
+
+                    <div class="pull-right">
+                        {% block pager_results %}
+                            {% include admin.getTemplate('pager_results') %}
+                        {% endblock %}
                     </div>
                 {% endif %}
             </div>
