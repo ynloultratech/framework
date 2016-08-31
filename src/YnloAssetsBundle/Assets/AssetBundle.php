@@ -12,7 +12,7 @@ namespace YnloFramework\YnloAssetsBundle\Assets;
 /**
  * Class AssetBundle.
  */
-class AssetBundle
+class AssetBundle implements \Serializable
 {
     /**
      * @var string
@@ -97,5 +97,21 @@ class AssetBundle
     public function getFilters()
     {
         return $this->filters;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize([$this->name, $this->assets, $this->filters]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        list($this->name, $this->assets, $this->filters) = unserialize($serialized);
     }
 }

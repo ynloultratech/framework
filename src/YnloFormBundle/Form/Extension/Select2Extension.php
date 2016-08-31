@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -142,6 +143,10 @@ class Select2Extension extends AbstractTypeExtension
         $resolver->setAllowedTypes('select2_options', ['null', 'array']);
         $resolver->setAllowedTypes('select2_template_result', ['null', 'string', 'callable']);
         $resolver->setAllowedTypes('select2_template_selection', ['null', 'string', 'callable']);
+
+        $resolver->setNormalizer('select2', function (Options $options, $value) {
+            return $options['expanded'] ? false : $value;
+        });
     }
 
     /**

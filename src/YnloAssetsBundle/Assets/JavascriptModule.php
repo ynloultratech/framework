@@ -200,4 +200,40 @@ class JavascriptModule extends AbstractAsset
     {
         return self::JAVASCRIPT;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize(
+            [
+                $this->cdn,
+                $this->moduleName,
+                $this->dependencies,
+                $this->exports,
+                $this->init,
+                $this->jqueryPlugins,
+                parent::serialize(),
+            ]
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->cdn,
+            $this->moduleName,
+            $this->dependencies,
+            $this->exports,
+            $this->init,
+            $this->jqueryPlugins,
+            $parentSerialized)
+            = unserialize($serialized);
+
+        parent::unserialize($parentSerialized);
+    }
 }

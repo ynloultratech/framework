@@ -10,25 +10,17 @@
 namespace YnloFramework\YnloFormBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
-/**
- * Class DateTimePickerTransformer.
- */
 class DateTimePickerTransformer implements DataTransformerInterface
 {
-    /**
-     * @var \IntlDateFormatter
-     */
-    protected $formatter;
+    private $formatter;
+    private $customFormat;
 
-    /**
-     * DateTimePickerTransformer constructor.
-     *
-     * @param \IntlDateFormatter $formatter
-     */
-    public function __construct(\IntlDateFormatter $formatter)
+    public function __construct(\IntlDateFormatter $formatter, $customFormat)
     {
         $this->formatter = $formatter;
+        $this->customFormat = $customFormat;
     }
 
     /**
@@ -36,14 +28,19 @@ class DateTimePickerTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if ($value) {
-            if (!$value instanceof \DateTime) {
-                $value = new \DateTime($value);
-            }
-            $value = $this->formatter->format($value);
+        if (null === $value) {
+            return '';
         }
 
-        return $value;
+        if (!$value instanceof \DateTime) {
+            $value = new \DateTime($value);
+        }
+
+        if (null !== $this->customFormat) {
+            return $this->formatter->format($this->customFormat);
+        }
+
+        return $this->formatter->format($value);
     }
 
     /**
@@ -51,6 +48,14 @@ class DateTimePickerTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if (!is_string($value)) {
+            throw new TransformationFailedException('Expected a string.');
+        }
+
+        if ('' === $value) {
+            return;
+        }
+
         return new \DateTime($value);
     }
 }

@@ -24,7 +24,7 @@ class DateTimePickerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addViewTransformer(new DateTimePickerTransformer($this->getIntlDateFormatter($options)));
+        $builder->addViewTransformer(new DateTimePickerTransformer($this->getIntlDateFormatter($options), $options['format']));
     }
 
     /**
@@ -36,14 +36,9 @@ class DateTimePickerType extends AbstractType
             array_intersect_key($options, $this->getDefaultWidgetOptions())
         );
 
-        // allow custom format (e.g 'MM/YYYY')
-        if (isset($options['format'])) {
-            $format = $options['format'];
-        } else {
-            $format = $this->getIntlDateFormatter($options)->getPattern();
-        }
-
-        $widgetOptions['format'] = $this->momentJSFormatConvert($format);
+        $widgetOptions['format'] = isset($options['format'])
+            ? $this->DateTimeToMomentJS($options['format'])
+            : $this->IntlDateTimeToMomentJS($this->getIntlDateFormatter($options)->getPattern());
 
         $view->vars['attr']['date-picker'] = null;
         if (isset($view->vars['widget_form_control_class']) && isset($view->vars['widget_addon_append']['icon'])) {
@@ -193,11 +188,11 @@ class DateTimePickerType extends AbstractType
     /**
      * Returns associated moment.js format.
      *
-     * @param string $format PHP Date format
+     * @param string $format Intl datetime format
      *
      * @return string Moment.js date format
      */
-    private function momentJSFormatConvert($format)
+    private function IntlDateTimeToMomentJS($format)
     {
         $formatConvertRules = [
             // year
@@ -230,6 +225,49 @@ class DateTimePickerType extends AbstractType
             // timezone
             'ZZZZZ' => 'Z',
             'ZZZ' => 'ZZ',
+            // letter 'T'
+            'T' => 'T',
+        ];
+
+        return strtr($format, $formatConvertRules);
+    }
+
+    /**
+     * Returns associated moment.js format.
+     *
+     * @param string $format PHP datetime format
+     *
+     * @return string Moment.js date format
+     */
+    private function DateTimeToMomentJS($format)
+    {
+        $formatConvertRules = [
+            // year
+            'Y' => 'YYYY',
+            'y' => 'YY',
+            // month
+            'M' => 'MMM',
+            'm' => 'M',
+            'F' => 'MMMM',
+            // day
+            'd' => 'DD',
+            'j' => 'D',
+            // hour
+            'H' => 'HH',
+            'G' => 'H',
+            'g' => 'h',
+            'h' => 'hh',
+            // am/pm
+            'a' => 'a',
+            // minute
+            'i' => 'mm',
+            // second
+            's' => 'ss',
+            // day of week
+            'D' => 'ddd',
+            'l' => 'dddd',
+            // timezone
+            'Z' => 'Z',
             // letter 'T'
             'T' => 'T',
         ];

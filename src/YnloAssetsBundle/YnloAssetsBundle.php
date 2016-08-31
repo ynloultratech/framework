@@ -23,7 +23,6 @@ class YnloAssetsBundle extends Bundle
     public function boot()
     {
         //re-build the registry using a saved parameter
-        $assetsArray = $this->container->getParameter('ynlo.assets');
-        AssetRegistry::unserialize($assetsArray);
+        AssetRegistry::unserialize($this->container->getParameter('ynlo.assets'));
     }
 }
