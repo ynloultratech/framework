@@ -1,9 +1,8 @@
-{% extends ['@SonataAdmin/Form/form_admin_fields.html.twig', 'MopaBootstrapBundle::Form/fields.html.twig'] %}
-
+{% use 'MopaBootstrapBundle::Form/fields.html.twig' %}
 {% use 'YnloFormBundle::Widgets/embedded_template.html.twig' %}
 {% use 'YnloFormBundle::Widgets/angular_form.html.twig' %}
 
-{% block form_row %}
+{% block form_row_begin %}
     {% if prepend_separator %}
         <hr style="clear: both">
     {% endif %}
@@ -25,9 +24,9 @@
     {% if input_wrapper_class %}
         <div class="{{ input_wrapper_class }}">
     {% endif %}
+{% endblock %}
 
-    {{ parent() }}
-
+{% block form_row_end %}
     {% if input_wrapper_class %}
         </div>
     {% endif %}
@@ -49,12 +48,10 @@
     {% if append_separator %}
         <hr style="clear: both">
     {% endif %}
-
-    {#{% include 'YnloFormBundle:Extensions:form_toggle.html.twig' %}#}
-    {#{% include 'YnloFormBundle:Extensions:typehead.html.twig' %}#}
-{% endblock form_row %}
-
-{% block choice_widget_collapsed %}
-    {{ parent() }}
-    {#{% include 'YnloFormBundle:Extensions:select2.html.twig' %}#}
 {% endblock %}
+
+{% block form_row %}
+    {{ block('form_row_begin') }}
+    {{ parent() }}
+    {{ block('form_row_end') }}
+{% endblock form_row %}
