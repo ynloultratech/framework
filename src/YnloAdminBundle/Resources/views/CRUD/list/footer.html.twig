@@ -1,12 +1,12 @@
 {% block list_footer %}
     {% if admin.datagrid.results|length > 0 %}
-        <div class="panel-footer">
+        <div class="panel-footer" style="padding: 10px">
             <div class="form-inline clearfix">
                 {% if not app.request.isXmlHttpRequest %}
                     <div class="pull-left">
                         {% if admin.hasRoute('batch') and batchactions|length > 0 %}
                             {% block batch_all %}
-                                <label class="checkbox" for="{{ admin.uniqid }}_all_elements">
+                                <label class="checkbox" for="{{ admin.uniqid }}_all_elements"  style="margin-top: 8px">
                                     <input type="checkbox" name="all_elements" id="{{ admin.uniqid }}_all_elements">
                                     {{ 'all_elements'|trans({}, 'SonataAdminBundle') }}
                                     ({{ admin.datagrid.pager.nbresults }})
@@ -16,6 +16,12 @@
                     </div>
 
                     <div class="pull-right">
+                        {% block pager_links %}
+                            {% if admin.datagrid.pager.haveToPaginate() %}
+                                {% include admin.getTemplate('pager_links') %}
+                            {% endif %}
+                        {% endblock %}
+
                         {% block pager_results %}
                             {% include admin.getTemplate('pager_results') %}
                         {% endblock %}
