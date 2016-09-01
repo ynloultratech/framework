@@ -1,0 +1,130 @@
+{% block progressbar_widget %}
+    <div id="progressbar-{{ progressbar.token }}">
+        <h4 class="progress-title {% block progressbar_title_class %}animated fadeIn{% endblock %}"></h4>
+
+        {{ 'Time Remaining'|trans }}: <span class="remaining-time"></span>
+
+        <div class="progress-message {% block progressbar_message_class %}pull-right{% endblock %}"></div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+{% endblock %}
+
+<script>
+    (function () {
+        var progress = {
+            token: '{{ progressbar.token }}',
+            url: '{{ path(progressbar.progressRoute, progressbar.progressRouteParameters) }}',
+            redirectUrl: '{{ progressbar.redirectUrl }}',
+            percentage: {{ progressbar.progressPercent }},
+            title: '{{ progressbar.title|raw }}',
+            message: '{{ progressbar.message }}',
+            remaining: 'Calculating...',
+            fails: 0,
+            resetToken: function (token) {
+                var $element = this.element();
+                $element.attr('token', 'progressbar-' + token);
+            },
+            advance: function () {
+                var self = this;
+
+                $.ajax({
+                    url: this.url,
+                    success: function (response) {
+                        self.fails = 0;
+                        self.updateFromResponse(response);
+
+                        //in progress or not started
+                        if (response.status == 1 || response.status == 0) {
+                            setTimeout(function () {
+                                self.advance();
+                            }, 500);
+                        }
+
+                        //cancelled or finished
+                        if ((response.status == 2 || response.status == 3)) {
+                            if (response.status == 2) {
+                                if (response.next !== null) {
+                                    setTimeout(function () {
+                                        response.next.remaining = 'Calculating...';
+                                        self.updateFromResponse(response.next, true);
+                                        self.advance();
+                                    }, 2500);
+                                } else {
+                                    $(document).trigger('progressbar.finished', {token: self.token});
+                                }
+                            }
+                            if (response.status == 3) $(document).trigger('progressbar.cancelled', {token: self.token});
+
+                            if (self.redirectUrl) {
+                                window.location = self.redirectUrl;
+                            }
+                        }
+                    },
+                    error: function () {
+                        self.fails++;
+                        // allow 3 fail attempts only
+                        if (self.fails < 4) {
+                            //retry
+                            setTimeout(function () {
+                                self.advance();
+                            }, 500);
+                        } else {
+                            $(document).trigger('progressbar.fail');
+                        }
+                    }
+                });
+
+                $(document).trigger('progressbar.advance', {token: self.token});
+
+                return this;
+            },
+            updateFromResponse: function (response, animate) {
+                if (this.token != response.token) {
+                    this.resetToken(response.token);
+                }
+
+                this.token = response.token;
+                this.url = response.url;
+                this.title = response.title;
+                this.message = response.message;
+                this.remaining = response.remaining;
+                this.percentage = response.percentage;
+                this.redirectUrl = response.redirectUrl;
+                this.update(animate);
+            },
+            update: function (animate) {
+                if (this.percentage == undefined) {
+                    this.percentage = 0;
+                }
+
+                var $element = this.element();
+                $element.find('.progress-bar').text(this.percentage + '%');
+                $element.find('.progress-bar').width(this.percentage + '%');
+                $element.find('.remaining-time').text(this.remaining);
+                $element.find('.progress-message').html(this.message);
+
+                var $title = $element.find('.progress-title');
+                if (animate) {
+                    $title.html(this.title);
+                    if ($title.hasClass('fadeIn')) {
+                        $title.removeClass('fadeIn').addClass('flash');
+                    } else {
+                        $title.refreshClass('flash');
+                    }
+                } else {
+                    $title.html(this.title);
+                }
+
+                return this;
+            },
+            element: function () {
+                return $('#progressbar-' + this.token);
+            }
+        };
+
+        progress.advance();
+        progress.update();
+    })();
+</script>

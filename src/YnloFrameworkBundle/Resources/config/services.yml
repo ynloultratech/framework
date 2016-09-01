@@ -1,16 +1,41 @@
 services:
-  ynlo.assetic_filter.framework_plugin_settings_dumper:
-      class: YnloFramework\YnloFrameworkBundle\Assetic\FrameworkPluginSettingsDumper
-      arguments: [ '@assetic.parameter_bag' ]
-      tags:
-           - { name: assetic.filter, alias: yfp_config_dumper }
+    ynlo.assetic_filter.framework_plugin_settings_dumper:
+        class: YnloFramework\YnloFrameworkBundle\Assetic\FrameworkPluginSettingsDumper
+        arguments: [ '@assetic.parameter_bag' ]
+        tags:
+            - { name: assetic.filter, alias: yfp_config_dumper }
 
-  ynlo.assetic_filter.pace_settings_dumper:
+    ynlo.assetic_filter.pace_settings_dumper:
         class: YnloFramework\YnloFrameworkBundle\Assetic\PaceSettingsDumper
         arguments: [ '%ynlo.config%' ]
         tags:
-             - { name: assetic.filter, alias: pace_settings_dumper }
+            - { name: assetic.filter, alias: pace_settings_dumper }
 
-  ynlo.tagged_services:
-      class: YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServices
-      arguments: [ '@service_container' ]
+    ynlo.tagged_services:
+        class: YnloFramework\YnloFrameworkBundle\Component\TaggedServices\TaggedServices
+        arguments: [ '@service_container' ]
+
+    ynlo.progressbar_manager:
+        class: YnloFramework\Component\ProgressBar\ProgressBarManager
+        public: false
+        arguments: ['@session']
+
+    ynlo.value_resolver.progressbar:
+        class: YnloFramework\YnloFrameworkBundle\ArgumentResolver\ProgressBarValueResolver
+        public: false
+        arguments: [ '@ynlo.progressbar_manager' ]
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
+    ynlo.twig_extension:
+        class: YnloFramework\YnloFrameworkBundle\Twig\YnloFrameworkExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    ynlo.listener.progressbar:
+        class: YnloFramework\YnloFrameworkBundle\EventListener\ProgressBarListener
+        arguments: ['@ynlo.progressbar_manager']
+        tags:
+            - { name: 'kernel.event_listener', event: kernel.request, method: onKernelRequest, priority: 1 }
+            - { name: 'kernel.event_listener', event: kernel.view, method: onKernelView }
