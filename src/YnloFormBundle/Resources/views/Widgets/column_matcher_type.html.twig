@@ -1,0 +1,144 @@
+{% block column_matcher_widget %}
+    <div id="import-column-matcher-counter" class="text-danger text-bold" style="position: absolute;top: -36px;right: 0;"><h6>{{ 'Selected'|trans }} <span>0</span> of <span>0</span></h6></div>
+    <div class="table-responsive" id="import-column-matcher">
+        <table class="table table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th></th>
+                {% for index in range(0, previewColumns|length - 1 ) %}
+                    <th data-column="index-{{ index }}">
+                        {{ form_widget(form['index_' ~ index]) }}
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in previewData %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    {% for index, value in row %}
+                        <td data-column="index-{{ index }}">{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        (function () {
+            var self = {
+                selected: [],
+                required: 0,
+                $matcher: null,
+                $selects: null,
+                $counter: null,
+                init: function () {
+                    self.$matcher = $('#import-column-matcher');
+                    self.$selects = self.$matcher.find('th select');
+                    self.$counter = $('#import-column-matcher-counter');
+
+                    // mark selected field as muted
+                    self.$selects.each(function () {
+                        $(this).data('select2').options.options.templateResult = self.templateResult;
+                        $(this).data('select2').options.options.sorter = self.sorter;
+                    });
+
+                    $(document).on('change', '#import-column-matcher th select', self.change);
+
+                    self.update();
+                },
+                change: function () {
+                    var $current = $(this);
+
+                    if ($current.val()) {
+                        // if already selected then exchange
+                        self.$selects.each(function () {
+                            var $select = $(this),
+                                    currentIndex = $current.closest('th').data('column'),
+                                    thisIndex = $select.closest('th').data('column');
+
+                            if ($select.val() == $current.val() && currentIndex != thisIndex) {
+                                $select.val('');
+                                $select.change();
+                            }
+                        });
+                    }
+
+                    self.update();
+                },
+                update: function () {
+                    delete self.selected;
+                    self.selected = [];
+                    self.required = 0;
+
+                    var selectedRequired = 0;
+
+                    self.$selects.first().find('option').each(function () {
+                        if ($(this).data('required')) {
+                            self.required += 1;
+                        }
+                    });
+
+                    self.$selects.each(function () {
+                        var $select = $(this),
+                                index = $select.closest('th').data('column'),
+                                column = self.$matcher.find('td[data-column="' + index + '"]');
+
+                        if ($select.val()) {
+                            self.selected.push($select.val());
+                            column.addClass('selected');
+
+                            if ($select.find('option[value="' + $select.val() + '"]').data('required')) {
+                                selectedRequired += 1;
+                            }
+                        } else {
+                            column.removeClass('selected');
+                        }
+                    });
+
+                    var selectedLength = self.selected.length, total = self.$selects.first().find('option').length - 1;
+                    self.$counter.find('span').first().text(selectedLength);
+                    self.$counter.find('span').last().text(total);
+                    if (selectedLength === total) {
+                        self.$counter.removeClass('text-danger text-info').addClass('text-success');
+                        if (self.$counter.find('h6').find('i').length === 0) {
+                            self.$counter.find('h6').prepend('<i class="icon-checkmark3"></i> ');
+                        }
+                    } else if (self.required === selectedRequired) {
+                        self.$counter.removeClass('text-danger text-success').addClass('text-info');
+                    } else {
+                        self.$counter.removeClass('text-success text-info').addClass('text-danger');
+                        self.$counter.find('i').remove();
+                    }
+
+                    if (self.required === selectedRequired) {
+                        $('#flow-btn-next').removeClass('disabled').prop('disabled', false);
+                    } else {
+                        $('#flow-btn-next').addClass('disabled').prop('disabled', true);
+                    }
+                },
+                templateResult: function (option) {
+                    if (self.selected.indexOf($(option.element).val()) > -1) {
+                        return $('<span>').addClass('text-muted').text(option.text);
+                    }
+
+                    return option.text;
+                },
+                sorter: function (data) {
+                    var ignore = data.shift();
+                    var newData = data.sort(function (a, b) {
+                        return (self.selected.indexOf($(a.element).val()) > -1) > (self.selected.indexOf($(b.element).val()) > -1);
+                    });
+                    newData.push(ignore);
+
+                    return newData;
+                }
+            };
+
+            setTimeout(function () {
+                self.init();
+            }, 500);
+        })();
+    </script>
+{% endblock %}
+
