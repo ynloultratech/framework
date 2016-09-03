@@ -49,7 +49,7 @@ trait ModalControllerTrait
      * Ajax redirect response is helpful for modals to refresh current
      * location after modal is submitted.
      *
-     * @return AjaxRedirectResponse
+     * @return AjaxRefreshResponse
      */
     public function ajaxRefresh()
     {
