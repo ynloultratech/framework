@@ -1,0 +1,53 @@
+{# @var admin YnloFramework\YnloAdminBundle\Admin\AbstractAdmin #}
+
+{% extends 'YnloAdminBundle:CRUD:base_list.html.twig' %}
+
+{% set _actions = block('btn_actions')|trim %}
+
+{% block list_table %}
+    {{ _actions|raw }}
+    <hr class="sm dashed">
+    {% if admin.datagrid.results|length > 0 %}
+        <table id="table_{{ admin.id(admin.datagrid.results|first) }}" class="table table-condensed table-hover">
+        {% block table_header %}
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                {% for field_description in admin.list.elements %}
+                    {% spaceless %}
+                        {% if field_description.getOption('code') in ['_batch','_select'] %}
+                        {% else %}
+                            <th class="sonata-ba-list-field-header-{{ field_description.type }}{% if field_description.options.header_class is defined %} {{ field_description.options.header_class }}{% endif %}"{% if field_description.options.header_style is defined %} style="{{ field_description.options.header_style }}"{% endif %}>
+                                {{ admin.trans(field_description.label, {}, field_description.translationDomain) }}
+                            </th>
+                        {% endif %}
+                    {% endspaceless %}
+                {% endfor %}
+            </tr>
+            </thead>
+        {% endblock %}
+    {% else %}
+        <div class="alert alert-styled-left alert-bordered alert-arrow-left alert-info mr-20 ml-20">
+            {{ 'no_result'|trans({}, 'SonataAdminBundle') }}
+        </div>
+    {% endif %}
+    {% block table_body %}
+        <tbody>
+        {% for object in admin.datagrid.results %}
+            <tr>
+                {% for field_description in admin.list.elements %}
+                    {% if field_description.getOption('code') in ['_batch','_select'] %}
+                    {% else %}
+                        {{ object|render_list_element(field_description) }}
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    {% endblock %}
+    {% block table_footer %}
+    {% endblock %}
+    </table>
+{% endblock %}
+
+{% block list_filters_actions %}{% endblock %}
+{% block list_filters %}{% endblock %}

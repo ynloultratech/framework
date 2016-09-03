@@ -1,0 +1,6 @@
+services:
+  ynlo.admin.embedded_admin_form_type:
+      class: YnloFramework\YnloAdminBundle\Form\Type\EmbeddedAdminType
+      arguments: ['@sonata.admin.pool', '@doctrine']
+      tags:
+          - { name: form.type }

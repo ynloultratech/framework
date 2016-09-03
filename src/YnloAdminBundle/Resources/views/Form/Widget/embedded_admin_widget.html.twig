@@ -1,0 +1,48 @@
+{# @var admin \YnloFramework\YnloAdminBundle\Admin\AbstractAdmin #}
+
+{% block embedded_admin_widget %}
+    {% set id = random() %}
+    <div id="embedded-admin-{{ id }}" style="min-height: 60px"></div>
+    <script>
+        (function () {
+            require(['block'], function () {
+                var $embedded = $('#embedded-admin-{{ id }}');
+
+                {# load remote content #}
+                var loadEmbedded = function () {
+                    var listUrl = '{{ admin.generateUrl('list', { 'id' : parentId }) }}';
+                    $embedded.block();
+                    $embedded.load(listUrl, function () {
+                        $embedded.find('a:not([href="#"])').each(function () {
+                            var $link = $(this);
+                            $embedded.unblock();
+                            $link.data('pjax', false);
+                            $link.off('click').on('click', function (event) {
+                                event.preventDefault && event.preventDefault();
+
+                                var options = Admin.Pjax.extractPopupOptions($(this));
+
+                                Admin.Dialog.remoteForm($link.attr('href'), {title: options.title, size: options.size}, function () {
+                                    loadEmbedded();
+                                });
+                            })
+                        });
+                    });
+                };
+
+                var init = function () {
+                    $embedded.is(':empty') && loadEmbedded();
+                };
+
+                setTimeout(function () {
+                    {# verify is visible for lazy load #}
+                    if ($embedded.visible()) {
+                        init();
+                    } else {
+                        $embedded.onVisible(init);
+                    }
+                }, 200)
+            });
+        })()
+    </script>
+{% endblock %}

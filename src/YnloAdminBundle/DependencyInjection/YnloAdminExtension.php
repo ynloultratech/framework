@@ -41,6 +41,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $configDir = __DIR__.'/../Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
         $loader->load('services.yml');
+        $loader->load('forms.yml');
     }
 
     /**
@@ -141,6 +142,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $assets[] = AssetFactory::asset('jquery_waypoints_js', 'bundles/sonataadmin/vendor/waypoints/lib/jquery.waypoints.min.js');
         $assets[] = AssetFactory::asset('jquery_waypoints_sticky_js', 'bundles/sonataadmin/vendor/waypoints/lib/shortcuts/sticky.min.js');
         $assets[] = AssetFactory::module('sonata_admin_js', 'bundles/sonataadmin/Admin.js');
+        $assets[] = AssetFactory::asset('jquery_visible_js', 'bundles/ynloadmin/vendor/plugins/js/jquery_visible.js');
         //Internal
         $assets[] = AssetFactory::asset('ynlo_admin_js', 'bundles/ynloadmin/js/admin.yfp.js', ['yfp_config_dumper']);
         $assets[] = AssetFactory::asset('ynlo_admin_css', 'bundles/ynloadmin/css/ynlo-admin.css', ['yfp_config_dumper']);

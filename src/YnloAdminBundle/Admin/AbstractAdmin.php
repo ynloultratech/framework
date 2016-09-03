@@ -74,6 +74,10 @@ class AbstractAdmin extends BaseAbstractAdmin
      */
     public function isActionOnModal($action)
     {
+        if ($this->isEmbedded() && in_array($action, ['create', 'edit', 'delete'])) {
+            return true;
+        }
+
         return in_array($action, $this->onModal, true);
     }
 
@@ -88,21 +92,21 @@ class AbstractAdmin extends BaseAbstractAdmin
         $modal->createButton('cancel', 'Cancel', ModalButton::ACTION_CLOSE);
         $modal->createButton('ok', 'OK', ModalButton::ACTION_SUBMIT);
 
-        if ($action === 'create') {
+        if ('create' === $action) {
             $modal->getButton('ok')
                 ->setLabel($this->trans('btn_create', [], 'SonataAdminBundle'))
                 ->setClass('btn btn-success')
                 ->setIcon('fa fa-plus-circle');
         }
 
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $modal->getButton('ok')
                 ->setLabel($this->trans('btn_update', [], 'SonataAdminBundle'))
                 ->setClass('btn btn-primary')
                 ->setIcon('fa fa-save');
         }
 
-        if ($action === 'delete') {
+        if ('delete' === $action) {
             $modal->setTypeDanger()->setTitle($this->trans('title_delete', [], 'SonataAdminBundle'));
             $modal->getButton('ok')
                 ->setLabel($this->trans('btn_delete', [], 'SonataAdminBundle'))
@@ -251,5 +255,17 @@ class AbstractAdmin extends BaseAbstractAdmin
      */
     protected function configureBatchActionsUsingMapper(BatchActionMapper $actions)
     {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTemplate($name)
+    {
+        if ('list' === $name && $this->isEmbedded()) {
+            return 'YnloAdminBundle:CRUD:base_list_embedded.html.twig';
+        }
+
+        return parent::getTemplate($name);
     }
 }
