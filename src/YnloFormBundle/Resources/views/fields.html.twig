@@ -4,12 +4,8 @@
 {% use 'YnloFormBundle::Widgets/column_matcher_type.html.twig' %}
 
 {% block form_row_begin %}
-    {% if prepend_separator %}
-        <hr style="clear: both">
-    {% endif %}
-
-    {% if prepend_clearfix %}
-        <div class="clearfix"></div>
+    {% if template_prepend %}
+        {{ include(template_prepend, template_parameters) }}
     {% endif %}
 
     {% if toggle_groups is defined %}
@@ -18,8 +14,12 @@
         {% endfor %}
     {% endif %}
 
-    {% if template_prepend %}
-        {{ include(template_prepend, template_parameters) }}
+    {% if prepend_separator %}
+        <hr style="clear: both">
+    {% endif %}
+
+    {% if prepend_clearfix %}
+        <div class="clearfix"></div>
     {% endif %}
 
     {% if input_wrapper_class %}
@@ -32,8 +32,12 @@
         </div>
     {% endif %}
 
-    {% if template_append %}
-        {{ include(template_append, template_parameters) }}
+    {% if append_clearfix %}
+        <div class="clearfix"></div>
+    {% endif %}
+
+    {% if append_separator %}
+        <hr style="clear: both">
     {% endif %}
 
     {% if toggle_groups is defined %}
@@ -42,12 +46,8 @@
         {% endfor %}
     {% endif %}
 
-    {% if append_clearfix %}
-        <div class="clearfix"></div>
-    {% endif %}
-
-    {% if append_separator %}
-        <hr style="clear: both">
+    {% if template_append %}
+        {{ include(template_append, template_parameters) }}
     {% endif %}
 {% endblock %}
 
