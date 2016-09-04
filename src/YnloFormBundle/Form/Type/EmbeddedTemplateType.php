@@ -16,9 +16,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
-/**
- * @deprecated instead use `template_append` or `template_prepend` options from WidgetTemplateExtension
- */
 class EmbeddedTemplateType extends AbstractType
 {
     /**
