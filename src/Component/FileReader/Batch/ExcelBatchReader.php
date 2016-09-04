@@ -7,7 +7,11 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Reader;
+namespace YnloFramework\Component\FileReader\Batch;
+
+use YnloFramework\Component\FileReader\BatchReaderInterface;
+use YnloFramework\Component\FileReader\BatchReaderTrait;
+use YnloFramework\Component\FileReader\Reader\ExcelReader;
 
 class ExcelBatchReader extends ExcelReader implements BatchReaderInterface
 {

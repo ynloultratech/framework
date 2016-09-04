@@ -7,7 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Reader;
+namespace YnloFramework\Component\FileReader\Reader;
+
+use YnloFramework\Component\FileReader\ReaderInterface;
+use YnloFramework\Component\FileReader\ReaderTrait;
 
 class CsvReader implements ReaderInterface
 {

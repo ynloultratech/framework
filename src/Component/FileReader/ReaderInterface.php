@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Reader;
+namespace YnloFramework\Component\FileReader;
 
 interface ReaderInterface extends \Iterator, \SeekableIterator, \Countable, \Serializable
 {

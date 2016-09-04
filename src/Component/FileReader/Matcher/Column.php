@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Matcher;
+namespace YnloFramework\Component\FileReader\Matcher;
 
 class Column
 {

@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Matcher;
+namespace YnloFramework\Component\FileReader\Matcher;
 
-use YnloFramework\YnloFormBundle\Import\Reader\BatchReaderInterface;
+use YnloFramework\Component\FileReader\BatchReaderInterface;
 
 class ColumnMatcher
 {
@@ -114,7 +114,5 @@ class ColumnMatcher
                 return $column->getName();
             }
         }
-
-        return;
     }
 }

@@ -9,7 +9,6 @@
 
 namespace YnloFramework\YnloFormBundle\Form\Type;
 
-use YnloFramework\YnloFormBundle\Import\Matcher\ColumnMatcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +18,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use YnloFramework\Component\FileReader\Matcher\ColumnMatcher;
 
 class ColumnMatcherType extends AbstractType
 {

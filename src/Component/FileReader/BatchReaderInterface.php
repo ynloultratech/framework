@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Reader;
+namespace YnloFramework\Component\FileReader;
 
 interface BatchReaderInterface extends ReaderInterface
 {
@@ -16,7 +16,7 @@ interface BatchReaderInterface extends ReaderInterface
      *
      * @param int $length
      *
-     * @return CsvBatchReader
+     * @return BatchReaderInterface
      */
     public function setBatchLength($length);
 

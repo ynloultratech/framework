@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloFramework\YnloFormBundle\Import\Matcher;
+namespace YnloFramework\Component\FileReader\Matcher;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use YnloFramework\Component\FileReader\Exception\UnexpectedTypeException;
 
 class ColumnCollection extends ArrayCollection
 {
