@@ -2,10 +2,13 @@
 
 {% extends 'YnloAdminBundle:CRUD:base_list.html.twig' %}
 
-{% set _actions = block('btn_actions')|trim %}
-
 {% block list_table %}
-    {{ _actions|raw }}
+    {% for item in admin.getActionButtons(action, object|default(null)) %}
+        {% if item.template is defined %}
+            {% include item.template %}
+        {% endif %}
+    {% endfor %}
+
     <hr class="sm dashed">
     {% if admin.datagrid.results|length > 0 %}
         <table id="table_{{ admin.id(admin.datagrid.results|first) }}" class="table table-condensed table-hover">
