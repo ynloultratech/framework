@@ -1,112 +1,118 @@
 services:
-  # Autocomplete Provider
+    # Autocomplete Provider
 
-  ynlo.form.autocomplete.provider.entity:
-      class: YnloFramework\YnloFormBundle\Autocomplete\Provider\SimpleEntityProvider
-      arguments: ['@?doctrine']
-      tags:
-          - { name: ynlo.form.autocomplete.provider }
+    ynlo.form.autocomplete.provider.entity:
+        class: YnloFramework\YnloFormBundle\Autocomplete\Provider\SimpleEntityProvider
+        arguments: ['@?doctrine']
+        tags:
+            - { name: ynlo.form.autocomplete.provider }
 
-  ynlo.form.autocomplete.provider.select2:
-      class: YnloFramework\YnloFormBundle\Autocomplete\Provider\Select2Provider
-      arguments: ['@?doctrine']
-      calls:
-           - [ setContainer, [ '@service_container' ]]
-      tags:
-           - { name: ynlo.form.autocomplete.provider }
+    ynlo.form.autocomplete.provider.select2:
+        class: YnloFramework\YnloFormBundle\Autocomplete\Provider\Select2Provider
+        arguments: ['@?doctrine']
+        calls:
+             - [ setContainer, [ '@service_container' ]]
+        tags:
+             - { name: ynlo.form.autocomplete.provider }
 
-  ynlo.form.autocomplete.provider.select2_tags:
-      class: YnloFramework\YnloFormBundle\Autocomplete\Provider\Select2TagsProvider
-      arguments: ['@?doctrine']
-      tags:
-          - { name: ynlo.form.autocomplete.provider }
+    ynlo.form.autocomplete.provider.select2_tags:
+        class: YnloFramework\YnloFormBundle\Autocomplete\Provider\Select2TagsProvider
+        arguments: ['@?doctrine']
+        tags:
+            - { name: ynlo.form.autocomplete.provider }
 
-  ynlo.form.autocomplete.provider.typeahead:
-      class: YnloFramework\YnloFormBundle\Autocomplete\Provider\TypeaheadProvider
-      arguments: ['@?doctrine']
-      tags:
-          - { name: ynlo.form.autocomplete.provider }
+    ynlo.form.autocomplete.provider.typeahead:
+        class: YnloFramework\YnloFormBundle\Autocomplete\Provider\TypeaheadProvider
+        arguments: ['@?doctrine']
+        tags:
+            - { name: ynlo.form.autocomplete.provider }
 
-  ynlo.form.autocomplete.context_manager:
-      class: YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextManager
-      arguments: ['@session']
+    ynlo.form.autocomplete.context_manager:
+        class: YnloFramework\YnloFormBundle\Autocomplete\AutocompleteContextManager
+        arguments: ['@session']
 
-  # Form Type Extension
+    # Form Type Extension
 
-  ynlo.form.toggle_form_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\ToggleFormTypeExtension
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+    ynlo.form.toggle_form_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\ToggleFormTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.widget_template_form_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\WidgetTemplateExtension
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+    ynlo.form.widget_template_form_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\WidgetTemplateExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.form.angular_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\AngularModelExtension
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+    ynlo.form.form.angular_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\AngularModelExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.select2_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\Select2Extension
-      arguments: ['@templating', '@?doctrine', '%ynlo.form.confing%']
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
+    ynlo.form.select2_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\Select2Extension
+        arguments: ['@templating', '@?doctrine', '%ynlo.form.confing%']
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
 
-  ynlo.form.form.ordered_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\OrderedExtension
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+    ynlo.form.form.ordered_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\OrderedExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.form.form_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\FormExtension
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+    ynlo.form.form.form_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\FormExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.form.autocomplete.typeahead_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\TypeaheadExtension
-      calls:
-          - [ setContainer, [ '@service_container' ]]
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
+    ynlo.form.form.autocomplete.typeahead_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\TypeaheadExtension
+        calls:
+            - [ setContainer, [ '@service_container' ]]
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
 
-  ynlo.form.form.autocomplete.select2_extension:
-      class: YnloFramework\YnloFormBundle\Form\Extension\Select2AutocompleteExtension
-      calls:
-          - [ setContainer, [ '@service_container' ]]
-      tags:
-          - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
+    ynlo.form.form.autocomplete.select2_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\Select2AutocompleteExtension
+        calls:
+            - [ setContainer, [ '@service_container' ]]
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
 
-  # Form Type
+    ynlo.form.visibility_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\VisibilityExtension
+        arguments: ['@security.authorization_checker']
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  ynlo.form.form.angular_controller_form_type:
-      class: YnloFramework\YnloFormBundle\Form\Type\AngularControllerType
-      arguments: ['@templating']
-      tags:
-          - { name: form.type }
+    # Form Type
 
-  ynlo.form.form_type.embedded:
-      class: YnloFramework\YnloFormBundle\Form\Type\EmbeddedTemplateType
-      arguments: ['@templating']
-      tags:
-          - { name: form.type }
+    ynlo.form.form.angular_controller_form_type:
+        class: YnloFramework\YnloFormBundle\Form\Type\AngularControllerType
+        arguments: ['@templating']
+        tags:
+            - { name: form.type }
 
-  ynlo.form.form_type.column_matcher_type:
-      class: YnloFramework\YnloFormBundle\Form\Type\ColumnMatcherType
-      tags:
-          - { name: form.type }
+    ynlo.form.form_type.embedded:
+        class: YnloFramework\YnloFormBundle\Form\Type\EmbeddedTemplateType
+        arguments: ['@templating']
+        tags:
+            - { name: form.type }
 
-  # Form Type Guesser
+    ynlo.form.form_type.column_matcher_type:
+        class: YnloFramework\YnloFormBundle\Form\Type\ColumnMatcherType
+        tags:
+            - { name: form.type }
 
-  ynlo.form.datepicker_type_guesser:
-      class: YnloFramework\YnloFormBundle\Form\Guesser\DatePickerTypeGuesser
-      arguments: ['@doctrine']
-      tags:
-          - { name: form.type_guesser }
+    # Form Type Guesser
 
-  ynlo.form.switchery_type_guesser:
-      class: YnloFramework\YnloFormBundle\Form\Guesser\SwitcheryTypeGuesser
-      arguments: ['@doctrine']
-      tags:
-          - { name: form.type_guesser }
+    ynlo.form.datepicker_type_guesser:
+        class: YnloFramework\YnloFormBundle\Form\Guesser\DatePickerTypeGuesser
+        arguments: ['@doctrine']
+        tags:
+            - { name: form.type_guesser }
+
+    ynlo.form.switchery_type_guesser:
+        class: YnloFramework\YnloFormBundle\Form\Guesser\SwitcheryTypeGuesser
+        arguments: ['@doctrine']
+        tags:
+            - { name: form.type_guesser }
