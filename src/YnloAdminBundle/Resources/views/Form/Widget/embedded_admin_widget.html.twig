@@ -13,20 +13,7 @@
                     var listUrl = '{{ admin.generateUrl('list', { 'id' : parentId }) }}';
                     $embedded.block();
                     $embedded.load(listUrl, function () {
-                        $embedded.find('a:not([href="#"])').each(function () {
-                            var $link = $(this);
-                            $embedded.unblock();
-                            $link.data('pjax', false);
-                            $link.off('click').on('click', function (event) {
-                                event.preventDefault && event.preventDefault();
-
-                                var options = Admin.Pjax.extractPopupOptions($(this));
-
-                                Admin.Dialog.remoteForm($link.attr('href'), {title: options.title, size: options.size}, function () {
-                                    loadEmbedded();
-                                });
-                            })
-                        });
+                        $embedded.unblock();
                     });
                 };
 
