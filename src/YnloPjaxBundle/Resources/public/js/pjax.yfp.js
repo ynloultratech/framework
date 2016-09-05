@@ -72,16 +72,19 @@ YnloFramework.Pjax = {
     _setupLinks: function () {
         $(document).off('click.pjax');
         $(document).on('click.pjax', YnloFramework.Pjax.config.links, function (event) {
-            var url = $(this).attr("href");
+            var $a = $(this);
+            var url = $a.attr("href");
 
             if (!url || url.substr(0, 1) == '#'
                 || YnloFramework.Location.getURLParameter('data-pjax', url)
-                || url.substr(0, 11) == 'javascript:') {
+                || url.substr(0, 11) == 'javascript:'
+                || $a.closest('.sf-toolbar').length
+            ) {
                 return;
             }
 
             var pjaxLinkEvent = jQuery.Event("pjax:link");
-            $(this).trigger(pjaxLinkEvent, [url]);
+            $a.trigger(pjaxLinkEvent, [url]);
             if (pjaxLinkEvent.isPropagationStopped() || pjaxLinkEvent.isDefaultPrevented()) {
                 event.preventDefault && event.preventDefault();
                 return false;
@@ -94,7 +97,7 @@ YnloFramework.Pjax = {
 
             event.preventDefault && event.preventDefault();
 
-            YnloFramework.Pjax.load(url, $(this));
+            YnloFramework.Pjax.load(url, $a);
 
             return false;
         });
