@@ -268,4 +268,50 @@ class AbstractAdmin extends BaseAbstractAdmin
 
         return parent::getTemplate($name);
     }
+
+    /**
+     * Get current action name based on current request.
+     *
+     * This method can be used to know what is the current action when use
+     * configureFormFields to build multiple forms based on action
+     *
+     * @return string
+     */
+    public function getCurrentAction()
+    {
+        return str_replace($this->getBaseRouteName().'_', '', $this->getRequest()->get('_route'));
+    }
+
+    /**
+     * Check if current action match with given list or string
+     *
+     * This method can be used to know what is the current cation when use
+     * configureFormFields to build multiple forms based on action
+     *
+     * @param string|array $actions
+     *
+     * @return boolean
+     */
+    public function isCurrentAction($actions)
+    {
+        return in_array($this->getCurrentAction(), (array) $actions);
+    }
+
+    /**
+     * Check if current action is sonata internal action
+     * like retrieve form element when add a option to sonata_type_model
+     *
+     * When sonata call some internal actions methods like configureFormFields
+     * should return the entire list of fields and not only field for current action
+     * otherwise actions like `sonata_admin_retrieve_form_element` may does not work fine
+     *
+     * @return boolean
+     */
+    public function isInternalAction()
+    {
+        //TODO: add all internal actions
+        return $this->isCurrentAction([
+            'sonata_admin_retrieve_form_element',
+        ]);
+    }
 }
