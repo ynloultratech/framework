@@ -9,16 +9,21 @@
 
 namespace YnloFramework\YnloFormBundle\Form\Extension;
 
+use Symfony\Bridge\Doctrine\Form\ChoiceList\IdReader;
+use Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Select2AutocompleteExtension extends AutocompleteBaseExtension
 {
+    private $idReaders;
+
     /**
      * {@inheritdoc}
      */
@@ -51,7 +56,7 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
         $form = $event->getForm();
         $options = $form->getConfig()->getOptions();
 
-        if ($options['_autocomplete_submitted']) {
+        if ($options['_autocomplete_submitted'] && isset($options['em'])) {
             return;
         }
 
@@ -77,14 +82,58 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
     {
         parent::configureOptions($resolver);
 
-        //this option is used internally to know when the autocomplete
-        //has been initialized in the pre-submit data
-        $resolver->setDefault('_autocomplete_submitted', false);
-
         $choiceNormalizer = function (OptionsResolver $options, $value) {
             return $value === null && $options['autocomplete'] ? [] : $value;
         };
 
+        $emNormalizer = function (Options $options, $em) {
+            //support for sonata model type
+            if (null === $em && !empty($options['model_manager']) && !empty($options['class'])) {
+                $em = $options['model_manager']->getEntityManager($options['class']);
+            }
+
+            return $em;
+        };
+
+        $queryBuilderNormalizer = function (Options $options, $queryBuilder) {
+            if (is_callable($queryBuilder) && !empty($options['em'])) {
+                $queryBuilder = call_user_func($queryBuilder, $options['em']->getRepository($options['class']));
+            }
+
+            return $queryBuilder;
+        };
+
+        // Set the "id_reader" option via the normalizer. This option is not
+        // supposed to be set by the user.
+        $idReaderNormalizer = function (Options $options, $idReader) {
+            if (empty($options['em']) || $idReader instanceof IdReader) {
+                return $idReader;
+            }
+
+            $hash = CachingFactoryDecorator::generateHash(array(
+                $options['em'],
+                $options['class'],
+            ));
+
+            if (!isset($this->idReaders[$hash])) {
+                $classMetadata = $options['em']->getClassMetadata($options['class']);
+                $this->idReaders[$hash] = new IdReader($options['em'], $classMetadata);
+            }
+
+            return $this->idReaders[$hash];
+        };
+
+        //this option is used internally to know when the autocomplete
+        //has been initialized in the pre-submit data
+        $resolver->setDefault('_autocomplete_submitted', false);
+        $resolver->setDefault('em', null);
+        $resolver->setDefault('id_reader', null); // internal
+
+        $resolver->setAllowedTypes('em', ['null', 'Doctrine\ORM\EntityManager']);
+
+        $resolver->setNormalizer('em', $emNormalizer);
+        $resolver->setNormalizer('query_builder', $queryBuilderNormalizer);
+        $resolver->setNormalizer('id_reader', $idReaderNormalizer);
         $resolver->setNormalizer('choices', $choiceNormalizer);
     }
 
