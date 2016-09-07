@@ -34,7 +34,7 @@ class CRUDController extends BaseCRUDController
      */
     public function render($view, array $parameters = [], Response $response = null)
     {
-        $action = array_key_value($parameters, 'action', null);
+        $action = array_key_value($parameters, 'action', $this->admin->getCurrentAction());
         if ($this->isModalAction($action)) {
             $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
