@@ -5,31 +5,29 @@
     <div id="embedded-admin-{{ id }}" style="min-height: 60px"></div>
     <script>
         (function () {
-            require(['block'], function () {
-                var $embedded = $('#embedded-admin-{{ id }}');
+            var $embedded = $('#embedded-admin-{{ id }}');
 
-                {# load remote content #}
-                var loadEmbedded = function () {
-                    var listUrl = '{{ admin.generateUrl('list', { 'id' : parentId }) }}';
-                    $embedded.block();
-                    $embedded.load(listUrl, function () {
-                        $embedded.unblock();
-                    });
-                };
+            {# load remote content #}
+            var loadEmbedded = function () {
+                var listUrl = '{{ admin.generateUrl('list', { 'id' : parentId }) }}';
+                $embedded.trigger('ynlo_admin.embedded_admin.before_load');
+                $embedded.load(listUrl, function () {
+                    $embedded.trigger('ynlo_admin.embedded_admin.after_load');
+                });
+            };
 
-                var init = function () {
-                    $embedded.is(':empty') && loadEmbedded();
-                };
+            var init = function () {
+                $embedded.is(':empty') && loadEmbedded();
+            };
 
-                setTimeout(function () {
-                    {# verify is visible for lazy load #}
-                    if ($embedded.visible()) {
-                        init();
-                    } else {
-                        $embedded.onVisible(init);
-                    }
-                }, 200)
-            });
+            setTimeout(function () {
+                {# verify is visible for lazy load #}
+                if ($embedded.visible()) {
+                    init();
+                } else {
+                    $embedded.onVisible(init);
+                }
+            }, 200)
         })()
     </script>
 {% endblock %}
