@@ -9,6 +9,11 @@
 
 namespace YnloFramework\Component\FileReader;
 
+use YnloFramework\Component\FileReader\Batch\CsvBatchReader;
+use YnloFramework\Component\FileReader\Batch\ExcelBatchReader;
+use YnloFramework\Component\FileReader\Reader\CsvReader;
+use YnloFramework\Component\FileReader\Reader\ExcelReader;
+
 class ReaderFactory
 {
     /**
@@ -30,8 +35,6 @@ class ReaderFactory
                 return new CsvReader($filename, $delimiter);
                 break;
         }
-
-        return;
     }
 
     /**
@@ -54,8 +57,6 @@ class ReaderFactory
                 return new CsvBatchReader($filename, $batchLength, $delimiter);
                 break;
         }
-
-        return;
     }
 
     private static function guessFileType($originalExtension)
@@ -73,7 +74,5 @@ class ReaderFactory
             default:
                 break;
         }
-
-        return;
     }
 }
