@@ -48,6 +48,7 @@ class YnloAssetsExtension extends Extension implements PrependExtensionInterface
         }
 
         $asseticConfig = $container->getExtensionConfig('assetic')[0];
+        $assetConfig = $container->getExtensionConfig('ynlo_assets')[0];
 
         //Assetic base configuration
         $asseticConfig['bundles'][] = 'YnloFrameworkBundle';
@@ -56,17 +57,22 @@ class YnloAssetsExtension extends Extension implements PrependExtensionInterface
             $asseticConfig['assets'] = [];
         }
 
-        AssetRegistry::build($container);
-        AssetRegistry::prependAssets(
-            [
-                AssetFactory::asset('requirejs', 'bundles/ynloassets/vendor/requirejs/require.min.js'),
-                AssetFactory::asset('requirejs_config', 'bundles/ynloassets/js/require_js_config.js', ['require_js_config']),
-            ]
-        );
+        $useRequireJs = (!isset($assetConfig['requirejs']) || $assetConfig['requirejs'] !== false);
 
-        AssetRegistry::addAsset(
-            AssetFactory::asset('jquery_plugins_overrides', 'bundles/ynloassets/js/jquery_plugins_overrides.js', ['jquery_plugin_override'])
-        );
+        AssetRegistry::build($container, $useRequireJs);
+
+        if ($useRequireJs) {
+            AssetRegistry::prependAssets(
+                [
+                    AssetFactory::asset('requirejs', 'bundles/ynloassets/vendor/requirejs/require.min.js'),
+                    AssetFactory::asset('requirejs_config', 'bundles/ynloassets/js/require_js_config.js', ['require_js_config']),
+                ]
+            );
+
+            AssetRegistry::addAsset(
+                AssetFactory::asset('jquery_plugins_overrides', 'bundles/ynloassets/js/jquery_plugins_overrides.js', ['jquery_plugin_override'])
+            );
+        }
 
         $this->processAssetContexts($container);
 

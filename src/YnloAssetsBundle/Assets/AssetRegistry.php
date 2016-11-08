@@ -29,13 +29,20 @@ class AssetRegistry
     private static $assets = [];
 
     /**
+     * @var bool
+     */
+    private static $requireJs = true;
+
+    /**
      * AssetRegistry builder.
      *
      * @param ContainerBuilder $container
+     * @param boolean          $requireJs
      */
-    public static function build(ContainerBuilder $container)
+    public static function build(ContainerBuilder $container, $requireJs = true)
     {
         self::$container = $container;
+        self::$requireJs = $requireJs;
 
         //first pass to allow other extensions to modify the framework assets settings
         self::prependAssetsConfigs($container);
@@ -95,6 +102,7 @@ class AssetRegistry
      */
     public static function addAsset(AssetInterface $asset)
     {
+        $asset = self::normalizeAsset($asset);
         self::$assets[$asset->getName()] = $asset;
         self::refreshBundleAll();
     }
@@ -121,7 +129,7 @@ class AssetRegistry
             if (self::hasNamedAsset($assets->getName())) {
                 self::removeAsset($assets->getName());
             }
-            self::$assets = array_merge([$assets->getName() => $assets], self::$assets);
+            self::addAsset($assets);
             self::refreshBundleAll();
         }
     }
@@ -233,7 +241,7 @@ class AssetRegistry
                     $indexedAssets = [];
                     foreach ($assetsNotIndexed as $asset) {
                         if ($asset instanceof AbstractAsset) {
-                            $indexedAssets[$asset->getName()] = $asset;
+                            $indexedAssets[$asset->getName()] = self::normalizeAsset($asset);
                         }
                     }
                     self::$assets = array_merge(self::$assets, $indexedAssets);
@@ -249,6 +257,23 @@ class AssetRegistry
         foreach ($namedAssetsByExtension as $extension => $assets) {
             self::registerAssetBundle(sprintf('bundle_'.$extension), $assets, true);
         }
+    }
+
+    /**
+     * Normalize asset disabling the use of RequireJs if not enabled
+     *
+     * @param AssetInterface $asset
+     *
+     * @return AssetInterface
+     */
+    private static function normalizeAsset(AssetInterface $asset)
+    {
+        if (!self::$requireJs && $asset instanceof JavascriptModule) {
+            $module = $asset;
+            $asset = new Javascript($module->getName(), $module->getPath());
+        }
+
+        return $asset;
     }
 
     /**
