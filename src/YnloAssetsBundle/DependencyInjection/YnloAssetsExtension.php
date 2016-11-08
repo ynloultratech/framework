@@ -81,10 +81,14 @@ class YnloAssetsExtension extends Extension implements PrependExtensionInterface
     private function processAssetContexts(ContainerBuilder $containerBuilder)
     {
         $config = $this->processConfiguration(new Configuration(), $containerBuilder->getExtensionConfig('ynlo_assets'));
+        $exclude = [];
+        if ($containerBuilder->hasExtension('ynlo_admin')) {
+            $exclude[] = 'bundle_ynlo_admin';
+        }
         $defaultContexts = [
             'app' => [
                 'include' => ['all'],
-                'exclude' => ['bundle_ynlo_admin'],
+                'exclude' => $exclude,
             ],
         ];
 
