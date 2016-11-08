@@ -128,7 +128,7 @@ YnloFramework.Pjax = {
                 $form.append($hidden);
             }
 
-            require(['jquery_form'], function () {
+            var ajaxSubmitFunction = function () {
                 $form.ajaxSubmit({
                     beforeSend: function (xhr) {
                         YnloFramework.Pjax._xhr = xhr;
@@ -152,7 +152,13 @@ YnloFramework.Pjax = {
                         $(document).trigger('pjax:error', [event, xhr, reason]);
                     }
                 });
-            });
+            };
+
+            if (typeof require !== 'undefined') {
+                require(['jquery_form'], ajaxSubmitFunction);
+            } else {
+                ajaxSubmitFunction();
+            }
         })
     },
     _xhr: null,
@@ -187,8 +193,8 @@ YnloFramework.Pjax = {
                 if (YnloFramework.hasPlugin('Modal')) {
                     if (typeof xhr.getResponseHeader === 'function') {
                         if (xhr.getResponseHeader('X-MODAL')) {
-                            require(['bootstrap-dialog'], function (BootstrapDialog) {
 
+                            var showDialog = function (BootstrapDialog) {
                                 //hack required to force parse elements inside modals
                                 //and avoid a flicker while is creating the modal
                                 var message = $('<div class="col-md-12">' + output.message + '</div>');
@@ -210,7 +216,13 @@ YnloFramework.Pjax = {
                                     form.attr('action', url);
                                 }
                                 $(document).trigger('pjax:abort', [output, status, xhr]);
-                            });
+                            };
+
+                            if (typeof require !== 'undefined') {
+                                require(['bootstrap-dialog'], showDialog);
+                            } else {
+                                showDialog(BootstrapDialog);
+                            }
                             return;
                         }
                     }
@@ -233,8 +245,8 @@ YnloFramework.Pjax = {
         YnloFramework.Pjax.lastLocation = YnloFramework.Pjax.currentLocation();
     },
     pushResponse: function (url, response) {
-        if (YnloFramework.Pjax.lastLocation !== url){
-            window.scrollTo(0,0);
+        if (YnloFramework.Pjax.lastLocation !== url) {
+            window.scrollTo(0, 0);
         }
         YnloFramework.Pjax.pushState(url);
 

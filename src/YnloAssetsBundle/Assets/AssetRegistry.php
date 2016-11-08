@@ -129,7 +129,8 @@ class AssetRegistry
             if (self::hasNamedAsset($assets->getName())) {
                 self::removeAsset($assets->getName());
             }
-            self::addAsset($assets);
+            $assets = self::normalizeAsset($assets);
+            self::$assets = array_merge([$assets->getName() => $assets], self::$assets);
             self::refreshBundleAll();
         }
     }

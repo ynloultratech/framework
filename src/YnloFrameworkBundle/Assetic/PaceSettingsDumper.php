@@ -56,9 +56,11 @@ var paceOptions = {
   restartOnPushState: $restartOnPushState,
   restartOnRequestAfter: $restartOnRequestAfter,
 };
-require(['pace'], function (pace) {
-  pace.start();
-});
+if (typeof require !== 'undefined'){
+    require(['pace'], function (pace) {
+      pace.start();
+    });
+}
 
 JAVASCRIPT;
             $asset->setContent($settings);
