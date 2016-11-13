@@ -145,19 +145,4 @@ class CRUDController extends BaseCRUDController
 
         return $ajax && $this->admin->isActionOnModal($action);
     }
-
-    /**
-     * trans.
-     *
-     * @param string $id         #TranslationMessage
-     * @param array  $parameters array of parameters
-     * @param null   $domain     #Domain
-     * @param null   $locale
-     *
-     * @return string translated string
-     */
-    protected function trans($id, array $parameters = [], $domain = null, $locale = null)
-    {
-        return $this->get('translator')->trans($id, $parameters, $domain, $locale);
-    }
 }
