@@ -154,7 +154,7 @@ YnloFramework.Pjax = {
                 });
             };
 
-            if (typeof require !== 'undefined') {
+            if (typeof requirejs !== 'undefined') {
                 require(['jquery_form'], ajaxSubmitFunction);
             } else {
                 ajaxSubmitFunction();
@@ -218,7 +218,7 @@ YnloFramework.Pjax = {
                                 $(document).trigger('pjax:abort', [output, status, xhr]);
                             };
 
-                            if (typeof require !== 'undefined') {
+                            if (typeof requirejs !== 'undefined') {
                                 require(['bootstrap-dialog'], showDialog);
                             } else {
                                 showDialog(BootstrapDialog);

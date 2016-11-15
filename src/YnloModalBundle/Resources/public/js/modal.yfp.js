@@ -74,7 +74,7 @@ YnloFramework.Modal = {
                     });
                 };
 
-                if (typeof require !== 'undefined') {
+                if (typeof requirejs !== 'undefined') {
                     require(['bootstrap-dialog'], showDialogFn);
                 } else {
                     showDialogFn(BootstrapDialog);
@@ -147,7 +147,7 @@ YnloFramework.Modal = {
                 }
             })
         };
-        if (typeof require !== 'undefined') {
+        if (typeof requirejs !== 'undefined') {
             require(['jquery_form'], submitDialogFn);
         } else {
             submitDialogFn(BootstrapDialog)
@@ -166,7 +166,6 @@ YnloFramework.Modal = {
             if (action) {
                 switch (action) {
                     case 'close':
-
                         action = function (dialog) {
                             dialog.close()
                         };

@@ -56,7 +56,7 @@ var paceOptions = {
   restartOnPushState: $restartOnPushState,
   restartOnRequestAfter: $restartOnRequestAfter,
 };
-if (typeof require !== 'undefined'){
+if (typeof requirejs !== 'undefined'){
     require(['pace'], function (pace) {
       pace.start();
     });
