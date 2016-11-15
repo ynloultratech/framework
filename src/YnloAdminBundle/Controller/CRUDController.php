@@ -36,7 +36,7 @@ class CRUDController extends BaseCRUDController
     {
         $action = array_key_value($parameters, 'action', $this->admin->getCurrentAction());
         if ($this->isModalAction($action)) {
-            $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
+            $parameters['base_template'] = $this->getModalLayout();
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
             $parameters['admin'] = $this->admin;
 
@@ -147,17 +147,12 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * trans.
+     * getModalLayout
      *
-     * @param string $id         #TranslationMessage
-     * @param array  $parameters array of parameters
-     * @param null   $domain     #Domain
-     * @param null   $locale
-     *
-     * @return string translated string
+     * @return string
      */
-    protected function trans($id, array $parameters = [], $domain = null, $locale = null)
+    protected function getModalLayout()
     {
-        return $this->get('translator')->trans($id, $parameters, $domain, $locale);
+        return 'YnloAdminBundle::modal_layout.html.twig';
     }
 }
