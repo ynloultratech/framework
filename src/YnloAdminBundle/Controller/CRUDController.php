@@ -36,7 +36,7 @@ class CRUDController extends BaseCRUDController
     {
         $action = array_key_value($parameters, 'action', $this->admin->getCurrentAction());
         if ($this->isModalAction($action)) {
-            $parameters['base_template'] = 'YnloAdminBundle::modal_layout.html.twig';
+            $parameters['base_template'] = $this->getModalLayout();
             $parameters['admin_pool'] = $this->get('sonata.admin.pool');
             $parameters['admin'] = $this->admin;
 
@@ -144,5 +144,15 @@ class CRUDController extends BaseCRUDController
         $ajax = ($this->isXmlHttpRequest() || $this->isModalRequest() || $this->getRequest()->headers->get('X-Pjax'));
 
         return $ajax && $this->admin->isActionOnModal($action);
+    }
+
+    /**
+     * getModalLayout
+     *
+     * @return string
+     */
+    protected function getModalLayout()
+    {
+        return 'YnloAdminBundle::modal_layout.html.twig';
     }
 }

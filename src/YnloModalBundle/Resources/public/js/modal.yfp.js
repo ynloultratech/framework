@@ -43,7 +43,8 @@ YnloFramework.Modal = {
             var options = YnloFramework.Modal._extractPopupOptions($(this));
             var url = $(this).attr('href');
             if (options.target == 'modal') {
-                require(['bootstrap-dialog'], function (BootstrapDialog) {
+
+                var showDialogFn = function (BootstrapDialog) {
                     event.preventDefault && event.preventDefault();
                     var dialog = new BootstrapDialog({
                         message: $(YnloFramework.Modal.config.loaderTemplate),
@@ -71,7 +72,13 @@ YnloFramework.Modal = {
                             dialog.close();
                         }
                     });
-                });
+                };
+
+                if (typeof requirejs !== 'undefined') {
+                    require(['bootstrap-dialog'], showDialogFn);
+                } else {
+                    showDialogFn(BootstrapDialog);
+                }
             }
         });
     },
@@ -103,7 +110,8 @@ YnloFramework.Modal = {
         var form = dialog.getModalBody().find('form');
         //get the current action in case the origin don`t have
         var url = form.attr('action');
-        require(['jquery_form'], function (BootstrapDialog) {
+
+        var submitDialogFn = function (BootstrapDialog) {
             form.ajaxSubmit({
                 beforeSend: function (xhr) {
                     dialog.enableButtons(false);
@@ -138,7 +146,12 @@ YnloFramework.Modal = {
                     dialog.setClosable(true);
                 }
             })
-        });
+        };
+        if (typeof requirejs !== 'undefined') {
+            require(['jquery_form'], submitDialogFn);
+        } else {
+            submitDialogFn(BootstrapDialog)
+        }
     },
     setOptions: function (dialog, options) {
         var index;
@@ -153,7 +166,6 @@ YnloFramework.Modal = {
             if (action) {
                 switch (action) {
                     case 'close':
-
                         action = function (dialog) {
                             dialog.close()
                         };
