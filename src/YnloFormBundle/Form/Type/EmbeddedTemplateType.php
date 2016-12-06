@@ -49,13 +49,11 @@ class EmbeddedTemplateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(
-                [
-                    'parameters' => [],
-                    'labeled' => false,
-                    'required' => false,
-                ]
-            )
+            ->setDefaults([
+                'parameters' => [],
+                'labeled' => false,
+                'required' => false,
+            ])
             ->setRequired(['template'])
             ->setAllowedTypes('template', 'string')
             ->setAllowedTypes('parameters', 'array')

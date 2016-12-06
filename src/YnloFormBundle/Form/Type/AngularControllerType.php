@@ -18,14 +18,8 @@ use Symfony\Component\Templating\EngineInterface;
 
 class AngularControllerType extends AbstractType
 {
-    /**
-     * @var EngineInterface
-     */
     private $templating;
 
-    /**
-     * @param EngineInterface $templating
-     */
     public function __construct(EngineInterface $templating)
     {
         $this->templating = $templating;
