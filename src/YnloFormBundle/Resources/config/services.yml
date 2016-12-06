@@ -92,6 +92,12 @@ services:
         tags:
             - { name: form.type }
 
+    ynlo.form.tag_entity_form_type:
+        class: YnloFramework\YnloFormBundle\Form\Type\TagEntityType
+        arguments: ['@property_accessor', '@sonata.admin.entity_manager']
+        tags:
+            - { name: 'form.type' }
+
     # Form Type Guesser
 
     ynlo.form.datepicker_type_guesser:
