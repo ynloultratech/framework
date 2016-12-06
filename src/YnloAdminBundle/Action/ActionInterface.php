@@ -9,9 +9,6 @@
 
 namespace YnloFramework\YnloAdminBundle\Action;
 
-/**
- * Class ActionInterface.
- */
 interface ActionInterface
 {
     const TYPE_BTN = 'btn';

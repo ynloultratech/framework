@@ -15,8 +15,6 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * Class PjaxListener.
- *
  * This class manipulates requests and response in order to works with Pjax
  */
 class PjaxListener implements ContainerAwareInterface

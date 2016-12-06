@@ -11,9 +11,6 @@ namespace YnloFramework\YnloAdminBundle\Menu;
 
 use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 
-/**
- * Class SidebarDashboardMenuItem.
- */
 class SidebarDashboardMenuItem extends AbstractMenuBuilderListener
 {
     protected $adminConfig;

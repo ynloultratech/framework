@@ -9,9 +9,6 @@
 
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
-/**
- * Class AssetBundle.
- */
 class AssetBundle implements \Serializable
 {
     /**

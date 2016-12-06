@@ -16,9 +16,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use YnloFramework\YnloAdminBundle\Admin\AbstractAdmin;
 use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 
-/**
- * Class Builder.
- */
 class Builder implements ContainerAwareInterface
 {
     use ContainerAwareTrait;

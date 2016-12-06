@@ -9,9 +9,6 @@
 
 namespace YnloFramework\Component\KernelBuilder;
 
-/**
- * Class WithYnloBundlesTrait.
- */
 trait WithYnloBundlesTrait
 {
     /**

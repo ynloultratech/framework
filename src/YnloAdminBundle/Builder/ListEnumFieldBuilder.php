@@ -13,9 +13,6 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 
-/**
- * Class ListEnumFieldBuilder.
- */
 class ListEnumFieldBuilder implements ListFieldBuilderInterface
 {
     /**

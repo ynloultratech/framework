@@ -12,8 +12,6 @@ namespace YnloFramework\YnloAdminBundle\Action;
 use Rafrsr\LibArray2Object\Object2ArrayInterface;
 
 /**
- * Class BatchAction.
- *
  * @method BatchActionMapper getDropDown()
  */
 class BatchAction extends Action implements Object2ArrayInterface

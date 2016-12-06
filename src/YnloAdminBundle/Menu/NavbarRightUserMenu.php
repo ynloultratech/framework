@@ -11,9 +11,6 @@ namespace YnloFramework\YnloAdminBundle\Menu;
 
 use YnloFramework\YnloAdminBundle\Event\ConfigureMenuEvent;
 
-/**
- * Class NavbarRightUserMenu.
- */
 class NavbarRightUserMenu extends AbstractMenuBuilderListener
 {
     protected $user;

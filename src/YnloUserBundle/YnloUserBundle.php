@@ -11,9 +11,6 @@ namespace YnloFramework\YnloUserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * Class YnloUserBundle.
- */
 class YnloUserBundle extends Bundle
 {
 }

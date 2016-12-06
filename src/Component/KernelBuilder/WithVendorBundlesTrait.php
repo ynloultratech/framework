@@ -9,9 +9,6 @@
 
 namespace YnloFramework\Component\KernelBuilder;
 
-/**
- * Class WithVendorBundlesTrait.
- */
 trait WithVendorBundlesTrait
 {
     /** @var string */

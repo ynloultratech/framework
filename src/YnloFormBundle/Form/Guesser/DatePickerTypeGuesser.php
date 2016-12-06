@@ -17,9 +17,6 @@ use Symfony\Component\Form\Guess\TypeGuess;
 use YnloFramework\YnloFormBundle\Form\Type\DatePickerType;
 use YnloFramework\YnloFormBundle\Form\Type\DateTimePickerType;
 
-/**
- * Class DatePickerTypeGuesser.
- */
 class DatePickerTypeGuesser extends DoctrineOrmTypeGuesser
 {
     /**

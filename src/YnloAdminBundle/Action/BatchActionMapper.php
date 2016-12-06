@@ -13,9 +13,6 @@ use Rafrsr\LibArray2Object\Object2ArrayBuilder;
 use Rafrsr\LibArray2Object\Object2ArrayInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-/**
- * Class BatchActionMapper.
- */
 class BatchActionMapper extends ActionMapper implements Object2ArrayInterface
 {
     /**

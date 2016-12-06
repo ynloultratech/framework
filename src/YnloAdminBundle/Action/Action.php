@@ -9,9 +9,6 @@
 
 namespace YnloFramework\YnloAdminBundle\Action;
 
-/**
- * Class Action.
- */
 class Action implements ActionInterface
 {
     /**

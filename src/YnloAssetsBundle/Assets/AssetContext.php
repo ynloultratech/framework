@@ -9,9 +9,6 @@
 
 namespace YnloFramework\YnloAssetsBundle\Assets;
 
-/**
- * Class AssetContext.
- */
 class AssetContext
 {
     /**

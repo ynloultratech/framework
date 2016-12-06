@@ -12,9 +12,6 @@ namespace YnloFramework\YnloAdminBundle\Builder;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 
-/**
- * Class ListActionFieldBuilder.
- */
 class ListActionFieldBuilder implements ListFieldBuilderInterface
 {
     /**

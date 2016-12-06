@@ -12,9 +12,6 @@ namespace YnloFramework\YnloAssetsBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use YnloFramework\YnloAssetsBundle\Assets\AssetRegistry;
 
-/**
- * Class YnloAssetsBundle.
- */
 class YnloAssetsBundle extends Bundle
 {
     /**

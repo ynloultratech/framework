@@ -16,9 +16,6 @@ use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
 use YnloFramework\YnloFormBundle\Form\Type\SwitcheryType;
 
-/**
- * Class SwitcheryTypeGuesser.
- */
 class SwitcheryTypeGuesser extends DoctrineOrmTypeGuesser
 {
     /**
@@ -41,7 +38,5 @@ class SwitcheryTypeGuesser extends DoctrineOrmTypeGuesser
         if ($metadata->getTypeOfField($property) == Type::BOOLEAN) {
             return new TypeGuess(SwitcheryType::class, [], Guess::VERY_HIGH_CONFIDENCE);
         }
-
-        return;
     }
 }
