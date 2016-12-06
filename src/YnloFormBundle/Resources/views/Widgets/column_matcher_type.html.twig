@@ -1,4 +1,4 @@
-{% block column_matcher_widget %}
+{% block import_column_matcher_widget %}
     <div id="import-column-matcher-counter" class="text-danger text-bold" style="position: absolute;top: -36px;right: 0;"><h6>{{ 'Selected'|trans }} <span>0</span> of <span>0</span></h6></div>
     <div class="table-responsive" id="import-column-matcher">
         <table class="table table-bordered table-condensed">
@@ -11,6 +11,16 @@
                     </th>
                 {% endfor %}
             </tr>
+            {% if show_restricted %}
+                <tr>
+                    <th></th>
+                    {% for index in range(0, previewColumns|length - 1 ) %}
+                        <th class="text-center" data-column-restricted="index-{{ index }}">
+                            {{ form_widget(form['index_restricted_' ~ index]) }} {{ index }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            {% endif %}
             </thead>
             <tbody>
             {% for row in previewData %}
@@ -82,17 +92,24 @@
                     self.$selects.each(function () {
                         var $select = $(this),
                                 index = $select.closest('th').data('column'),
-                                column = self.$matcher.find('td[data-column="' + index + '"]');
+                                $column = self.$matcher.find('td[data-column="' + index + '"]'),
+                                $column_restricted = self.$matcher.find('th[data-column-restricted="' + index + '"]');
 
                         if ($select.val()) {
                             self.selected.push($select.val());
-                            column.addClass('selected');
+                            $column.addClass('selected');
 
-                            if ($select.find('option[value="' + $select.val() + '"]').data('required')) {
+                            var $option = $select.find('option[value="' + $select.val() + '"]');
+
+                            if ($option.data('required')) {
                                 selectedRequired += 1;
                             }
+
+                            if ($option.data('restricted')) {
+                                $column_restricted.find(':checkbox').prop('checked', true);
+                            }
                         } else {
-                            column.removeClass('selected');
+                            $column.removeClass('selected');
                         }
                     });
 
@@ -112,9 +129,9 @@
                     }
 
                     if (self.required === selectedRequired) {
-                        $('#flow-btn-next').removeClass('disabled').prop('disabled', false);
+                        $('button#flow-btn-next').removeClass('disabled').prop('disabled', false);
                     } else {
-                        $('#flow-btn-next').addClass('disabled').prop('disabled', true);
+                        $('button#flow-btn-next').addClass('disabled').prop('disabled', true);
                     }
                 },
                 templateResult: function (option) {
@@ -141,4 +158,3 @@
         })();
     </script>
 {% endblock %}
-

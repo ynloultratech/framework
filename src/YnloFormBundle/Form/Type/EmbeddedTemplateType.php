@@ -19,19 +19,6 @@ use Symfony\Component\Templating\EngineInterface;
 class EmbeddedTemplateType extends AbstractType
 {
     /**
-     * @var EngineInterface
-     */
-    private $templating;
-
-    /**
-     * @param EngineInterface $templating
-     */
-    public function __construct(EngineInterface $templating)
-    {
-        $this->templating = $templating;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -46,7 +33,8 @@ class EmbeddedTemplateType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $options['parameters']['form'] = $view;
-        $view->vars['template'] = $this->templating->render($options['template'], $options['parameters']);
+        $view->vars['template'] = $options['template'];
+        $view->vars['parameters'] = $options['parameters'];
 
         $options['required'] = false;
         if ($options['labeled'] !== true) {

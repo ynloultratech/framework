@@ -9,30 +9,42 @@
 
 namespace YnloFramework\Component\FileReader\Matcher;
 
+use Doctrine\DBAL\Types\Type;
+
 class Column
 {
     private $name;
-
     private $label;
-
     private $index;
-
     private $required;
+    private $type;
+    private $restricted;
+    private $supportedTypes = [
+        Type::STRING,
+        Type::DECIMAL,
+        Type::INTEGER,
+        Type::DATE,
+        Type::DATETIME,
+    ];
 
     /**
-     * @param string $name     name of the column to get values later
-     * @param string $label    human label to display
-     * @param bool   $required is required
+     * @param string $name       Name of the column to get values later
+     * @param string $label      Human label to display
+     * @param bool   $required   Is required
+     * @param string $type       Column type
+     * @param bool   $restricted Restricted column
      */
-    public function __construct($name, $label = null, $required = false)
+    public function __construct($name, $label = null, $required = false, $type = Type::STRING, $restricted = false)
     {
         $this->name = $name;
         $this->label = $label;
         $this->required = $required;
+        $this->type = $type;
+        $this->restricted = $restricted;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -40,7 +52,7 @@ class Column
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      *
      * @return $this
      */
@@ -109,6 +121,42 @@ class Column
         $this->required = $required;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        if (!in_array($type, $this->supportedTypes)) {
+            throw new \InvalidArgumentException(sprintf('Unsupported column type: %s, these types are supported only: (%s)', $type, implode(', ', $this->supportedTypes)));
+        }
+
+        $this->type = $type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRestricted()
+    {
+        return $this->restricted;
+    }
+
+    /**
+     * @param bool $restricted
+     */
+    public function setRestricted($restricted)
+    {
+        $this->restricted = $restricted;
     }
 
     /**

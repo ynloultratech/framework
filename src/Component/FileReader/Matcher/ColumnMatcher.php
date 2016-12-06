@@ -21,6 +21,11 @@ class ColumnMatcher
     private $columns;
 
     /**
+     * @var array
+     */
+    private $restrictedColumns = [];
+
+    /**
      * @var BatchReaderInterface
      */
     private $reader;
@@ -44,6 +49,56 @@ class ColumnMatcher
     public function getColumns()
     {
         return $this->columns;
+    }
+
+    /**
+     * Get restricted columns.
+     *
+     * @return array
+     */
+    public function getRestrictedColumns()
+    {
+        return $this->restrictedColumns ?: [];
+    }
+
+    /**
+     * Set restricted columns.
+     *
+     * @param array $columns
+     *
+     * @return self
+     */
+    public function setRestrictedColumns($columns)
+    {
+        $this->restrictedColumns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Add restricted column.
+     *
+     * @param int $index
+     *
+     * @return self
+     */
+    public function addRestrictedColumn($index)
+    {
+        $this->restrictedColumns[$index] = true;
+
+        return $this;
+    }
+
+    /**
+     * Is restricted column.
+     *
+     * @param int $index
+     *
+     * @return bool
+     */
+    public function isRestrictedColumn($index)
+    {
+        return isset($this->restrictedColumns[$index]);
     }
 
     /**
@@ -75,21 +130,6 @@ class ColumnMatcher
     }
 
     /**
-     * Get matched index columns.
-     *
-     * @return array of index
-     */
-    public function getResult()
-    {
-        $result = [];
-        foreach ($this->columns as $column) {
-            $result[$column->getName()] = $column->getIndex();
-        }
-
-        return $result;
-    }
-
-    /**
      * @return BatchReaderInterface
      */
     public function getReader()
@@ -114,5 +154,37 @@ class ColumnMatcher
                 return $column->getName();
             }
         }
+    }
+
+    /**
+     * Get column.
+     *
+     * @param int $index
+     *
+     * @return Column
+     */
+    public function getColumn($index)
+    {
+        foreach ($this->columns as $column) {
+            if ($column->getIndex() === $index) {
+                return $column;
+            }
+        }
+    }
+
+    /**
+     * Get matched index columns.
+     *
+     * @return array of index
+     */
+    public function getResult()
+    {
+        $result = [];
+
+        foreach ($this->columns as $column) {
+            $result[$column->getName()] = $column->getIndex();
+        }
+
+        return $result;
     }
 }
