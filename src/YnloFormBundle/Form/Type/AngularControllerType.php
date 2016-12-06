@@ -23,12 +23,6 @@ class AngularControllerType extends AbstractType
      */
     private $templating;
 
-    private $select2DefaultOptions
-        = [
-            'minimumResultsForSearch' => 20,
-            'minimumInputLength' => 0,
-        ];
-
     /**
      * @param EngineInterface $templating
      */
@@ -59,14 +53,6 @@ class AngularControllerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
-    {
-        return 'ynlo_form_angular_form';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -88,5 +74,13 @@ class AngularControllerType extends AbstractType
     public function getParent()
     {
         return HiddenType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'ynlo_form_angular_form';
     }
 }
