@@ -92,17 +92,6 @@ services:
         tags:
             - { name: form.type }
 
-    ynlo.form.form_type.embedded:
-        class: YnloFramework\YnloFormBundle\Form\Type\EmbeddedTemplateType
-        arguments: ['@templating']
-        tags:
-            - { name: form.type }
-
-    ynlo.form.form_type.column_matcher_type:
-        class: YnloFramework\YnloFormBundle\Form\Type\ColumnMatcherType
-        tags:
-            - { name: form.type }
-
     # Form Type Guesser
 
     ynlo.form.datepicker_type_guesser:
