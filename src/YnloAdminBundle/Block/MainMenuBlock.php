@@ -18,10 +18,8 @@ class MainMenuBlock extends TemplateBlock
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            [
-                'template' => 'YnloAdminBundle::Block/sidebar_menu.html.twig',
-            ]
-        );
+        $resolver->setDefaults([
+            'template' => 'YnloAdminBundle::Block/sidebar_menu.html.twig',
+        ]);
     }
 }

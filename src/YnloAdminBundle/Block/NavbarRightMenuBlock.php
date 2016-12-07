@@ -18,10 +18,8 @@ class NavbarRightMenuBlock extends TemplateBlock
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            [
-                'template' => 'YnloAdminBundle::Block/navbar_right_menu.html.twig',
-            ]
-        );
+        $resolver->setDefaults([
+            'template' => 'YnloAdminBundle::Block/navbar_right_menu.html.twig',
+        ]);
     }
 }

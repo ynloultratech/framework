@@ -21,10 +21,8 @@ class NavbarLeftMenuBlock extends TemplateBlock
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            [
-                'template' => 'YnloAdminBundle::Block/navbar_left_menu.html.twig',
-            ]
-        );
+        $resolver->setDefaults([
+            'template' => 'YnloAdminBundle::Block/navbar_left_menu.html.twig',
+        ]);
     }
 }
