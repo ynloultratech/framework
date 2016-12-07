@@ -82,8 +82,11 @@ YnloFramework.Debugger = {
         YnloFramework.Debugger.lastError = xhr;
         if (xhr.getResponseHeader('X-Debug-Token-Link')) {
             YnloFramework.Debugger.lastDebugTokenLink = xhr.getResponseHeader('X-Debug-Token-Link');
-            element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastError(true)">[PROFILE]</a>');
+            element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.showLastError(true)" style="margin: 0 5px">[PROFILE]</a>');
         }
+
+        element.append('<a data-pjax="false" href="#" onclick="YnloFramework.Debugger.close()">[X]</a>');
+
         if (expanded) {
             YnloFramework.Debugger.showLastError();
         }
@@ -92,7 +95,7 @@ YnloFramework.Debugger = {
         if ($('.ynlo-debugger-error-preview').length) {
             $('.ynlo-debugger-error-preview').remove();
         }
-        var element = $('<div class="ynlo-debugger-error-preview"><a href="#" data-pjax="false" onclick="$(\'.ynlo-debugger-error-preview\').remove();">[ CLOSE ]</a><iframe frameborder="0"></iframe></div>');
+        var element = $('<div class="ynlo-debugger-error-preview"><a href="#" data-pjax="false" onclick="$(\'.ynlo-debugger-error-preview\').remove();">[CLOSE]</a><iframe frameborder="0"></iframe></div>');
 
         if (profile == undefined && YnloFramework.Debugger.lastDebugTokenLink) {
             element.find('a').after('<a data-pjax="false" style="margin: 0 5px 0 0" href="#" onclick="YnloFramework.Debugger.showLastError(true)">[PROFILE]</a> ');
@@ -105,5 +108,8 @@ YnloFramework.Debugger = {
             iframe.prop('srcdoc', YnloFramework.Debugger.lastError.responseText);
         }
         element.show();
+    },
+    close: function () {
+        $('.ynlo-debugger-error').remove();
     }
 };
