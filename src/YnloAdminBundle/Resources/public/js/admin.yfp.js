@@ -171,5 +171,62 @@ YnloFramework.Admin = {
             }
             editableOriginalFunction(subject);
         };
+
+        Admin.setup_collection_buttons = function () {
+            $(document)
+                .off('click.admin.form')
+                .on('click.admin.form', '.sonata-collection-add', function (event) {
+                    var $this = $(this);
+
+                    Admin.stopEvent(event);
+
+                    var $container = $this.closest('[data-prototype]');
+                    var counter = parseInt($container.attr('data-entry-length')) + 1;
+                    var proto = $container.attr('data-prototype');
+                    var protoName = $container.attr('data-prototype-name') || '__name__';
+                    // Set field id
+                    var id = $container.attr('id');
+                    var $collection_body = $('#collection_' + id);
+                    var idRegexp = new RegExp(id + '_' + protoName, 'g');
+                    proto = proto.replace(idRegexp, id + '_' + counter);
+
+                    // Set field name
+                    var parts = id.split('_');
+                    var nameRegexp = new RegExp(parts[parts.length - 1] + '\\]\\[' + protoName, 'g');
+                    proto = proto.replace(nameRegexp, parts[parts.length - 1] + '][' + counter);
+
+                    //update entry length
+                    $container.attr('data-entry-length', counter);
+
+                    $(proto)
+                        .appendTo($collection_body)
+                        .trigger('sonata-admin-append-form-element');
+
+                    $this.trigger('sonata-collection-item-added');
+                });
+
+            $(document)
+                .off('sonata-admin-append-form-element.admin.form')
+                .on('sonata-admin-append-form-element.admin.form', function (event) {
+                    YnloFramework.FormSelect2.initializeWidget($(event.target).find('select'));
+                });
+
+            $(document)
+                .off('click.admin.form.collection.delete')
+                .on('click.admin.form.collection.delete', '.sonata-collection-delete', function (event) {
+                    if (confirm('Are you sure you want to delete?')) {
+                        var $this = $(this);
+
+                        Admin.stopEvent(event);
+
+                        $this.closest('.sonata-collection-row').fadeOut(function () {
+                            $(this).remove();
+                            $(this).trigger('sonata-collection-item-deleted');
+                        });
+
+                        $(document).trigger('sonata-collection-item-deleted-successful');
+                    }
+                });
+        }
     }
 };
