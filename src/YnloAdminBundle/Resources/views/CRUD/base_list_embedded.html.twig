@@ -3,12 +3,11 @@
 {% extends 'YnloAdminBundle:CRUD:base_list.html.twig' %}
 
 {% block list_table %}
-    {% for item in admin.getActionButtons(action, object|default(null)) %}
-        {% if item.template is defined %}
-            {% include item.template %}
-        {% endif %}
-    {% endfor %}
-
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            {% include 'YnloAdminBundle:CRUD/list:actions.html.twig' with {'actions': admin.getListToolbarActions.all } %}
+        </div>
+    </div>
     <hr class="sm dashed">
     {% if admin.datagrid.results|length > 0 %}
         <table id="table_{{ admin.id(admin.datagrid.results|first) }}" class="table table-condensed table-hover">
