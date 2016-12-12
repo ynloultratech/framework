@@ -55,7 +55,7 @@ YnloFramework.Location = {
         }
     },
     load: function (url) {
-        if (YnloFramework.hasPlugin('Pjax') && -1 === url.indexOf('pjax=false')) {
+        if (YnloFramework.hasPlugin('Pjax') && -1 === window.location.href.indexOf('pjax=false')) {
             YnloFramework.Pjax.load(url);
         } else {
             window.location = url;
