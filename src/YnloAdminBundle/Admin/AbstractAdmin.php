@@ -148,6 +148,14 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
+     * @return string
+     */
+    public function getEmbeddedId()
+    {
+        return md5($this->code);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function generateUrl($name, array $parameters = [], $absolute = UrlGeneratorInterface::ABSOLUTE_PATH)

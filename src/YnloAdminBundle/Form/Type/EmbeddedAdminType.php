@@ -94,7 +94,6 @@ class EmbeddedAdminType extends AbstractType
         $view->vars['parentId'] = $id;
         $view->vars['admin'] = $childAdmin;
         $view->vars['label'] = $options['title'];
-        $view->vars['admin_embedded_id'] = md5($childAdmin->getCode());
     }
 
     /**

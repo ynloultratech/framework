@@ -14,8 +14,8 @@ class AjaxRefreshResponse extends AjaxSuccessResponse
     /**
      * {@inheritdoc}
      */
-    public function __construct()
+    public function __construct($params = [])
     {
-        parent::__construct(['refresh' => true]);
+        parent::__construct(array_merge(['refresh' => true], $params));
     }
 }

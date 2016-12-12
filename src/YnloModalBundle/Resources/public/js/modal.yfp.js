@@ -124,10 +124,12 @@ YnloFramework.Modal = {
 
                         if (response.redirect) {
                             YnloFramework.Location.go(response.redirect);
-                        }
-
-                        if (response.refresh) {
-                            YnloFramework.Location.refresh();
+                        } else if (response.refresh) {
+                            if (response.embedded) {
+                                YnloFramework.AdminEmbedded.refresh(response.embedded);
+                            } else {
+                                YnloFramework.Location.refresh();
+                            }
                         }
                     } else {
                         dialog.enableButtons(true);

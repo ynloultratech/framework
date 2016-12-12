@@ -122,6 +122,10 @@ class CRUDController extends BaseCRUDController
     protected function renderJson($data, $status = 200, $headers = [])
     {
         if ($this->isModalRequest()) {
+            if ($this->admin->isEmbedded()) {
+                return new AjaxRefreshResponse(['embedded' => $this->admin->getEmbeddedId()]);
+            }
+
             if ($this->getRequest()->getMethod() === 'DELETE') {
                 return new AjaxRedirectResponse($this->admin->generateUrl('list'));
             }

@@ -1,5 +1,5 @@
 {# @var admin \YnloFramework\YnloAdminBundle\Admin\AbstractAdmin #}
 
 {% block embedded_admin_widget %}
-    <div id="{{ id }}" admin-embedded="{{ admin_embedded_id }}" admin-embedded-url="{{ admin.generateUrl('list', { 'id' : parentId }) }}" style="min-height: 60px"></div>
+    <div id="{{ id }}" admin-embedded="{{ admin.embeddedId }}" admin-embedded-url="{{ admin.generateUrl('list', { 'id' : parentId }) }}" style="min-height: 60px"></div>
 {% endblock %}
