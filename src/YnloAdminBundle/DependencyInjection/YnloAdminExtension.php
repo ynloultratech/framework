@@ -149,6 +149,7 @@ class YnloAdminExtension extends Extension implements AssetRegisterInterface, Pr
         $assets[] = AssetFactory::asset('sonata_admin_override_js', 'bundles/ynloadmin/js/sonata_admin_override.js');
         $assets[] = AssetFactory::asset('ynlo_admin_list_batch_js', 'bundles/ynloadmin/js/admin_list_batch.yfp.js', ['yfp_config_dumper']);
         $assets[] = AssetFactory::asset('ynlo_admin_list_details_js', 'bundles/ynloadmin/js/admin_list_details.yfp.js', ['yfp_config_dumper']);
+        $assets[] = AssetFactory::asset('ynlo_admin_embedded_js', 'bundles/ynloadmin/js/admin_embedded.yfp.js', ['yfp_config_dumper']);
 
         return $assets;
     }

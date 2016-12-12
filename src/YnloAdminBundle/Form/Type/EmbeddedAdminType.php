@@ -94,6 +94,7 @@ class EmbeddedAdminType extends AbstractType
         $view->vars['parentId'] = $id;
         $view->vars['admin'] = $childAdmin;
         $view->vars['label'] = $options['title'];
+        $view->vars['admin_embedded_id'] = md5($childAdmin->getCode());
     }
 
     /**
@@ -109,17 +110,14 @@ class EmbeddedAdminType extends AbstractType
             return $title;
         };
 
-        $resolver->setDefaults(
-            [
-                'class' => null,
-                // needed for multiple admin attached to same entity
-                'admin_code' => null,
-                'parent_admin_code' => null,
-                'title' => false,
-                'required' => false,
-                'query_builder' => null,
-            ]
-        );
+        $resolver->setDefaults([
+            'class' => null,
+            // needed for multiple admin attached to same entity
+            'admin_code' => null,
+            'parent_admin_code' => null,
+            'title' => false,
+            'required' => false,
+        ]);
 
         $resolver->setNormalizer('title', $titleNormalizer);
     }

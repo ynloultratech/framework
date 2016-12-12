@@ -1,33 +1,5 @@
 {# @var admin \YnloFramework\YnloAdminBundle\Admin\AbstractAdmin #}
 
 {% block embedded_admin_widget %}
-    {% set id = random() %}
-    <div id="embedded-admin-{{ id }}" style="min-height: 60px"></div>
-    <script>
-        (function () {
-            var $embedded = $('#embedded-admin-{{ id }}');
-
-            {# load remote content #}
-            var loadEmbedded = function () {
-                var listUrl = '{{ admin.generateUrl('list', { 'id' : parentId }) }}';
-                $embedded.trigger('ynlo_admin.embedded_admin.before_load');
-                $embedded.load(listUrl, function () {
-                    $embedded.trigger('ynlo_admin.embedded_admin.after_load');
-                });
-            };
-
-            var init = function () {
-                $embedded.is(':empty') && loadEmbedded();
-            };
-
-            setTimeout(function () {
-                {# verify is visible for lazy load #}
-                if ($embedded.visible()) {
-                    init();
-                } else {
-                    $embedded.onVisible(init);
-                }
-            }, 200)
-        })()
-    </script>
+    <div id="{{ id }}" admin-embedded="{{ admin_embedded_id }}" admin-embedded-url="{{ admin.generateUrl('list', { 'id' : parentId }) }}" style="min-height: 60px"></div>
 {% endblock %}
