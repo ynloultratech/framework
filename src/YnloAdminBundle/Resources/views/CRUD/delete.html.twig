@@ -1,7 +1,7 @@
 {% extends '@SonataAdmin/CRUD/delete.html.twig' %}
 
 {% block content %}
-    {% if modal is defined and modal %}
+    {% if object is defined and object %}
         <form method="POST" action="{{ admin.generateObjectUrl('delete', object) }}">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_sonata_csrf_token" value="{{ csrf_token }}">
