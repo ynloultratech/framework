@@ -1,4 +1,6 @@
 modals:
-   btn:
-     ok: OK
-     cancel: Cancel
+    delete:
+        undone: This action cannot be undone.
+    btn:
+        ok: OK
+        cancel: Cancel

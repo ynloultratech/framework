@@ -5,7 +5,8 @@
         <form method="POST" action="{{ admin.generateObjectUrl('delete', object) }}">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_sonata_csrf_token" value="{{ csrf_token }}">
-            {{ 'message_delete_confirmation'|trans({'%object%': admin.toString(object)}, 'SonataAdminBundle') }}
+            <h5>{{ 'message_delete_confirmation'|trans({'%object%': admin.toString(object)}, 'SonataAdminBundle') }}</h5>
+            <p>{{ 'modals.delete.undone'|trans({}, 'YnloModalBundle') }}</p>
         </form>
     {% else %}
         {{ parent() }}
