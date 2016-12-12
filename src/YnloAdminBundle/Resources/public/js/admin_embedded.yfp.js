@@ -8,29 +8,35 @@
 YnloFramework.AdminEmbedded = {
     init: function () {
         $('[admin-embedded]').each(function () {
-            var $embedded = $(this),
-                url = $embedded.attr('admin-embedded-url');
-
-            // load remote content
-            var loadEmbedded = function () {
-                $embedded.trigger('ynlo_admin.embedded_admin.before_load');
-                $embedded.load(url, function () {
-                    $embedded.trigger('ynlo_admin.embedded_admin.after_load');
-                });
-            };
-
-            var init = function () {
-                $embedded.is(':empty') && loadEmbedded();
-            };
+            var $embedded = $(this);
 
             setTimeout(function () {
                 // verify is visible for lazy load
                 if ($embedded.visible()) {
-                    init();
+                    YnloFramework.AdminEmbedded._load($embedded);
                 } else {
-                    $embedded.onVisible(init);
+                    $embedded.onVisible(function () {
+                        YnloFramework.AdminEmbedded._load($embedded);
+                    });
                 }
             }, 200);
+        });
+    },
+    refresh: function (id) {
+        var $embedded = $('[admin-embedded="' + id + '"]');
+
+        if (0 === $embedded.length) {
+            return; //not found
+        }
+
+        this._load($embedded, true);
+    },
+    _load: function ($embedded, force) {
+        if (!$embedded.is(':empty') && !force) return;
+
+        $embedded.trigger('ynlo_admin.embedded_admin.before_load');
+        $embedded.load($embedded.attr('admin-embedded-url'), function () {
+            $embedded.trigger('ynlo_admin.embedded_admin.after_load');
         });
     }
 };
