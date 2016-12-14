@@ -77,9 +77,9 @@ trait ReaderTrait
     }
 
     /**
-     * @param mixed $headerRowNumber
+     * @param int $headerRowNumber
      *
-     * @return ExcelReader
+     * @return ReaderInterface
      */
     public function setHeaderRowNumber($headerRowNumber)
     {

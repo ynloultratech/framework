@@ -172,4 +172,12 @@ class CsvReader implements ReaderInterface
 
         return $this->valid();
     }
+
+    public function __clone()
+    {
+        if ($this->file) {
+            $csvControl = $this->file->getCsvControl();
+            $this->load($this->getFilePath(), $csvControl[0], $csvControl[1]);
+        }
+    }
 }

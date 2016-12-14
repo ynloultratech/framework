@@ -207,4 +207,11 @@ class ExcelReader implements ReaderInterface
 
         return $this->worksheet->valid();
     }
+
+    public function __clone()
+    {
+        if ($this->file) {
+            $this->load($this->getFilePath(), $this->activeSheet);
+        }
+    }
 }
