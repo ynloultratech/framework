@@ -43,6 +43,17 @@ class Configuration implements ConfigurationInterface
         $rootNode->booleanNode('ajax_forms')->defaultValue(false)->info('Use ajax forms in bundles that support this.');
         $rootNode->variableNode('icons')->defaultValue(['fontawesome'])->info('Icon libraries to load, available: fontawesome, glyphicons. @note: glyphicons are always loaded with bootstrap');
 
+        $rootNode
+            ->arrayNode('notify')
+                ->canBeDisabled()
+                ->info('Enable or disable float notification.')
+                ->children()
+                    ->scalarNode('delay')->defaultValue('600')->end()
+                    ->scalarNode('animate_speed')->defaultValue('fast')->end()
+                    ->scalarNode('width')->defaultValue('500px')->end()
+                    ->scalarNode('animation')->defaultValue('fade')->end()
+            ->end();
+
         return $treeBuilder;
     }
 }

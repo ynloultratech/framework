@@ -81,6 +81,12 @@ class YnloFrameworkExtension extends Extension implements AssetRegisterInterface
             $assets[] = AssetFactory::asset('animate_css', 'bundles/ynloframework/vendor/animate/animate.min.css');
         }
 
+        if ($config['notify']) {
+            $assets[] = AssetFactory::module('pnotify', 'bundles/ynloframework/vendor/pnotify/pnotify.js');
+            $assets[] = AssetFactory::asset('pnotify_css', 'bundles/ynloframework/vendor/pnotify/pnotify.css');
+            $assets[] = AssetFactory::asset('ynlo_notify_js', 'bundles/ynloframework/js/notify.yfp.js', ['yfp_config_dumper']);
+        }
+
         return $assets;
     }
 }

@@ -1,6 +1,15 @@
-{% for type in sonata_flashmessages_types() %}
-    {% set domain = domain is defined ? domain : null %}
-    {% for message in sonata_flashmessages_get(type, domain) %}
-        <div class="alert alert-{{ type|sonata_status_class }}">{{ message|raw }}</div>
+<div id="alert-container">
+    {% for type in sonata_flashmessages_types() %}
+        {% set domain = domain is defined ? domain : null %}
+        {% for message in sonata_flashmessages_get(type, domain) %}
+            <script>
+                var type = '{{ type|sonata_status_class }}', message = '{{ message|raw }}';
+                if (YnloFramework.hasPlugin('Notify')) {
+                    YnloFramework.Notify.flash(type, message);
+                } else {
+                    $('#alert-container').append($('<div>').addClass('alert alert-' + type).html(message));
+                }
+            </script>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
+</div>
