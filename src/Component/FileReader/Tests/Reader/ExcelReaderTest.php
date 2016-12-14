@@ -20,7 +20,7 @@ class ExcelReaderTest extends TestCase
     public function testCurrent()
     {
         $reader = new ExcelReader(__DIR__.'/../fixtures/data.xlsx');
-        $this->assertCount(18, $reader->current());
+        $this->assertCount(17, $reader->current());
 
         return $reader;
     }

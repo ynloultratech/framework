@@ -142,19 +142,21 @@ class CsvReader implements ReaderInterface
     }
 
     /**
-     * Load file.
+     * Load csv file.
      *
      * @param string $filename
      * @param string $delimiter
      * @param string $enclosure
      * @param string $escape
+     *
+     * @return bool
      */
     public function load($filename, $delimiter, $enclosure, $escape = '\\')
     {
         ini_set('auto_detect_line_endings', true);
 
         if (!file_exists($filename)) {
-            throw new \InvalidArgumentException(sprintf('The file "%s" does not exists', $filename));
+            return false;
         }
 
         $this->file = new \SplFileObject($filename, 'r');
@@ -165,5 +167,9 @@ class CsvReader implements ReaderInterface
             \SplFileObject::DROP_NEW_LINE
         );
         $this->file->setCsvControl($delimiter, $enclosure, $escape);
+
+        $this->rewind();
+
+        return $this->valid();
     }
 }

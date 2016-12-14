@@ -26,25 +26,34 @@ trait BatchReaderTrait
     /**
      * {@inheritdoc}
      */
-    public function setBatchLength($length)
+    public function getBatchLength()
     {
-        $length = (int) $length;
-        if ($length < 0) {
-            throw new \InvalidArgumentException('The batch length must be an integer positive.');
-        }
+        return $this->length;
+    }
 
-        $this->length = min($length, $this->count());
-        $this->rewind();
-
-        return $this;
+    /**
+     * Gets the current step.
+     *
+     * @return int
+     */
+    public function getBatchStep()
+    {
+        return $this->step;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBatchLength()
+    public function count()
     {
-        return $this->length;
+        if (null === $this->count && $this->file) {
+            $length = $this->length;
+            $this->length = 0;
+            $this->count = parent::count();
+            $this->length = $length;
+        }
+
+        return $this->count ?: 0;
     }
 
     /**

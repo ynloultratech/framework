@@ -19,7 +19,7 @@ class CsvBatchReaderTest extends TestCase
 {
     public function testValid()
     {
-        $batch = new CsvBatchReader(__DIR__.'/../fixtures/data.csv', 3, '|');
+        $batch = new CsvBatchReader(__DIR__.'/../fixtures/data.csv', 5, 1, '|');
         $this->assertTrue($batch->valid());
         $this->assertCount(17, $batch);
 
@@ -28,35 +28,9 @@ class CsvBatchReaderTest extends TestCase
 
     /**
      * @depends testValid
-     * @expectedException \InvalidArgumentException
-     */
-    public function testBatchLength(CsvBatchReader $batch)
-    {
-        $this->assertEquals(3, $batch->getBatchLength());
-        $batch->setBatchLength(5);
-        $this->assertEquals(5, $batch->getBatchLength());
-        $this->assertCount(17, $batch);
-
-        $batch->setBatchLength(22);
-        // avoid batch length greater than total
-        $this->assertEquals(17, $batch->getBatchLength());
-        $this->assertEquals(0, $batch->key());
-
-        $batch->seek(17);
-        $batch->next();
-        $this->assertFalse($batch->advance());
-
-        // The batch length must be an integer positive.
-        // Expected exception InvalidArgumentException
-        $batch->setBatchLength(-23);
-    }
-
-    /**
-     * @depends testValid
      */
     public function testBatch(CsvBatchReader $batch)
     {
-        $batch->setBatchLength(5);
         $batch->setHeaderRowNumber(2);
         $total = 0;
 

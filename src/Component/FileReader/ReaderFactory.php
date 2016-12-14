@@ -41,20 +41,23 @@ class ReaderFactory
      * Create batch reader for file.
      *
      * @param string $filename
-     * @param string $originalExtension
      * @param string $delimiter
      * @param int    $batchLength
+     * @param int    $batchStep
+     * @param string $originalExtension
      *
-     * @return BatchReaderInterface|null
+     * @return null|BatchReaderInterface
      */
-    public static function createBatchReaderForFile($filename, $originalExtension, $delimiter = ',', $batchLength = 500)
+    public static function createBatchReaderForFile($filename, $delimiter = ',', $batchLength = 500, $batchStep = 1, $originalExtension = null)
     {
+        $originalExtension = $originalExtension ?: pathinfo($filename, PATHINFO_EXTENSION);
+
         switch (self::guessFileType($originalExtension)) {
             case 'Excel2007':
-                return new ExcelBatchReader($filename, $batchLength);
+                return new ExcelBatchReader($filename, $batchLength, $batchStep);
                 break;
             case 'Csv':
-                return new CsvBatchReader($filename, $batchLength, $delimiter);
+                return new CsvBatchReader($filename, $batchLength, $batchStep, $delimiter);
                 break;
         }
     }

@@ -28,35 +28,9 @@ class ExcelBatchReaderTest extends TestCase
 
     /**
      * @depends testValid
-     * @expectedException \InvalidArgumentException
-     */
-    public function testBatchLength(ExcelBatchReader $batch)
-    {
-        $this->assertEquals(500, $batch->getBatchLength());
-        $batch->setBatchLength(1000);
-        $this->assertEquals(1000, $batch->getBatchLength());
-        $this->assertCount(1507, $batch);
-
-        $batch->setBatchLength(2000);
-        // avoid batch length greater than total
-        $this->assertEquals(1507, $batch->getBatchLength());
-        $this->assertEquals(0, $batch->key());
-
-        $batch->seek(1506);
-        $batch->next();
-        $this->assertFalse($batch->valid());
-
-        // The batch length must be an integer positive.
-        // Expected exception InvalidArgumentException
-        $batch->setBatchLength(-23);
-    }
-
-    /**
-     * @depends testValid
      */
     public function testBatch(ExcelBatchReader $batch)
     {
-        $batch->setBatchLength(500);
         $batch->setHeaderRowNumber(2);
         $total = 0;
 

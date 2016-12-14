@@ -12,20 +12,18 @@ namespace YnloFramework\Component\FileReader;
 interface BatchReaderInterface extends ReaderInterface
 {
     /**
-     * Set batch length.
-     *
-     * @param int $length
-     *
-     * @return BatchReaderInterface
-     */
-    public function setBatchLength($length);
-
-    /**
      * Get batch length.
      *
      * @return int
      */
     public function getBatchLength();
+
+    /**
+     * Gets current batch step.
+     *
+     * @return int
+     */
+    public function getBatchStep();
 
     /**
      * Checks if current step is valid and advance the batch X steps.

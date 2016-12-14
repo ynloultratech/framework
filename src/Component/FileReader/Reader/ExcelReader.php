@@ -126,6 +126,7 @@ class ExcelReader implements ReaderInterface
                 'headerRowNumber' => $this->headerRowNumber,
                 'activeSheet' => $this->activeSheet,
                 'columns' => $this->columns,
+                'count' => $this->count,
             ]
         );
     }
@@ -136,9 +137,10 @@ class ExcelReader implements ReaderInterface
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
-        $this->load($data['filename'], $data['activeSheet']);
         $this->headerRowNumber = $data['headerRowNumber'];
         $this->columns = $data['columns'];
+        $this->count = $data['count'];
+        $this->load($data['filename'], $data['activeSheet']);
     }
 
     /**
@@ -167,15 +169,32 @@ class ExcelReader implements ReaderInterface
         }
     }
 
+    /**
+     * Load excel file.
+     *
+     * @param $filename
+     * @param $activeSheet
+     *
+     * @return bool
+     */
     protected function load($filename, $activeSheet)
     {
         if (!file_exists($filename)) {
-            return;
+            return false;
         }
 
         $this->file = new \SplFileObject($filename);
 
+        /** @var \PHPExcel_Reader_Excel2007 $reader */
         $reader = \PHPExcel_IOFactory::createReaderForFile($this->getFilePath());
+        $reader->setReadDataOnly(true);
+
+        if (null === $this->count) {
+            // fast count
+            $spreadsheetInfo = $reader->listWorksheetInfo($filename);
+            $this->count = $spreadsheetInfo[0]['totalRows'];
+        }
+
         /** @var \PHPExcel $excel */
         $excel = $reader->load($this->file->getPathname());
 
@@ -185,5 +204,7 @@ class ExcelReader implements ReaderInterface
         }
 
         $this->worksheet = $excel->getActiveSheet()->getRowIterator();
+
+        return $this->worksheet->valid();
     }
 }

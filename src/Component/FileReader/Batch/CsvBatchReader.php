@@ -17,11 +17,12 @@ class CsvBatchReader extends CsvReader implements BatchReaderInterface
 {
     use BatchReaderTrait;
 
-    public function __construct($filename, $batchLength = 500, $delimiter = ',', $enclosure = '"', $escape = '\\')
+    public function __construct($filename, $batchLength = 500, $batchStep = 1, $delimiter = ',', $enclosure = '"', $escape = '\\')
     {
-        parent::__construct($filename, $delimiter, $enclosure, $escape);
+        $this->step = $batchStep;
+        $this->length = max(0, $batchLength);
 
-        $this->setBatchLength($batchLength);
+        parent::__construct($filename, $delimiter, $enclosure, $escape);
     }
 
     /**
@@ -51,26 +52,16 @@ class CsvBatchReader extends CsvReader implements BatchReaderInterface
         }
 
         $this->step += $step;
+
+        if ($this->length * ($this->step - 1) > $this->count) {
+            return false;
+        }
+
         if ($this->key() !== $this->length * ($this->step - 1)) {
             $this->rewind();
         }
 
         return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        if (null === $this->count && $this->file) {
-            $length = $this->length;
-            $this->length = 0;
-            $this->count = parent::count();
-            $this->length = $length;
-        }
-
-        return $this->count ?: 0;
     }
 
     /**
