@@ -120,13 +120,18 @@ class ColumnMatcher
      *
      * @param int $size
      *
-     * @return BatchReaderInterface
+     * @return \Generator
      */
     public function getPreviewData($size = 10)
     {
-        $this->reader->setBatchLength($size);
+        $count = 0;
+        foreach ($this->reader as $row) {
+            if (++$count > $size) {
+                break;
+            }
 
-        return $this->reader;
+            yield $row;
+        }
     }
 
     /**
