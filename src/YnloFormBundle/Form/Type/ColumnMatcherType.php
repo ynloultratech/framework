@@ -143,6 +143,6 @@ class ColumnMatcherType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_column_matcher';
+        return 'column_matcher';
     }
 }
