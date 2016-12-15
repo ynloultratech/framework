@@ -13,7 +13,13 @@ YnloFramework.FormSelect2 = {
                 require(['select2'], function () {
                     YnloFramework.FormSelect2.initializeWidget(element);
                 });
-            })
+            });
+
+            setTimeout(function () {
+                $('select[data-select2-watch]').each(function () {
+                    YnloFramework.FormSelect2.initializeWatcher($(this));
+                });
+            }, 1000);
         };
         initialize();
         $(document).on('ajaxSuccess', initialize);
@@ -96,5 +102,27 @@ YnloFramework.FormSelect2 = {
                 }
             });
         });
+    },
+    initializeWatcher: function (target) {
+        var $watcher = $(target),
+            $target = $($watcher.data('select2-watch'));
+
+        if ($watcher.data('select2') === undefined) {
+            return;
+        }
+
+        if ($target.length == 0) return;
+
+        $watcher.data('select2').options.options.templateResult = function (option) {
+            if ($(option.element).data('watch') == $target.val()) {
+                return option.text;
+            }
+        };
+
+        $target
+            .off('change.select2-watch')
+            .on('change.select2-watch', function () {
+                $watcher.val('').trigger('change');
+            });
     }
 };
