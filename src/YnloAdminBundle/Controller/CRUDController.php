@@ -151,7 +151,7 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * getModalLayout
+     * getModalLayout.
      *
      * @return string
      */

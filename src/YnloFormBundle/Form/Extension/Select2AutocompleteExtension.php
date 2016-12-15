@@ -110,10 +110,10 @@ class Select2AutocompleteExtension extends AutocompleteBaseExtension
                 return $idReader;
             }
 
-            $hash = CachingFactoryDecorator::generateHash(array(
+            $hash = CachingFactoryDecorator::generateHash([
                 $options['em'],
                 $options['class'],
-            ));
+            ]);
 
             if (!isset($this->idReaders[$hash])) {
                 $classMetadata = $options['em']->getClassMetadata($options['class']);

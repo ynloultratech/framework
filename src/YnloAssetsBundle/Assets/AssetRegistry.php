@@ -34,7 +34,7 @@ class AssetRegistry
      * AssetRegistry builder.
      *
      * @param ContainerBuilder $container
-     * @param boolean          $requireJs
+     * @param bool             $requireJs
      */
     public static function build(ContainerBuilder $container, $requireJs = true)
     {
@@ -258,7 +258,7 @@ class AssetRegistry
     }
 
     /**
-     * Normalize asset disabling the use of RequireJs if not enabled
+     * Normalize asset disabling the use of RequireJs if not enabled.
      *
      * @param AssetInterface $asset
      *

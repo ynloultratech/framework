@@ -291,14 +291,14 @@ class AbstractAdmin extends BaseAbstractAdmin
     }
 
     /**
-     * Check if current action match with given list or string
+     * Check if current action match with given list or string.
      *
      * This method can be used to know what is the current cation when use
      * configureFormFields to build multiple forms based on action
      *
      * @param string|array $actions
      *
-     * @return boolean
+     * @return bool
      */
     public function isCurrentAction($actions)
     {
@@ -307,13 +307,13 @@ class AbstractAdmin extends BaseAbstractAdmin
 
     /**
      * Check if current action is sonata internal action
-     * like retrieve form element when add a option to sonata_type_model
+     * like retrieve form element when add a option to sonata_type_model.
      *
      * When sonata call some internal actions methods like configureFormFields
      * should return the entire list of fields and not only field for current action
      * otherwise actions like `sonata_admin_retrieve_form_element` may does not work fine
      *
-     * @return boolean
+     * @return bool
      */
     public function isInternalAction()
     {

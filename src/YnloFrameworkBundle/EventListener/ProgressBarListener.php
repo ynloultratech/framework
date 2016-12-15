@@ -28,7 +28,7 @@ class ProgressBarListener
     }
 
     /**
-     * Auto-start progressbar whether this request is a progress action
+     * Auto-start progressbar whether this request is a progress action.
      *
      * @param GetResponseEvent $event
      */

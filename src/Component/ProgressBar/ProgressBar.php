@@ -234,7 +234,7 @@ class ProgressBar
     }
 
     /**
-     * Gets the progress route parameters
+     * Gets the progress route parameters.
      *
      * @return array
      */

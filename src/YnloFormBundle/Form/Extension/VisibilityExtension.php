@@ -55,7 +55,7 @@ class VisibilityExtension extends AbstractTypeExtension
 
             // sonata checker support: 'CREATE', 'EDIT', etc.
             if ($options->offsetExists('sonata_field_description') && null !== $admin = $options['sonata_field_description']->getAdmin()) {
-                /** @var AbstractAdmin $admin */
+                /* @var AbstractAdmin $admin */
                 return $admin->isGranted($value);
             }
 
