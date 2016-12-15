@@ -7,13 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace AdminBundle\Menu;
+namespace YnloAdminBundle\Menu;
 
 use Knp\Menu\ItemInterface;
 
-/**
- * AdminMenuBuilderInterface.
- */
 interface AdminMenuBuilderInterface
 {
     /**
