@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace YnloAdminBundle\Menu;
+namespace YnloFramework\YnloAdminBundle\Menu;
 
 use Knp\Menu\ItemInterface;
 
