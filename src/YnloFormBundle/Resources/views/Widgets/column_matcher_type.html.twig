@@ -16,7 +16,7 @@
                     <th></th>
                     {% for index in range(0, previewColumns|length - 1 ) %}
                         <th class="text-center" data-column-restricted="index-{{ index }}">
-                            {{ form_widget(form['index_restricted_' ~ index]) }} {{ index }}
+                            {{ form_row(form['index_restricted_' ~ index]) }}
                         </th>
                     {% endfor %}
                 </tr>
