@@ -37,7 +37,7 @@ class DateTimePickerTransformer implements DataTransformerInterface
         }
 
         if (null !== $this->customFormat) {
-            return $this->formatter->format($this->customFormat);
+            return $value->format($this->customFormat);
         }
 
         return $this->formatter->format($value);
