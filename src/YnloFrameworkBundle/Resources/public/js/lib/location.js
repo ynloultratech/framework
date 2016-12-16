@@ -48,14 +48,14 @@ YnloFramework.Location = {
         }
     },
     refresh: function () {
-        if (YnloFramework.hasPlugin('Pjax') && -1 === url.indexOf('pjax=false')) {
+        if (YnloFramework.hasPlugin('Pjax') && -1 === window.location.href.indexOf('data-pjax=0')) {
             YnloFramework.Pjax.refresh();
         } else {
             window.location = window.location;
         }
     },
     load: function (url) {
-        if (YnloFramework.hasPlugin('Pjax') && -1 === window.location.href.indexOf('pjax=false')) {
+        if (YnloFramework.hasPlugin('Pjax') && -1 === url.indexOf('data-pjax=0')) {
             YnloFramework.Pjax.load(url);
         } else {
             window.location = url;
