@@ -145,9 +145,19 @@ class CRUDController extends BaseCRUDController
      */
     protected function isModalAction($action)
     {
-        $ajax = ($this->isXmlHttpRequest() || $this->isModalRequest() || $this->getRequest()->headers->get('X-Pjax'));
+        $ajax = ($this->isXmlHttpRequest() || $this->isModalRequest() || $this->isPjaxRequest());
 
         return $ajax && $this->admin->isActionOnModal($action);
+    }
+
+    /**
+     * Is Pjax request.
+     *
+     * @return bool
+     */
+    public function isPjaxRequest()
+    {
+        return null !== $this->getRequest()->headers->get('X-PJAX');
     }
 
     /**
