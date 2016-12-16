@@ -84,6 +84,11 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    ynlo.form.file_extension:
+        class: YnloFramework\YnloFormBundle\Form\Extension\FileTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+
     # Form Type
 
     ynlo.form.form.angular_controller_form_type:

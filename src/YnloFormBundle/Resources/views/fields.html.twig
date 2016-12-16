@@ -56,3 +56,27 @@
     {{ parent() }}
     {{ block('form_row_end') }}
 {% endblock form_row %}
+
+{% block file_widget %}
+    {% set attr = attr|merge({'class': 'file-input'}) %}
+    {{ parent() }}
+    {% if widget == 'bootstrap_fileinput' %}
+        <script>
+            // Basic setup
+            $('#{{ form.vars.id }}').fileinput({
+                showPreview: false,
+                showUpload: false,
+                browseLabel: '',
+                browseClass: 'btn btn-primary btn-icon',
+                removeLabel: '',
+                browseIcon: '<i class="icon-plus22" style="margin:0"></i>',
+                removeClass: 'btn btn-danger btn-icon',
+                removeIcon: '<i class="icon-cancel-square" style="margin:0"></i>',
+                layoutTemplates: {
+                    caption: '<div tabindex="-1" class="form-control file-caption {class}">\n' + '<div class="file-caption-name"></div>\n' + '</div>'
+                },
+                allowedFileExtensions: {{ allowed_file_extensions|json_encode|raw }}
+            });
+        </script>
+    {% endif %}
+{% endblock file_widget %}

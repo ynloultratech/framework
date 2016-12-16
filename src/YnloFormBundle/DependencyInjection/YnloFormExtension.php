@@ -94,6 +94,9 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
             $assets[] = AssetFactory::asset('ynlo_form_select2_js', 'bundles/ynloform/js/form_select2.yfp.js', ['yfp_config_dumper']);
         }
 
+        $assets[] = AssetFactory::module('fileinput', 'bundles/ynloform/vendor/fileinput/fileinput.min.js')
+            ->addJqueryPlugin('fileinput');
+
         $assets[] = AssetFactory::module('angular', 'bundles/ynloform/vendor/angular/angular.min.js');
         $assets[] = AssetFactory::module('angular_animate', 'bundles/ynloform/vendor/angular/angular-animate.min.js')
             ->setModuleName('ngAnimate')->setDependencies(['angular']);
