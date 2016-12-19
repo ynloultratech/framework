@@ -64,6 +64,7 @@ class YnloAssetsExtension extends Extension implements PrependExtensionInterface
         if ($useRequireJs) {
             AssetRegistry::prependAssets(
                 [
+                    AssetFactory::asset('switchery_js', 'bundles/ynloform/vendor/switchery/switchery.min.js'),
                     AssetFactory::asset('requirejs', 'bundles/ynloassets/vendor/requirejs/require.min.js'),
                     AssetFactory::asset('requirejs_config', 'bundles/ynloassets/js/require_js_config.js', ['require_js_config']),
                 ]

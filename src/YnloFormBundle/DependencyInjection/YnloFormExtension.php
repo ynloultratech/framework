@@ -82,7 +82,7 @@ class YnloFormExtension extends Extension implements PrependExtensionInterface, 
         $assets[] = AssetFactory::asset('spectrum_colorpicker_theme_css', 'bundles/ynloform/vendor/spectrum/themes/bootstrap.css');
 
         //switchery does not work as module, why?
-        $assets[] = AssetFactory::asset('switchery_js', 'bundles/ynloform/vendor/switchery/switchery.min.js');
+        //$assets[] = AssetFactory::asset('switchery_js', 'bundles/ynloform/vendor/switchery/switchery.min.js');
         $assets[] = AssetFactory::asset('switchery_css', 'bundles/ynloform/vendor/switchery/switchery.min.css');
 
         if (array_key_value($config, 'select2.enabled')) {
