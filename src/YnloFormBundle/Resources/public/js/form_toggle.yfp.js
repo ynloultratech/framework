@@ -15,7 +15,12 @@ YnloFramework.FormToggle = {
                 } else {
                     $(this).attr('form-toggle-initialized', true);
                 }
-                $(this).formToggle($.parseJSON($(this).attr('form-toggle-options')));
+                $(this).formToggle();
+                //allow reverse in the same input
+                $(this).formToggle({
+                    dataAttribute: 'reverse-toggle',
+                    reverse: true
+                });
             })
         };
         initialize();
