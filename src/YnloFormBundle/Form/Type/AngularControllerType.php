@@ -30,12 +30,11 @@ class AngularControllerType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $params = array_merge(['form' => $view], $options['controller_parameters']);
         if ($options['controller_body']) {
             $view->vars['controller_body'] = $this->templating->render(
                 $options['controller_body'],
-                [
-                    'form' => $form->getParent(),
-                ]
+                $params
             );
         }
 
@@ -52,12 +51,15 @@ class AngularControllerType extends AbstractType
         $resolver->setDefaults(
             [
                 'controller_body' => null,
+                'controller_parameters' => [],
                 'angular_modules' => [],
+                'mapped' => false,
                 'angular_services' => ['$scope'],
             ]
         );
 
         $resolver->setAllowedTypes('controller_body', ['null', 'string']);
+        $resolver->setAllowedTypes('controller_parameters', ['array']);
         $resolver->setAllowedTypes('angular_modules', ['array']);
         $resolver->setAllowedTypes('angular_services', ['array']);
     }
