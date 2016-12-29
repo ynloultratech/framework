@@ -36,22 +36,16 @@ class ToggleFormTypeExtension extends AbstractTypeExtension
             || isset($options['toggle_prefix'])
         ) {
             $view->vars['attr']['form-toggle'] = null;
-            $toggleOptions = [];
-            if (isset($view->vars['toggle_reverse_prefix'])) {
-                $toggleOptions = [
-                    'dataAttribute' => 'reverse-toggle',
-                    'reverse' => true,
-                ];
-            }
-            $view->vars['attr']['form-toggle-options'] = json_encode($toggleOptions);
 
             //convert into class name
             if ($options['toggle']) {
                 $view->vars['attr']['data-toggle'] = '.toggle_group_'.$options['toggle'];
+                $view->vars['attr']['data-reverse-toggle'] = '.toggle_group_not_'.$options['toggle'];
             }
 
             if ($options['toggle_prefix']) {
                 $view->vars['attr']['data-toggle-prefix'] = '.toggle_group_'.$options['toggle_prefix'];
+                $view->vars['attr']['data-reverse-toggle-prefix'] = '.toggle_group_not_'.$options['toggle_prefix'];
             }
         }
     }
@@ -65,14 +59,12 @@ class ToggleFormTypeExtension extends AbstractTypeExtension
             [
                 'toggle' => null,
                 'toggle_prefix' => null,
-                'toggle_reverse_prefix' => null,
                 'toggle_group' => null,
             ]
         );
 
         $resolver->setAllowedTypes('toggle', ['null', 'string']);
         $resolver->setAllowedTypes('toggle_prefix', ['null', 'string']);
-        $resolver->setAllowedTypes('toggle_reverse_prefix', ['null', 'string']);
         $resolver->setAllowedTypes('toggle_group', ['null', 'string', 'array']);
     }
 
