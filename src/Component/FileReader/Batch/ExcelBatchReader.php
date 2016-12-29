@@ -105,8 +105,9 @@ class ExcelBatchReader extends ExcelReader implements BatchReaderInterface, \PHP
         $this->step = $data['step'];
         $this->length = $data['length'];
         $this->count = $data['count'];
-        $this->load($data['filename'], $data['activeSheet']);
-        $this->rewind();
+        if ($this->load($data['filename'], $data['activeSheet'])) {
+            $this->rewind();
+        }
     }
 
     /**
@@ -150,6 +151,6 @@ class ExcelBatchReader extends ExcelReader implements BatchReaderInterface, \PHP
         $this->worksheet->resetStart($this->length * ($this->step - 1));
         $this->worksheet->resetEnd(min($this->length * $this->step, $this->count));
 
-        return $this->worksheet->valid();
+        return $this->valid();
     }
 }
