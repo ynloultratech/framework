@@ -21,6 +21,8 @@ YnloFramework.AdminEmbedded = {
                 }
             }, 200);
         });
+
+        $(document).on('ajaxSuccess', YnloFramework.AdminEmbedded.init);
     },
     refresh: function (id) {
         var $embedded = $('[admin-embedded="' + id + '"]');
