@@ -11,11 +11,14 @@ namespace YnloFramework\YnloAdminBundle\Admin;
 
 use Rafrsr\LibArray2Object\Object2ArrayBuilder;
 use Sonata\AdminBundle\Admin\AbstractAdmin as BaseAbstractAdmin;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use YnloFramework\YnloAdminBundle\Action\ActionMapper;
 use YnloFramework\YnloAdminBundle\Action\BatchActionMapper;
 use YnloFramework\YnloModalBundle\Modal\Modal;
 use YnloFramework\YnloModalBundle\Modal\ModalButton;
+use YnloFramework\YnloModalBundle\Response\AjaxRedirectResponse;
+use YnloFramework\YnloModalBundle\Response\AjaxRefreshResponse;
 
 /**
  * AbstractAdmin.
@@ -113,6 +116,27 @@ class AbstractAdmin extends BaseAbstractAdmin
                 ->setClass('btn btn-danger')
                 ->setIcon('fa fa-trash');
         }
+    }
+
+    /**
+     * This action is executed when a modal is success and
+     * should return the expected response
+     *
+     * @param string $action
+     *
+     * @return Response
+     */
+    public function onModalSuccess($action)
+    {
+        if ($this->isEmbedded()) {
+            return new AjaxRefreshResponse(['embedded' => $this->getEmbeddedId()]);
+        }
+
+        if ($action === 'delete') {
+            return new AjaxRedirectResponse($this->generateUrl('list'));
+        }
+
+        return new AjaxRefreshResponse();
     }
 
     /**
@@ -318,8 +342,10 @@ class AbstractAdmin extends BaseAbstractAdmin
     public function isInternalAction()
     {
         //TODO: add all internal actions
-        return $this->isCurrentAction([
-            'sonata_admin_retrieve_form_element',
-        ]);
+        return $this->isCurrentAction(
+            [
+                'sonata_admin_retrieve_form_element',
+            ]
+        );
     }
 }
