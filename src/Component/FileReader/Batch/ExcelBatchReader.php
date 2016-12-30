@@ -149,7 +149,7 @@ class ExcelBatchReader extends ExcelReader implements BatchReaderInterface, \PHP
 
         $this->length = min($this->length, $this->count);
 
-        if ($this->length * ($this->step - 1) > $this->count) {
+        if ($this->length * ($this->step - 1) >= $this->count) {
             return false;
         }
 
