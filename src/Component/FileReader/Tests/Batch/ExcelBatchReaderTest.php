@@ -34,6 +34,16 @@ class ExcelBatchReaderTest extends TestCase
         $this->assertEquals(499, $batch->key());
     }
 
+    public function testNotAdvance()
+    {
+        $batch = new ExcelBatchReader(__DIR__.'/../fixtures/data.xlsx', 2000); ////0-1506
+        $this->assertTrue($batch->valid());
+        $batch->seek(1506);
+        $batch->next();
+        $this->assertFalse($batch->valid());
+        $this->assertFalse($batch->advance());
+    }
+
     public function testInvalid()
     {
         $batch = new ExcelBatchReader(__DIR__.'/../fixtures/data.xlsx', 2000); ////0-1506
