@@ -30,9 +30,23 @@ class ExcelBatchReader extends ExcelReader implements BatchReaderInterface, \PHP
      */
     public function seek($position)
     {
-        if ($this->worksheet) {
-            $this->worksheet->seek($position + 1);
+        if (!$this->worksheet) {
+            return;
         }
+
+        // normalize index (start with 1)
+        ++$position;
+
+        $rowStart = $this->length * ($this->step - 1) + 1;
+        $rowEnd = min($this->length * $this->step, $this->count);
+
+        if ($position > $rowEnd) {
+            $position = $rowEnd;
+        } elseif ($position < $rowStart) {
+            $position = $rowStart;
+        }
+
+        $this->worksheet->seek($position);
     }
 
     /**
@@ -148,7 +162,7 @@ class ExcelBatchReader extends ExcelReader implements BatchReaderInterface, \PHP
         }
 
         $this->worksheet = $excel->getActiveSheet()->getRowIterator();
-        $this->worksheet->resetStart($this->length * ($this->step - 1));
+        $this->worksheet->resetStart($this->length * ($this->step - 1) + 1);
         $this->worksheet->resetEnd(min($this->length * $this->step, $this->count));
 
         return $this->valid();
