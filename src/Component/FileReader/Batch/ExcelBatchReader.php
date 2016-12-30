@@ -119,8 +119,12 @@ class ExcelBatchReader extends ExcelReader implements BatchReaderInterface, \PHP
         $this->step = $data['step'];
         $this->length = $data['length'];
         $this->count = $data['count'];
-        if ($this->load($data['filename'], $data['activeSheet'])) {
-            $this->rewind();
+        try {
+            if ($this->load($data['filename'], $data['activeSheet'])) {
+                $this->rewind();
+            }
+        } catch (\Exception $e) {
+            // avoid 504 error!
         }
     }
 
