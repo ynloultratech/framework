@@ -140,7 +140,11 @@ class ExcelReader implements ReaderInterface
         $this->headerRowNumber = $data['headerRowNumber'];
         $this->columns = $data['columns'];
         $this->count = $data['count'];
-        $this->load($data['filename'], $data['activeSheet']);
+        try {
+            $this->load($data['filename'], $data['activeSheet']);
+        } catch (\Exception $e) {
+            // avoid 504 error!
+        }
     }
 
     /**
