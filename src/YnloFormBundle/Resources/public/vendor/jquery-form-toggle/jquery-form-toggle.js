@@ -1,7 +1,7 @@
-(function() {
+(function () {
 
-    jQuery(function($) {
-        return $.fn.formToggle = function(options) {
+    jQuery(function ($) {
+        return $.fn.formToggle = function (options) {
             var element_selector, methods, settings;
             settings = $.extend({
                 dataAttribute: "toggle",
@@ -12,19 +12,19 @@
                 checkboxInit: null,
                 radioInit: null,
                 selectInit: null,
-                parameterize: function(string) {
+                parameterize: function (string) {
                     return $.trim(string).toLowerCase().replace(/\W/g, '-');
                 }
             }, options);
             methods = {
-                showOrHideTarget: function(selected, target, args) {
+                showOrHideTarget: function (selected, target, args) {
                     if ((selected && !settings.reverse) || (settings.reverse && !selected)) {
                         return target.show();
                     } else {
                         return target.hide();
                     }
                 },
-                targetForController: function(controller, value) {
+                targetForController: function (controller, value) {
                     var selector, selectorPrefix, selectorSuffix;
                     if (value == null) {
                         value = null;
@@ -42,23 +42,45 @@
                     }
                     return $(selector);
                 },
-                handleCheckedState: function(controller, target, args) {
+                handleCheckedState: function (controller, target, args) {
                     var selected;
                     selected = $(controller).is(':checked');
                     return methods.showOrHideTarget(selected, target, args);
                 },
-                handleSelect: function(select, args) {
-                    return select.find("option").each(function(index) {
+                handleSelect: function (select, args) {
+                    select.find("option").each(function (index) {
                         var option, selected, target;
                         option = $(this);
                         target = methods.targetForController(select, option.val());
                         selected = option.val() === $(select).val();
                         return methods.showOrHideTarget(selected, target, args);
                     });
+
+                    //a second pass to allow multiple child options
+                    return select.find("option").each(function (index) {
+                        var option, selected, target;
+                        option = $(this);
+                        target = methods.targetForController(select, option.val());
+                        selected = option.val() === $(select).val();
+                        if (selected) {
+                            $(target).each(function () {
+                                var mainTarget = $(this);
+                                if (mainTarget.css('display') === 'block') {
+                                    select.find("option").each(function (index) {
+                                        var option, selected, target;
+                                        option = $(this);
+                                        target = methods.targetForController(select, option.val());
+                                        mainTarget.closest(target).show();
+                                        mainTarget.find(target).show();
+                                    });
+                                }
+                            })
+                        }
+                    });
                 }
             };
             element_selector = "[data-" + settings.dataAttribute + "], [data-" + settings.dataAttribute + "-prefix]";
-            $(element_selector).each(function(index, controller) {
+            $(element_selector).each(function (index, controller) {
                 var setting, target;
                 controller = $(controller);
                 if (controller.is('select')) {
@@ -74,7 +96,7 @@
                     return methods.handleCheckedState(controller, target, setting);
                 }
             });
-            return $(document).on('change switchChange.bootstrapSwitch', element_selector, function(event) {
+            return $(document).on('change switchChange.bootstrapSwitch', element_selector, function (event) {
                 var controller, group, target;
                 controller = $(this);
                 if (controller.is('select')) {
@@ -86,7 +108,7 @@
                 }
                 if (controller.is(':radio')) {
                     group = controller.attr("name");
-                    return $(":radio[name='" + group + "']").each(function(index, radio) {
+                    return $(":radio[name='" + group + "']").each(function (index, radio) {
                         radio = $(radio);
                         target = methods.targetForController(radio);
                         return methods.handleCheckedState(radio, target, settings.radio);
