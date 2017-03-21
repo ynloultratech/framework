@@ -53,7 +53,7 @@ class CsvBatchReader extends CsvReader implements BatchReaderInterface
 
         $this->step += $step;
 
-        if ($this->length * ($this->step - 1) > $this->count) {
+        if ($this->length * ($this->step - 1) > $this->count()) {
             return false;
         }
 
