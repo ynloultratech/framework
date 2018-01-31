@@ -76,6 +76,7 @@ class CsvBatchReader extends CsvReader implements BatchReaderInterface
                 'columns' => $this->columns,
                 'step' => $this->step,
                 'length' => $this->length,
+                'headerRowNumber' => $this->headerRowNumber,
             ]
         );
     }
@@ -93,6 +94,7 @@ class CsvBatchReader extends CsvReader implements BatchReaderInterface
         $this->columns = $data['columns'];
         $this->step = $data['step'];
         $this->length = $data['length'];
+        $this->headerRowNumber = $data['headerRowNumber'];
         $this->rewind();
     }
 }

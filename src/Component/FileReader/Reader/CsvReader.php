@@ -124,6 +124,7 @@ class CsvReader implements ReaderInterface
                 'filename' => $this->file ? $this->file->getRealPath() : null,
                 'csvControl' => $this->file ? $this->file->getCsvControl() : null,
                 'columns' => $this->columns,
+                'headerRowNumber' => $this->headerRowNumber,
             ]
         );
     }
@@ -139,6 +140,7 @@ class CsvReader implements ReaderInterface
         }
         $this->load($data['filename'], $data['csvControl'][0], $data['csvControl'][1]);
         $this->columns = $data['columns'];
+        $this->headerRowNumber = $data['headerRowNumber'];
     }
 
     /**
