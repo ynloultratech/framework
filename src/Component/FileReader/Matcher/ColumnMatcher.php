@@ -161,6 +161,28 @@ class ColumnMatcher
         }
     }
 
+    public function getSimilarData(string $name, array &$history): ?string
+    {
+        $list = [];
+        foreach ($this->columns as $column) {
+            $lev = levenshtein($name, $column->getLabel());
+            if ($lev < 4 || $lev <= \strlen($name) / 2 || false !== strpos($column->getLabel(), $name)) {
+                $list[$column->getName()] = $lev;
+            }
+        }
+        uasort($list, function ($a, $b) { return $a <=> $b; });
+
+        foreach (array_keys($list) as $key) {
+            if (!isset($history[$key])) {
+                $history[$key] = true;
+
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Get column.
      *
